@@ -25,6 +25,7 @@ const Employees = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
+
       render: (
         _: ReactNode,
         record: { _id: string; firstName: string; lastName: string }
@@ -127,7 +128,7 @@ const Employees = () => {
             {!employees?.length ? (
               <NoDataComponent message={NoDataMessage} />
             ) : (
-              <div className="mt-4 flex gap-4 ">
+              <div className="mt-4 flex gap-4 w-full">
                 <Table
                   data={filteredData}
                   columns={columns}

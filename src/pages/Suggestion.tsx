@@ -106,7 +106,7 @@ const Suggestion = () => {
 
   return (
     <div className="pt-24 px-4 w-full  grid gap-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start">
         <div className="grid gap-2 title-box">
           <div className="flex items-center gap-2">
             <h1 className="text-xl capitalize font-semibold text-primaryblue leading-none">

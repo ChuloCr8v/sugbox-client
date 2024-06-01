@@ -6,7 +6,7 @@ type Props = {
 
 const PieChartComponent = (props: Props) => {
   return (
-    <div className="bg-white flex items-center justify-center rounded border p-4">
+    <div className="bg-white hidden lg:flex items-center justify-center rounded border p-4">
       <PieChart
         series={[
           {

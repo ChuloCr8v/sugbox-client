@@ -130,7 +130,7 @@ const EmployeeFilters = (props: Props) => {
         >
           <button
             className={twMerge(
-              "flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue w-full h-8 rounded duration-200",
+              "flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue w-full min-w-[100px] h-8 rounded duration-200",
               showMobileFilter && "border-primaryColor text-primaryColor"
             )}
             onClick={() => setShowMobileFilter(!showMobileFilter)}
@@ -151,7 +151,7 @@ const EmployeeFilters = (props: Props) => {
         >
           <button
             className={twMerge(
-              "flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue w-full h-8 rounded duration-200",
+              "flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue w-full min-w-[100px] h-8 rounded duration-200",
               showMobileFilter && "border-primaryColor text-primaryColor"
             )}
             //   onClick={() => setShowMobileFilter(!showMobileFilter)}

@@ -8,7 +8,7 @@ const useGetAvatar = (userId?: string) => {
     return (
       <div
         className={twMerge(
-          "h-40 w-40 bg-primaryblue text-[80px] font-semibold rounded-xl text-white flex flex-col justify-center items-center"
+          "h-[300px] w-full lg:h-40 lg:w-40 bg-primaryblue text-[120px] lg:text-[80px] font-semibold rounded-xl text-white flex flex-col justify-center items-center"
         )}
       >
         <span className="leading-[0] -mt-2">

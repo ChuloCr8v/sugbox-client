@@ -184,19 +184,19 @@ const Settings = () => {
     <div className="px-4 pt-24 w-full flex flex-col relative">
       <div className="w-full flex flex-col gap-8">
         <SectionHeading heading={"Settings"} />
-        <div className="flex items-start gap-6">
-          <div className="profile-pic">{avatar()}</div>
+        <div className="flex flex-col lg:flex-row items-start gap-6">
+          <div className="profile-pic w-full">{avatar()}</div>
           <div className="w-full grid gap-6">
             <div className="w-full border flex flex-col items-start gap-2 rounded-lg p-4">
               <div className="text-primaryblue font-bold !text-xl">
                 <SectionHeading heading={"Personal Details"} />
               </div>
-              <div className="grid grid-cols-2 gap-4 w-full">
+              <div className="flex flex-col lg:grid grid-cols-2 gap-4 w-full">
                 {personalInfoData.map((item: any) => (
                   <div
                     className={twMerge(
-                      "grid gap-2",
-                      item.title === "email" && "col-span-2 w-1/2"
+                      "grid gap-2 ",
+                      item.title === "email" && "col-span-2 w-full lg:w-1/2"
                     )}
                     key={item.title}
                   >
@@ -262,7 +262,7 @@ const Settings = () => {
               <div className="text-primaryblue font-bold !text-xl">
                 <SectionHeading heading={"Notification Settings"} />
               </div>
-              <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
+              <div className="flex flex-col lg:grid grid-cols-2 gap-y-4 justify-between w-full">
                 {notificationData.map((item) => (
                   <div className="grid gap-2" key={item.title}>
                     <Label title={item.title} labelClassName="text-gray-500" />

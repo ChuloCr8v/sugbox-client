@@ -154,7 +154,7 @@ const Filter = (props: Props) => {
   };
 
   return (
-    <div className="grid grid-cols-3 lg:flex items-center gap-2">
+    <div className="grid grid-cols-3 xl:flex items-center gap-2">
       <Input
         value={filterValue.searchValue}
         onChange={(e) => handleSearchSuggestion(e.target.value)}
@@ -169,7 +169,7 @@ const Filter = (props: Props) => {
         >
           <button
             className={twMerge(
-              "w-full flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue h-8 rounded duration-200",
+              "w-full min-w-[100px] flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue h-8 rounded duration-200",
               showMobileFilter && "border-primaryColor text-primaryColor"
             )}
             onClick={() => setShowMobileFilter(!showMobileFilter)}
@@ -190,7 +190,7 @@ const Filter = (props: Props) => {
         >
           <button
             className={twMerge(
-              "flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue w-full h-8 rounded duration-200",
+              "w-full min-w-[100px] flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue h-8 rounded duration-200",
               showMobileFilter && "border-primaryColor text-primaryColor"
             )}
             //   onClick={() => setShowMobileFilter(!showMobileFilter)}

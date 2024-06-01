@@ -22,7 +22,7 @@ const CommentCard = (props: {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="grid lg:grid-cols-3 gap-2">
       {userComments?.map((item: { comment: string; _id: string }) => (
         <>
           <a

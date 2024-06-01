@@ -8,8 +8,8 @@ const ErrorComponent = (props: Props) => {
       {props.errorMsg ? (
         props.errorMsg
       ) : (
-        <div className="flex items-center justify-center">
-          <img src="/error.gif" alt="error" className="-ml-32 w-32" />
+        <div className="flex flex-col lg:flex-row items-center justify-center">
+          <img src="/error.gif" alt="error" className="-ml-12 lg:-ml-32 w-32" />
           <p className="ml-2">
             Oops!.An error occured.{" "}
             <span className="block text-center text-gray-500 italic">
