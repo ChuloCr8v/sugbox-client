@@ -1,4 +1,4 @@
-import { Button, Dropdown } from "antd";
+import { Dropdown } from "antd";
 import { useState } from "react";
 import {
   FaBan,
@@ -8,9 +8,6 @@ import {
   FaTrashAlt,
 } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { twMerge } from "tailwind-merge";
-import UseGetAuth from "../hooks/useGetAuth";
-import { useGetSuggestionQuery } from "../redux/data/suggestions";
 import { showEditSuggestionModal } from "../redux/modals";
 import UpdateStatusModal from "./modals/UpdateStatusModal";
 
@@ -21,11 +18,11 @@ interface Props {
 
 const SuggestionActionButtons = (props: Props) => {
   const [openUpdateStatusModal, setOpenUpdateStatusModal] = useState("");
-  const { data: suggestion } = useGetSuggestionQuery(props.id);
+  //const { data: suggestion } = useGetSuggestionQuery(props.id);
 
-  const { id: userId, isAdmin } = UseGetAuth();
+  // const { id: userId,  } = UseGetAuth();
 
-  const verifyUser = userId === suggestion?.userId;
+  // const verifyUser = userId === suggestion?.userId;
 
   const items = [
     {
