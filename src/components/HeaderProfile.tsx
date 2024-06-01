@@ -88,14 +88,14 @@ const HeaderProfile = () => {
       >
         <LoadingModal loadingModalOpen={isLoading} />
         <div className="flex items-center gap-2">
-          <div className="h-7 w-7 rounded-full bg-primaryblue text-white flex items-center justify-center uppercase text-base font-bold ">
+          <div className="h-8 w-8 rounded-full bg-primaryblue text-white flex items-center justify-center uppercase text-base font-bold ">
             {avatar()}
           </div>
           <p className="hidden md:flex text-textcolor font-semibold text-base group-hover:text-primaryblue duration-200">
             {username()}
           </p>
         </div>
-        <FaChevronDown className="ml-20 text-[13px]" />
+        <FaChevronDown className="ml-4 text-[13px]" />
       </a>
     </Dropdown>
   );

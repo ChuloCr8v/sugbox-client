@@ -78,7 +78,7 @@ const SummaryCardSection = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-4 items-center">
+    <div className="grid md:grid-cols-2 gap-4 items-center">
       {summaryData.map((s, index) => (
         <a
           // onClick={(e) => {

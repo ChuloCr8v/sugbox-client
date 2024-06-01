@@ -116,6 +116,8 @@ const Suggestions = (props: Props) => {
     },
   ];
 
+  console.log(currentPage);
+
   const NoDataMessage = (
     <p className="text-center">
       Uh oh! No Suggestions for your organization yet.
@@ -133,7 +135,7 @@ const Suggestions = (props: Props) => {
               count={props.data?.length}
             />
           ) : (
-            <PageHeader title={"Suggestions"} showActionButton />
+            <PageHeader title={"Suggestions"} />
           )}
 
           <div

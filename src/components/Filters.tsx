@@ -154,22 +154,22 @@ const Filter = (props: Props) => {
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="grid grid-cols-3 lg:flex items-center gap-2">
       <Input
         value={filterValue.searchValue}
         onChange={(e) => handleSearchSuggestion(e.target.value)}
         placeholder="Enter search term"
         prefix={<FaSearch className="text-[#777777] pr-1" />}
-        className="border-gray-300 border h-8 rounded w-full"
+        className="col-span-3 border-gray-300 border h-8 rounded w-full"
       />
-      <Dropdown placement="bottom" menu={{ items }} className="cursor-pointer">
+      <Dropdown placement="bottom" menu={{ items }} className="cursor-pointer ">
         <a
           onClick={(e) => e.preventDefault()}
           className="flex items-center justify-between gap-2 "
         >
           <button
             className={twMerge(
-              "flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue w-[100px] h-8 rounded duration-200",
+              "w-full flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue h-8 rounded duration-200",
               showMobileFilter && "border-primaryColor text-primaryColor"
             )}
             onClick={() => setShowMobileFilter(!showMobileFilter)}
@@ -190,7 +190,7 @@ const Filter = (props: Props) => {
         >
           <button
             className={twMerge(
-              "flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue w-[100px] h-8 rounded duration-200",
+              "flex items-center justify-center text-sm text-gray-500 hover:text-primaryblue gap-2 border border-gray-300 bg-white hover:border-primaryblue w-full h-8 rounded duration-200",
               showMobileFilter && "border-primaryColor text-primaryColor"
             )}
             //   onClick={() => setShowMobileFilter(!showMobileFilter)}

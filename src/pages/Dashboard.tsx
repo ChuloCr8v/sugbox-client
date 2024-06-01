@@ -49,10 +49,8 @@ const Dashboard = () => {
   );
 
   const adminProfileTitle = (
-    <p className="font-normal">
-      <span className="text-primaryblue font-semibold">
-        {user?.companyName}'s{" "}
-      </span>
+    <p className=" font-semibold">
+      <span className="text-primaryblue hidden">{user?.companyName}'s </span>
       Dashboard
     </p>
   );

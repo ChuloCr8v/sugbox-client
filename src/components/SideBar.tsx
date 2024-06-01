@@ -96,26 +96,29 @@ const Sidebar = () => {
   const allMenu = navItems.filter((item) => item.role === "all");
   console.log(user);
   return (
-    <div
-      className={twMerge(
-        "bg-white min-h-screen fixed lg:relative top-0 left-0 w-0 lg:w-[350px] pt-24 border-r overflow-hidden z-30 duration-200",
-        !user && "hidden",
-        isSideBarOpen && "w-[calc(100vw-20%)] "
-      )}
-    >
+    <div className="">
       <div
+        onClick={() => dispatch(closeSideBar())}
         className={twMerge(
           "fixed z-20 top-0 left-0 min-h-screen w-0 bg-black opacity-30 lg:hidden duration-200",
           isSideBarOpen && "w-screen"
         )}
       ></div>
-      {allMenu.map((item, index) => (
-        <MenuItem item={item} key={index} />
-      ))}
-      {user?.isAdmin &&
-        adminMenu.map((item, index) => <MenuItem item={item} key={index} />)}
-      {(user?.adminRole === "staff" || user?.adminRole === "moderator") &&
-        staffMenu.map((item, index) => <MenuItem item={item} key={index} />)}
+      <div
+        className={twMerge(
+          "bg-white min-h-screen fixed lg:relative top-0 left-0 w-0 lg:w-[350px] pt-24 border-r overflow-hidden z-30 duration-200",
+          !user && "hidden",
+          isSideBarOpen && "w-[calc(100vw-20%)] "
+        )}
+      >
+        {allMenu.map((item, index) => (
+          <MenuItem item={item} key={index} />
+        ))}
+        {user?.isAdmin &&
+          adminMenu.map((item, index) => <MenuItem item={item} key={index} />)}
+        {(user?.adminRole === "staff" || user?.adminRole === "moderator") &&
+          staffMenu.map((item, index) => <MenuItem item={item} key={index} />)}
+      </div>
     </div>
   );
 };

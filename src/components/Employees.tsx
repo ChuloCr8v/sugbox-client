@@ -106,7 +106,10 @@ const Employees = () => {
               count={filteredData?.length}
             />
           ) : (
-            <PageHeader title={"Employees"} showActionButton />
+            <PageHeader
+              title={"Employees"}
+              showActionButton={currentPage.includes("employees")}
+            />
           )}
           <div
             className={twMerge(
