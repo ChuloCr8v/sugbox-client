@@ -5,6 +5,7 @@ import PageHeader from "../components/PageHeader";
 import SuggestionTable from "../components/SuggestionTable";
 import useGetSuggestions from "../hooks/useGetSuggestions";
 import { suggestionProps } from "../types";
+import { SectionHeading } from "../components/Suggestions";
 
 const MySuggestions = () => {
   const { userSuggestions, isFetching, isLoading, refetch } =
@@ -22,21 +23,13 @@ const MySuggestions = () => {
     setFilteredData(data);
   }, [userSuggestions]);
 
-  const PageTitle = () => {
-    return (
-      <div className="flex items-center gap-2">
-        <p className="capitalize">my suggestions</p>{" "}
-        <div className="bg-primaryblue rounded-full text-white h-6 w-6 flex items-center justify-center">
-          {filteredData?.length}
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div className="w-full p-4 pt-24">
       <div className="grid gap-8">
-        <PageHeader title={<PageTitle />} />
+        <SectionHeading
+          heading={"My Suggestions"}
+          count={filteredData?.length}
+        />
         <Filters
           data={userSuggestions}
           isRefreshing={isFetching}

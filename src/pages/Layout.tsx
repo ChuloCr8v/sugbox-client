@@ -29,11 +29,11 @@ const Layout = () => {
   const { token } = UseGetAuth();
 
   return (
-    <div className="flex flex-col  pb-24">
+    <div className="flex flex-col">
       <div className="flex w-full">
         <Header />
         <SideBar />
-        <div className="w-full pb-24 flex flex-col items-center">
+        <div className="w-full flex flex-col items-center">
           <div className="flex flex-col items-center  w-full">
             <Routes>
               <Route

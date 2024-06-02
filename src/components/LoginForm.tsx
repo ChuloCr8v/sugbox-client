@@ -16,7 +16,7 @@ const LoginForm = (props: Props) => {
   return (
     <form
       action=""
-      className="bg-white px-6 py-10 flex flex-col items-start gap-6 max-w-[400px] w-full shadow-lg rounded-xl border-solid border-bordercolor border-2 bg-morph"
+      className="bg-white px-6 py-10 flex flex-col items-start gap-6 max-w-[400px] w-full shadow rounded-xl border border-gray-200"
     >
       {loginFormValues.map((v, index) => (
         <FormGroup
@@ -33,7 +33,7 @@ const LoginForm = (props: Props) => {
       <div className="w-full flex justify-between items-center">
         <Checkbox
           onChange={() => {}}
-          className="hover:text-primaryblue duration-200 text-base text-white"
+          className="hover:text-primaryblue duration-200 text-base text-black"
         >
           Remember Me
         </Checkbox>
@@ -46,7 +46,7 @@ const LoginForm = (props: Props) => {
       </div>
       <Button
         className={twMerge(
-          "w-full hover:bg-[#031932] bg-hoverblue font-bold text-white uppercase py-3",
+          "w-full hover:bg-hoverblue bg-primaryblue font-bold text-white uppercase py-3",
           props.disabled && "bg-gray-200 hover:bg-gray-200"
         )}
         text={"Login"}
@@ -56,11 +56,11 @@ const LoginForm = (props: Props) => {
         url={""}
       />
       <div className="place-self-center">
-        <span className="text-center text-white">
+        <span className="text-center text-gray-500">
           Don't have an account? Sign up{" "}
           <a
             href="/signup"
-            className="underline font-bold hover:text-[#031932] duration-200"
+            className="underline font-bold text-primaryblue hover:bg-hoverblue duration-200"
           >
             here
           </a>

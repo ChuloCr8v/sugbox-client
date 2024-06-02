@@ -19,8 +19,8 @@ const Header = () => {
   return (
     <div
       className={twMerge(
-        "flex justify-center items-center w-screen border-b fixed top-0 left-0 bg-white z-50"
-        //   !user ? "bg-opacity-20" : " bg-opacity-100"
+        "flex justify-center items-center w-screen border-b fixed top-0 left-0 bg-white z-50",
+        !user ? "hidden" : "flex"
       )}
     >
       <div className="wrapper flex justify-between items-center w-full py-4 px-4">

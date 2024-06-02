@@ -38,7 +38,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="xl:grid grid-cols-2 h-screen w-screen overflow-hidden login bg-primaryblue xl:bg-transparent">
+    <div className="xl:grid grid-cols-2 h-screen w-screen overflow-hidden bg-white xl:bg-primaryblue xl:bg-transparent">
       <div className="hidden xl:flex flex-col items-center justify-center h-full w-full">
         <img
           src={"/box.png"}
@@ -55,10 +55,11 @@ const SignIn = () => {
             : "Leave Your Suggestions"}
         </p>
       </div>
-      <div className=" flex flex-col items-center justify-center h-full w-full px-4">
-        <p className="text-2xl mb-4 text-center font-semibold text-white">
+      <div className="bg-white flex flex-col items-center justify-center h-full w-full px-4">
+        <p className="text-2xl mb-4 text-center font-semibold text-black xl:hidden">
           {loginRole !== "employee" ? "Admin" : "Employee"} Login
         </p>
+
         <Form
           handleInputChange={handleInputChange}
           handleSubmit={handleLogin}

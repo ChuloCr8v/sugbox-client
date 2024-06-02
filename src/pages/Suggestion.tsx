@@ -175,6 +175,17 @@ const Suggestion = () => {
         </div>
       </div>
 
+      <CommentBox
+        handleBtnClick={addCommentFunction}
+        placeholder={"Start typing..."}
+        comment={commentText}
+        onchange={(e) => {
+          setCommentText(e.target.value);
+        }}
+        setComment={setCommentText}
+        addCommentLoading={addCommentLoading}
+      />
+
       {openCommentSection && (
         <div
           className={twMerge(
@@ -187,23 +198,12 @@ const Suggestion = () => {
         </div>
       )}
 
-      <CommentBox
-        handleBtnClick={addCommentFunction}
-        placeholder={"Start typing..."}
-        comment={commentText}
-        onchange={(e) => {
-          setCommentText(e.target.value);
-        }}
-        setComment={setCommentText}
-        addCommentLoading={addCommentLoading}
-      />
-
       {loadingAllSuggestions ? (
         <Spin />
       ) : (
         <div className="overflow-hidden">
           <p className="font-semibold text-lg ">Trending Suggestions</p>
-          <div className="flex gap-4 mt-2 overflow-x-scroll pb-2">
+          <div className="flex gap-4 mt-2 overflow-x-scroll py-2">
             {[...suggestions]
               ?.sort(
                 (
@@ -214,7 +214,7 @@ const Suggestion = () => {
               .map((suggestion: suggestionProps) => (
                 <a
                   href={`/suggestion/${suggestion._id}`}
-                  className="rounded shadow p-4 min-w-[450px]"
+                  className="rounded border shadow p-4 min-w-[450px]"
                   key={suggestion._id}
                 >
                   <TrendingSuggestionCard suggestion={suggestion} />

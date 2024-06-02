@@ -110,7 +110,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="px-8 pt-24 w-full flex flex-col">
+    <div className="px-8 py-24 w-full flex flex-col">
       <div className="w-full flex flex-col gap-8">
         {/* <SectionHeading heading={isAdmin ? profileTitle : userProfileTitle} /> */}
 
@@ -132,9 +132,9 @@ const Profile = () => {
           <div className="grid gap-8">
             <SectionHeading
               heading={
-                <PageTitle
-                  data={filteredData}
-                  title={<>{isAdmin ? "Employee" : "My"} Suggestions</>}
+                <SectionHeading
+                  heading={<>{isAdmin ? "Employee" : "My"} Suggestions</>}
+                  count={filteredData.length}
                 />
               }
             />
@@ -155,7 +155,12 @@ const Profile = () => {
         {!isAdmin && (
           <div className="grid gap-4">
             <SectionHeading
-              heading={<PageTitle title="My comments" data={userComments} />}
+              heading={
+                <SectionHeading
+                  heading={"My Comments"}
+                  count={userComments.length}
+                />
+              }
             />
             <CommentCard userId={id} userSuggestions={userSuggestions} />
           </div>
