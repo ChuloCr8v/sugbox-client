@@ -110,7 +110,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="px-8 py-24 w-full flex flex-col">
+    <div className="px-4 py-24 w-full flex flex-col">
       <div className="w-full flex flex-col gap-8">
         {/* <SectionHeading heading={isAdmin ? profileTitle : userProfileTitle} /> */}
 
@@ -134,7 +134,7 @@ const Profile = () => {
               heading={
                 <SectionHeading
                   heading={<>{isAdmin ? "Employee" : "My"} Suggestions</>}
-                  count={filteredData.length}
+                  count={filteredData?.length}
                 />
               }
             />

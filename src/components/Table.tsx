@@ -9,7 +9,7 @@ const TableComponent = (props: {
   onRow?: any;
 }) => {
   return (
-    <div className="max-w-[370px] w-full md:max-w-full overflow-x-hidden">
+    <div className="max-w-[380px] w-full md:max-w-full overflow-x-hidden">
       <Table
         scroll={{ x: "max-content" }}
         loading={props.loading}
