@@ -14,18 +14,18 @@ const TrendingSuggestionCard = (props: Props) => {
           {props.suggestion?.title}{" "}
           <SuggestionStatusTag status={props.suggestion?.status} />
         </p>
-        <p className="text-sm text-gray-500">
-          {dateFormatter(props.suggestion?.createdAt)}
-        </p>
-      </div>
-
-      <div className="flex flex-col items-start">
-        <div className="">
+        <div className="flex items-center gap-2 text-sm">
           <p className="text-gray-500">
             <span className="italic">by</span>{" "}
             {employee ? employee.firstName + " " + employee.lastName : ""}
           </p>
+          <p className=" text-gray-500">
+            {dateFormatter(props.suggestion?.createdAt)}
+          </p>
         </div>
+      </div>
+
+      <div className="text-sm flex flex-col items-start">
         <div className="flex items-center justify-center gap-2 text-gray-500">
           <p className="text-green-500">
             {props.suggestion?.upVotes.length} upvotes
