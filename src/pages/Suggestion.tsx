@@ -137,11 +137,6 @@ const Suggestion = () => {
             </div>
           </div>
         </div>
-
-        <SuggestionActionButtons
-          id={suggestion?._id}
-          setOpenDeleteItemModal={setOpenDeleteItemModal}
-        />
       </div>
       <div className="suggestion-body border rounded-md p-4">
         <p className="">{suggestion?.suggestion}</p>
@@ -173,6 +168,12 @@ const Suggestion = () => {
             </Button>
           </Tooltip>
         </div>
+      </div>
+      <div className="-mt-4">
+        <SuggestionActionButtons
+          id={suggestion?._id}
+          setOpenDeleteItemModal={setOpenDeleteItemModal}
+        />
       </div>
 
       <CommentBox

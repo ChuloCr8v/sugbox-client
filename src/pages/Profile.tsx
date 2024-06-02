@@ -1,5 +1,5 @@
 import { Spin } from "antd";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CommentCard from "../components/CommentsCard";
 import ErrorComponent from "../components/ErrorComponent";
@@ -45,16 +45,16 @@ const Profile = () => {
     setFilteredData(data);
   }, [suggestions]);
 
-  const PageTitle = (props: { data: Array<object>; title: ReactNode }) => {
-    return (
-      <div className="flex items-center gap-2">
-        <p className="capitalize">{props.title}</p>{" "}
-        <div className="bg-primaryblue rounded-full text-white h-6 w-6 flex items-center justify-center">
-          {props?.data?.length ? props?.data?.length : 0}
-        </div>
-      </div>
-    );
-  };
+  // const PageTitle = (props: { data: Array<object>; title: ReactNode }) => {
+  //   return (
+  //     <div className="flex items-center gap-2">
+  //       <p className="capitalize">{props.title}</p>{" "}
+  //       <div className="bg-primaryblue rounded-full text-white h-6 w-6 flex items-center justify-center">
+  //         {props?.data?.length ? props?.data?.length : 0}
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
   const anonymousSuggestions = () => {
     return employee?.defaultAnonymous ? "ON" : "OFF";

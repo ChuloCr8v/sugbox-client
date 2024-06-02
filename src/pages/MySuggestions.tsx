@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import FilterCards from "../components/FilterCards";
 import Filters from "../components/Filters";
-import PageHeader from "../components/PageHeader";
 import SuggestionTable from "../components/SuggestionTable";
+import { SectionHeading } from "../components/Suggestions";
 import useGetSuggestions from "../hooks/useGetSuggestions";
 import { suggestionProps } from "../types";
-import { SectionHeading } from "../components/Suggestions";
 
 const MySuggestions = () => {
   const { userSuggestions, isFetching, isLoading, refetch } =
