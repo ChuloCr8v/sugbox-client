@@ -114,7 +114,7 @@ const Profile = () => {
       <div className="w-full flex flex-col gap-8">
         {/* <SectionHeading heading={isAdmin ? profileTitle : userProfileTitle} /> */}
 
-        <div className="flex flex-col justify-center items-center lg:grid grid-cols-12 gap-4">
+        <div className="flex flex-col justify-center items-start lg:grid grid-cols-12 gap-4">
           <div className="profile-pic col-span-2 w-full">{avatar()}</div>
           <div className="col-span-10 grid gap-4 w-full border border-gray-300 rounded-lg p-4">
             <div className="grid lg:grid-cols-2 gap-4">

@@ -11,8 +11,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import CommentBox from "../components/CommentBox";
 import Comments from "../components/Comments";
+import ErrorComponent from "../components/ErrorComponent";
 import SuggestionActionButtons from "../components/SuggestionActionButtons";
-import SuggestionCard from "../components/SuggestionCard";
 import SuggestionStatusTag from "../components/SuggestionStatusTag";
 import VoteComponent from "../components/VoteComponent";
 import DeleteItemModal from "../components/modals/DeleteItemModal";
@@ -29,7 +29,7 @@ import {
 import { hideNewCommentModal } from "../redux/modals";
 import { suggestionProps } from "../types";
 import { dateFormatter } from "../utils.ts/dateFormatter";
-import ErrorComponent from "../components/ErrorComponent";
+import TrendingSuggestionCard from "../components/TrendingSuggestionCard";
 
 const Suggestion = () => {
   const { id: userId } = UseGetAuth();
@@ -212,9 +212,13 @@ const Suggestion = () => {
                 ) => b.upVotes.length - a.upVotes.length
               )
               .map((suggestion: suggestionProps) => (
-                <div className="" key={suggestion._id}>
-                  <SuggestionCard data={suggestion} />
-                </div>
+                <a
+                  href={`/suggestion/${suggestion._id}`}
+                  className="rounded shadow p-4 min-w-[450px]"
+                  key={suggestion._id}
+                >
+                  <TrendingSuggestionCard suggestion={suggestion} />
+                </a>
               ))
               .slice(0, 5)}
           </div>

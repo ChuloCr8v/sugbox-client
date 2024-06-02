@@ -59,7 +59,7 @@ const SuggestionActionButtons = (props: Props) => {
       <Dropdown menu={{ items }} className="cursor-pointer">
         <a
           onClick={(e) => e.preventDefault()}
-          className="flex items-center justify-between gap-2 rounded bg-gray-200 text-gray-500 px-2 py-1"
+          className="flex items-center justify-between gap-2 rounded bg-gray-100 text-gray-500 px-2 py-1"
         >
           Actions
           <FaChevronDown className="h-3 mt-1" />
