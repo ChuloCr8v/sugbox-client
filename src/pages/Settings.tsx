@@ -2,14 +2,14 @@ import { Button, Select, Switch, message } from "antd";
 import { ReactNode, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import ProfilePicture from "../components/ProfilePicture";
 import { Label } from "../components/SmallerComponents";
+import { SectionHeading } from "../components/Suggestions";
 import ConfirmEmailUpdateModal from "../components/modals/ConfirmEmailUpdateModal";
-import useGetAvatar from "../hooks/useGetAvatar";
 import {
   useEditEmployeeMutation,
   useGetEmployeeQuery,
 } from "../redux/data/employees";
-import { SectionHeading } from "../components/Suggestions";
 
 const employeeDataFields = {
   email: "",
@@ -32,7 +32,6 @@ const employeeDataFields = {
 const Settings = () => {
   const { id } = useParams();
   const { data: employee } = useGetEmployeeQuery(id);
-  const { avatar } = useGetAvatar();
   const [editEmployee, { isLoading: updatingPersonalInfo }] =
     useEditEmployeeMutation();
   const [confirmResetPasswordIsOpen, setResetPasswordIsOpen] = useState(false);
@@ -185,7 +184,9 @@ const Settings = () => {
       <div className="w-full flex flex-col gap-8">
         <SectionHeading heading={"Settings"} />
         <div className="flex flex-col lg:flex-row items-start gap-6">
-          <div className="profile-pic w-full">{avatar()}</div>
+          <div className="profile-pic w-full relative">
+            <ProfilePicture data={employee} />
+          </div>
           <div className="w-full grid gap-6">
             <div className="w-full border flex flex-col items-start gap-2 rounded-lg p-4">
               <div className="text-primaryblue font-bold !text-xl">
