@@ -70,14 +70,14 @@ const ProfilePicture = (props: {
   };
 
   return (
-    <div className="w-fit space-y-4 relative">
+    <div className="w-screen pr-4 space-y-4 relative">
       {uploadUrl && (
         <FaBan
           className="absolute -right-2 -top-2 text-xl text-red-600 z-[99999]"
           onClick={() => setUploadUrl("")}
         />
       )}{" "}
-      <div className="relative rounded-lg bg-blue-100 w-[200px] h-[200px] flex flex-col items-center justify-center overflow-hidden group">
+      <div className="relative rounded-lg bg-blue-100 w-full h-[350px] flex flex-col items-center justify-center overflow-hidden group">
         {uploadingImage && (
           <div className="h-full w-full bg-black bg-opacity-50 absolute left-0 top-0 flex items-center justify-center z-[99999]">
             <Spin />
@@ -87,9 +87,9 @@ const ProfilePicture = (props: {
           <input
             type="file"
             onChange={getImage}
-            className="relative z-[9999] !h-[200px] !w-[200px] opacity-0"
+            className="relative z-[9999] h-[400px] w-[400px] opacity-0"
           />
-          <div className="flex flex-col items-center justify-center h-[200px] w-[200px] absolute z-[999] top-0 left-0 opacity-0 group-hover:opacity-100 duration-300">
+          <div className="flex flex-col items-center justify-center h-[400px] w-full md:w-[200px] absolute z-[999] top-0 left-0 opacity-0 group-hover:opacity-100 duration-300">
             <div className="border rounded-full p-4">
               <FaCamera className="text-white text-5xl " />
             </div>
@@ -100,7 +100,7 @@ const ProfilePicture = (props: {
           <img
             src={uploadUrl && uploadUrl}
             alt=""
-            className="object-cover h-full w-full absolute top-0 left-0 z-50"
+            className="object-cover !object-center h-full w-full absolute top-0 left-0 z-50"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center absolute top-0 left-0">

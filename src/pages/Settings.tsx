@@ -183,8 +183,8 @@ const Settings = () => {
     <div className="px-4 pt-24 w-full flex flex-col relative">
       <div className="w-full flex flex-col gap-8">
         <SectionHeading heading={"Settings"} />
-        <div className="flex flex-col lg:flex-row items-start gap-6">
-          <div className="profile-pic w-full relative">
+        <div className="flex flex-col md:flex-row items-start gap-6">
+          <div className="profile-pic w-fitrelative">
             <ProfilePicture data={employee} />
           </div>
           <div className="w-full grid gap-6">
