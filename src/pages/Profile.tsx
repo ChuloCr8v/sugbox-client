@@ -158,7 +158,7 @@ const Profile = () => {
               heading={
                 <SectionHeading
                   heading={"My Comments"}
-                  count={userComments.length}
+                  count={userComments?.length}
                 />
               }
             />

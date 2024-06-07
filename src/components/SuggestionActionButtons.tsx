@@ -89,7 +89,8 @@ const SuggestionActionButtons = (props: Props) => {
             item.title.toLowerCase() === "reject" &&
               suggestion?.status === "rejected" &&
               "hidden",
-            item.title.toLowerCase() === "delete" &&
+            (item.title.toLowerCase() === "delete" ||
+              item.title.toLowerCase() === "edit") &&
               suggestion?.status === "approved" &&
               "hidden"
           )}

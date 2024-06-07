@@ -180,15 +180,15 @@ const Settings = () => {
   };
 
   return (
-    <div className="px-4 pt-24 w-full flex flex-col relative">
+    <div className="px-4 py-24 w-full flex flex-col relative">
       <div className="w-full flex flex-col gap-8">
         <SectionHeading heading={"Settings"} />
         <div className="flex flex-col md:flex-row items-start gap-6">
-          <div className="profile-pic w-fitrelative">
+          <div className="profile-pic w-fit relative">
             <ProfilePicture data={employee} />
           </div>
-          <div className="w-full grid gap-6">
-            <div className="w-full border flex flex-col items-start gap-2 rounded-lg p-4">
+          <div className="w-full grid gap-6 max-[390px]:pt-4">
+            <div className="w-full md:border flex flex-col items-start gap-2 rounded-lg md:p-4">
               <div className="text-primaryblue font-bold !text-xl">
                 <SectionHeading heading={"Personal Details"} />
               </div>
@@ -197,7 +197,7 @@ const Settings = () => {
                   <div
                     className={twMerge(
                       "grid gap-2 ",
-                      item.title === "email" && "col-span-2 w-full lg:w-1/2"
+                      item.title === "email" && "col-span-2 w-full xl:w-1/2"
                     )}
                     key={item.title}
                   >
@@ -218,7 +218,7 @@ const Settings = () => {
                         className="h-9 p-2 border border-gray-300 hover:border-primaryblue duration-200 rounded w-full"
                       />
                     ) : item.type === "email" ? (
-                      <div className="flex items-center justify-between gap-2 border border-gray-300 h-9 px-2 pr-0.5 mr-2 rounded-md">
+                      <div className="flex items-center justify-between gap-2 border border-gray-300 h-9 px-2 pr-0.5 xl:mr-2 rounded-md">
                         <p className=""> {item.value}</p>
                         <Button
                           onClick={() => setResetPasswordIsOpen(true)}
@@ -227,7 +227,7 @@ const Settings = () => {
                           Edit Email
                         </Button>
                       </div>
-                    ) : item.type === "defaultAnonymous" ? (
+                    ) : item.name === "defaultAnonymous" ? (
                       <div className="">
                         <Switch
                           defaultChecked

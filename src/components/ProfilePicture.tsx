@@ -1,11 +1,26 @@
 import type { GetProp, UploadProps } from "antd";
 import { Button, Spin, message } from "antd";
 import { useState } from "react";
-import { FaBan, FaCamera, FaUser } from "react-icons/fa";
+import { FaCamera, FaUser } from "react-icons/fa";
 import UseGetAuth from "../hooks/useGetAuth";
 import { useUploadProfilePictureMutation } from "../redux/data/profilePicture";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
+export const convertBase64 = (file: FileType) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (error) => {
+      reject(error);
+      console.log(error);
+    };
+  });
+};
 
 const beforeUpload = (file: FileType) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -38,22 +53,6 @@ const ProfilePicture = (props: {
 
   const { id } = UseGetAuth();
 
-  const convertBase64 = (file: FileType) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-        console.log(error);
-      };
-    });
-  };
-
   const uploadImage = async () => {
     beforeUpload(imageFile);
 
@@ -70,16 +69,19 @@ const ProfilePicture = (props: {
   };
 
   return (
-    <div className="w-screen pr-4 space-y-4 relative">
+    <div className="grid gap-4 relative md:w-[200px] xl:w-[250px]">
       {uploadUrl && (
-        <FaBan
-          className="absolute -right-2 -top-2 text-xl text-red-600 z-[99999]"
+        <div
+          className="font-semibold hover:opacity-100 duration-200 opacity-60 absolute right-2 top-2 text-sm text-white px-2
+        rounded-full bg-red-600 z-[70]"
           onClick={() => setUploadUrl("")}
-        />
-      )}{" "}
-      <div className="relative rounded-lg bg-blue-100 w-full h-[350px] flex flex-col items-center justify-center overflow-hidden group">
+        >
+          Remove
+        </div>
+      )}
+      <div className="relative rounded-lg bg-blue-100 max-[390px]:w-[360px] w-auto h-[250px] flex flex-col items-center justify-center overflow-hidden group">
         {uploadingImage && (
-          <div className="h-full w-full bg-black bg-opacity-50 absolute left-0 top-0 flex items-center justify-center z-[99999]">
+          <div className="h-full w-full bg-black bg-opacity-50 absolute left-0 top-0 flex items-center justify-center z-50">
             <Spin />
           </div>
         )}
@@ -87,20 +89,20 @@ const ProfilePicture = (props: {
           <input
             type="file"
             onChange={getImage}
-            className="relative z-[9999] h-[400px] w-[400px] opacity-0"
+            className="relative z-50 h-[400px] w-[400px] opacity-0"
           />
-          <div className="flex flex-col items-center justify-center h-[400px] w-full md:w-[200px] absolute z-[999] top-0 left-0 opacity-0 group-hover:opacity-100 duration-300">
+          <div className="flex flex-col items-center justify-center h-[400px] w-full absolute z-40 top-0 left-0 opacity-0 group-hover:opacity-100 duration-300">
             <div className="border rounded-full p-4">
-              <FaCamera className="text-white text-5xl " />
+              <FaCamera className="text-white text-5xl" />
             </div>
-            <div className="h-full w-full bg-black bg-opacity-25 absolute z-30 left-0 top-0"></div>
+            <div className="h-full w-full bg-black bg-opacity-25 absolute z-50 left-0 top-0"></div>
           </div>
         </div>
         {uploadUrl ? (
           <img
             src={uploadUrl && uploadUrl}
             alt=""
-            className="object-cover !object-center h-full w-full absolute top-0 left-0 z-50"
+            className="object-cover !object-center h-full w-full absolute top-0 left-0 z-30"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center absolute top-0 left-0">

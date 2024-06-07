@@ -56,7 +56,7 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="w-full grid gap-4 px-4 pt-24">
+    <div className="w-full grid gap-4 px-4 py-24">
       <PageHeader
         title={isAdmin ? adminProfileTitle : userProfileTitle}
         showActionButton

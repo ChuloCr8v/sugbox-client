@@ -1,44 +1,107 @@
-import { Button, Checkbox, Modal, message } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Checkbox, Modal, Spin, message } from "antd";
+import axios from "axios";
+import { useState } from "react";
+import { FaPaperclip, FaRegTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { twMerge } from "tailwind-merge";
 import UseGetAuth from "../../hooks/useGetAuth";
 import { useGetEmployeeQuery } from "../../redux/data/employees";
 import { useAddSuggestionMutation } from "../../redux/data/suggestions";
 import { hideNewSuggestionModal } from "../../redux/modals";
 import { FormGroup } from "../SmallerComponents";
-
 interface newSuggestionModalProps {
   modals: {
     newSuggestionModal: boolean;
   };
 }
 
-const newSuggestionData = {
-  title: "",
-  suggestion: "",
-  isAnonymous: false,
-};
-
 const SuggestionModal = () => {
+  const [files, setFiles] = useState<any>([]);
+  const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  const { user } = UseGetAuth();
+  const { data: employee } = useGetEmployeeQuery(user?._id);
+
+  const newSuggestionData = {
+    title: "",
+    suggestion: "",
+    isAnonymous: employee?.defaultAnonymousSuggestion,
+    attachments: files,
+  };
+
   const [addSuggestion, { isLoading }] = useAddSuggestionMutation();
   const [newSuggestion, setNewSuggestion] = useState(newSuggestionData);
   const { newSuggestionModal } = useSelector(
     (state: newSuggestionModalProps) => state.modals
   );
   const dispatch = useDispatch();
-  const { user } = UseGetAuth();
 
-  const { data: employee } = useGetEmployeeQuery(user?._id);
+  const { token } = UseGetAuth();
 
   const id = user?.companyId;
 
-  useEffect(() => {
-    if (employee?.defaultAnonymousSuggestion) {
-      newSuggestion.isAnonymous = true;
+  const handleGetFiles = async (e: any) => {
+    setLoading(true);
+    const _files: any = Array.from(e.target.files);
+
+    const formData = new FormData();
+
+    for (let index = 0; index < _files.length; index++) {
+      formData.append(`files`, _files[index]);
     }
-  }, [newSuggestionModal]);
+
+    try {
+      await axios
+        .post(`http://localhost:8000/api/files/upload-files`, formData, {
+          headers: {
+            Authorization: token,
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: (progressEvent: any) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setProgress(percentCompleted);
+            console.log(`Upload progress: ${percentCompleted}%`);
+            // Optionally, update your UI to reflect the progress
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setFiles((prev: any) => [...prev, res.data]);
+          message.success("Upload Successfull");
+          console.log(files);
+        })
+        .catch((error) => console.log(error));
+    } catch (error) {
+      console.log(error);
+      message.error("Upload Failed");
+    }
+    setProgress(0);
+    setLoading(false);
+  };
+
+  const handleRemoveFile = async (asset_id: string) => {
+    try {
+      const updatedFiles = files.filter(
+        (file: { asset_id: string }) => file.asset_id !== asset_id
+      );
+      setFiles(updatedFiles);
+    } catch (error) {
+      console.log(error);
+      message.error("Delete file failed, try again!");
+    }
+  };
 
   const handleSubmit = async () => {
+    const attachments = files.map(
+      (item: { asset_id: string; secure_url: string }) => {
+        return { asset_id: item.asset_id, secure_url: item.secure_url };
+      }
+    );
+
+    newSuggestion.attachments = attachments;
     try {
       const add = await addSuggestion({
         id,
@@ -49,8 +112,7 @@ const SuggestionModal = () => {
       setNewSuggestion((prev) => {
         return { ...prev, title: "", suggestion: "", isAnonymous: false };
       });
-
-      console.log(newSuggestion);
+      setFiles([]);
       dispatch(hideNewSuggestionModal());
     } catch (error) {
       console.log(error);
@@ -62,13 +124,16 @@ const SuggestionModal = () => {
     target: { value: string; name: string };
   }) => {
     const { name, value } = e.target;
-
     setNewSuggestion((prev) => ({ ...prev, [name]: value }));
-    console.log(newSuggestion);
   };
 
   const disabled =
     isLoading || newSuggestion.suggestion === "" || newSuggestion.title === "";
+
+  function formatName(str: string) {
+    let slashIndex = str.indexOf("/");
+    return str.substring(slashIndex + 1);
+  }
 
   return (
     <>
@@ -95,9 +160,62 @@ const SuggestionModal = () => {
             placeholder={"Leave your suggestion"}
             name={"suggestion"}
           />
+
+          <div className="">
+            {progress > 0 && (
+              <div className="flex items-center gap-2">
+                <div className="h-1  w-[300px] overflow-hidden bg-gray-200 rounded-full">
+                  <div
+                    style={{ width: `${progress}%` }}
+                    className={twMerge(
+                      ` bg-green-600 h-3`,
+                      progress < 50 && "bg-red-600"
+                    )}
+                  ></div>
+                </div>
+                <p className="text-gray-500">{progress}%...</p>
+              </div>
+            )}
+            {loading ? (
+              <div className="">
+                <Spin /> getting files...
+              </div>
+            ) : (
+              <div className="w-fit place-self-start border rounded px-2 py-1 bg-gray-50 relative flex items-center gap-2 text-gray-500 hover:text-primaryblue hover:border-primaryblue">
+                <input
+                  onChange={handleGetFiles}
+                  type="file"
+                  multiple
+                  className="absolute left-0 top-0 w-full opacity-0"
+                />
+                <FaPaperclip className="" />
+                <p className="text-sm ">Add attachments</p>
+              </div>
+            )}
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 w-full">
+            {files?.map((file: { public_id: string; asset_id: string }) => (
+              <div
+                key={file.asset_id}
+                className="flex items-center justify-between bg-gray-50 border rounded px-2 py-0.5"
+              >
+                <p className="">
+                  {formatName(file?.public_id)?.slice(0, 25)}
+                  {formatName(file?.public_id)?.length > 25 && "..."}
+                </p>
+                <FaRegTrashAlt
+                  className="text-red-400 hover:text-red-700 duration-200"
+                  onClick={() => handleRemoveFile(file.asset_id)}
+                />
+              </div>
+            ))}
+          </div>
+
           <div className="formGroup">
             <Checkbox
               name="isAnonymous"
+              defaultChecked={newSuggestion.isAnonymous}
               checked={newSuggestion.isAnonymous}
               onChange={(e) => {
                 setNewSuggestion((prev) => ({
@@ -124,7 +242,7 @@ const SuggestionModal = () => {
             <Button
               onClick={handleSubmit}
               disabled={disabled}
-              loading={isLoading}
+              loading={isLoading || loading}
               type="primary"
               className="bg-primaryblue h-8 w-[144px]"
             >

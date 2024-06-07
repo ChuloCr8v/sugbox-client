@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <div
       className={twMerge(
-        "flex justify-center items-center w-screen border-b fixed top-0 left-0 bg-white z-50",
+        "flex justify-center items-center w-screen border-b fixed top-0 left-0 bg-white z-[999]",
         !user ? "hidden" : "flex"
       )}
     >

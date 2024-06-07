@@ -1,8 +1,11 @@
 import { Button, Spin, Tooltip, message } from "antd";
 import { useState } from "react";
 import {
+  FaDownload,
+  FaPaperclip,
   FaRegCalendarAlt,
   FaRegCommentAlt,
+  FaRegImage,
   FaRegUser,
   FaUserNinja,
 } from "react-icons/fa";
@@ -30,6 +33,7 @@ import { hideNewCommentModal } from "../redux/modals";
 import { suggestionProps } from "../types";
 import { dateFormatter } from "../utils.ts/dateFormatter";
 import TrendingSuggestionCard from "../components/TrendingSuggestionCard";
+import AttachmentPreview from "../components/modals/AttachmentPreview";
 
 const Suggestion = () => {
   const { id: userId } = UseGetAuth();
@@ -57,6 +61,11 @@ const Suggestion = () => {
     useAddCommentMutation();
   const [deleteSuggestion, { isLoading: deleteSuggestionLoading }] =
     useDeleteSuggestionMutation();
+
+  const [previewAttachment, setPreviewAttachment] = useState({
+    isOpen: false,
+    src: "",
+  });
 
   const upvotedAlready = suggestion?.upVotes?.includes(userId);
   const downvotedAlready = suggestion?.downVotes?.includes(userId);
@@ -105,7 +114,7 @@ const Suggestion = () => {
   }
 
   return (
-    <div className="pt-24 px-4 w-full  grid gap-6">
+    <div className="py-24 px-4 w-full  grid gap-6">
       <div className="flex justify-between items-start">
         <div className="grid gap-2 title-box">
           <div className="flex items-center gap-2">
@@ -139,7 +148,50 @@ const Suggestion = () => {
         </div>
       </div>
       <div className="suggestion-body border rounded-md p-4">
-        <p className="">{suggestion?.suggestion}</p>
+        <p className="pb-5">{suggestion?.suggestion}</p>
+        {suggestion?.attachments?.length > 0 && (
+          <div className="space-y-2">
+            <div className="border-t w-40"></div>
+            <p className="flex items-center gap-1 capitalize text-gray-600">
+              <FaPaperclip className="text-sm" />
+              Attachments
+            </p>
+            <div className="flex flex-wrap gap-4 rounded border p-4 bg-gray-100 w-fit">
+              {suggestion?.attachments?.map(
+                (attachment: { secure_url: string }) => (
+                  <div
+                    className="h-[150px] w-[250px] overflow-hidden rounded shadow-lg relative bg-white"
+                    key={attachment.secure_url}
+                  >
+                    <img src={attachment.secure_url} className="object-cover" />
+                    <div
+                      className={twMerge(
+                        "flex gap-4 items-center justify-center absolute group top-0 left-0 h-full w-full bg-black bg-opacity-0 hover:bg-opacity-35 duration-200 group"
+                      )}
+                    >
+                      <button className="text-white flex items-center justify-center gap-2 text-sm hover:text-primaryblue opacity-0 group-hover:opacity-100 duration-200">
+                        <FaDownload />
+                        Download
+                      </button>
+                      <button
+                        onClick={() => {
+                          setPreviewAttachment({
+                            isOpen: true,
+                            src: attachment.secure_url,
+                          });
+                        }}
+                        className="text-white flex items-center justify-center gap-2 text-sm hover:text-primaryblue opacity-0 group-hover:opacity-100 duration-200"
+                      >
+                        <FaRegImage />
+                        Preview
+                      </button>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        )}
         <div className="flex items-center gap-2 mt-4">
           <VoteComponent
             downVoteLoading={downvoteSuggestionLoading}
@@ -169,7 +221,12 @@ const Suggestion = () => {
           </Tooltip>
         </div>
       </div>
-      <div className="-mt-4">
+      <div
+        className={twMerge(
+          suggestion?.status === "approved" && "hidden",
+          `-mt-4`
+        )}
+      >
         <SuggestionActionButtons
           id={suggestion?._id}
           setOpenDeleteItemModal={setOpenDeleteItemModal}
@@ -215,7 +272,7 @@ const Suggestion = () => {
               .map((suggestion: suggestionProps) => (
                 <a
                   href={`/suggestion/${suggestion._id}`}
-                  className="rounded border shadow p-4 min-w-[450px]"
+                  className="rounded border shadow p-4 min-w-[350px]"
                   key={suggestion._id}
                 >
                   <TrendingSuggestionCard suggestion={suggestion} />
@@ -235,6 +292,13 @@ const Suggestion = () => {
         handleDeleteItemOk={handleDeleteSuggestion}
         itemTitle={suggestion?.title}
         modalTitle={"Delete Suggestion"}
+      />
+
+      <AttachmentPreview
+        previewAttachment={previewAttachment.isOpen}
+        src={previewAttachment.src}
+        suggestionTitle={suggestion?.title}
+        setPreviewAttachment={setPreviewAttachment}
       />
     </div>
   );

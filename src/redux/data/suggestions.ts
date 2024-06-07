@@ -13,6 +13,7 @@ const suggestionApi = api.injectEndpoints({
         url: `suggestion/new-suggestion/${id}`,
         method: "POST",
         body: suggestion,
+        formData: true,
       }),
       invalidatesTags: ["suggestions", "suggestion"],
     }),
