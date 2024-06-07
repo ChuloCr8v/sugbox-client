@@ -31,7 +31,13 @@ const AttachmentPreview = (props: Props) => {
         props.setPreviewAttachment({ src: "", isOpen: false });
       }}
     >
-      <img src={props.src} alt={props.suggestionTitle} className="" />
+      <div className="rounded-lg overflow-hidden">
+        <img
+          src={props.src}
+          alt={props.suggestionTitle}
+          className="object-cover w-full h-auto"
+        />
+      </div>
     </Modal>
   );
 };

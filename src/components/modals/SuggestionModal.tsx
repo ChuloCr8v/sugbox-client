@@ -185,6 +185,7 @@ const SuggestionModal = () => {
                 <input
                   onChange={handleGetFiles}
                   type="file"
+                  accept="image/*"
                   multiple
                   className="absolute left-0 top-0 w-full opacity-0"
                 />

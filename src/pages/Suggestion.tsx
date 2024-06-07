@@ -156,14 +156,17 @@ const Suggestion = () => {
               <FaPaperclip className="text-sm" />
               Attachments
             </p>
-            <div className="flex flex-wrap gap-4 rounded border p-4 bg-gray-100 w-fit">
+            <div className="flex flex-wrap gap-4 rounded md:border md:p-4 md:bg-gray-100 w-fit">
               {suggestion?.attachments?.map(
                 (attachment: { secure_url: string }) => (
                   <div
-                    className="h-[150px] w-[250px] overflow-hidden rounded shadow-lg relative bg-white"
+                    className="h-[150px] w-full md:w-[250px] overflow-hidden rounded shadow-lg relative bg-white"
                     key={attachment.secure_url}
                   >
-                    <img src={attachment.secure_url} className="object-cover" />
+                    <img
+                      src={attachment.secure_url}
+                      className="object-cover h-full w-full object-center"
+                    />
                     <div
                       className={twMerge(
                         "flex gap-4 items-center justify-center absolute group top-0 left-0 h-full w-full bg-black bg-opacity-0 hover:bg-opacity-35 duration-200 group"
