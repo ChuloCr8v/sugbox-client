@@ -1,5 +1,6 @@
 import { Button, Checkbox, Modal, message } from "antd";
 import { useEffect, useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   useEditSuggestionMutation,
@@ -48,7 +49,8 @@ const EditSuggestionModal = () => {
   const disabled =
     formData?.title === data?.title &&
     formData?.isAnonymous === data?.isAnonymous &&
-    formData?.suggestion === data?.suggestion;
+    formData?.suggestion === data?.suggestion &&
+    formData?.attachments?.length === data?.attachments?.length;
 
   const updateSuggestion = async () => {
     try {
@@ -60,6 +62,20 @@ const EditSuggestionModal = () => {
       console.log(error);
       message.error("Update suggestion failed. Try again.");
     }
+  };
+
+  const handleRemoveAttachment = (asset_id: string) => {
+    console.log(asset_id);
+    const updatedAttachments = formData.attachments?.filter(
+      (attachment: { asset_id: string }) => attachment.asset_id !== asset_id
+    );
+
+    setFormData((prevState: object) => ({
+      ...prevState,
+      attachments: updatedAttachments,
+    }));
+
+    console.log(formData.attachments);
   };
 
   return (
@@ -104,6 +120,23 @@ const EditSuggestionModal = () => {
             >
               Suggest Anonymously
             </Checkbox>
+          </div>
+          <div className="grid min-[600px]:grid-cols-2 gap-2">
+            {formData?.attachments?.map(
+              (attachment: { secure_url: string; asset_id: string }) => (
+                <div className="h-[100px] w-full border rounded overflow-hidden relative">
+                  <FaTrashAlt
+                    className="absolute right-2 top-2 hover:text-red-600 duration-200"
+                    onClick={() => handleRemoveAttachment(attachment.asset_id)}
+                  />
+                  <img
+                    src={attachment.secure_url}
+                    alt="attachment"
+                    className="object-fit w-full h-auto"
+                  />
+                </div>
+              )
+            )}
           </div>
           <div className="w-full flex items-center gap-4 justify-end mt-4">
             <Button

@@ -9,6 +9,7 @@ import { useGetEmployeeQuery } from "../../redux/data/employees";
 import { useAddSuggestionMutation } from "../../redux/data/suggestions";
 import { hideNewSuggestionModal } from "../../redux/modals";
 import { FormGroup } from "../SmallerComponents";
+import { API_URL } from "../..";
 interface newSuggestionModalProps {
   modals: {
     newSuggestionModal: boolean;
@@ -53,7 +54,7 @@ const SuggestionModal = () => {
 
     try {
       await axios
-        .post(`http://localhost:8000/api/files/upload-files`, formData, {
+        .post(`${API_URL}files/upload-files`, formData, {
           headers: {
             Authorization: token,
             "Content-Type": "multipart/form-data",
@@ -186,7 +187,6 @@ const SuggestionModal = () => {
                   onChange={handleGetFiles}
                   type="file"
                   accept="image/*"
-                  multiple
                   className="absolute left-0 top-0 w-full opacity-0"
                 />
                 <FaPaperclip className="" />

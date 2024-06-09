@@ -149,52 +149,7 @@ const Suggestion = () => {
       </div>
       <div className="suggestion-body border rounded-md p-4">
         <p className="pb-5">{suggestion?.suggestion}</p>
-        {suggestion?.attachments?.length > 0 && (
-          <div className="space-y-2">
-            <div className="border-t w-40"></div>
-            <p className="flex items-center gap-1 capitalize text-gray-600">
-              <FaPaperclip className="text-sm" />
-              Attachments
-            </p>
-            <div className="flex flex-wrap gap-4 rounded md:border md:p-4 md:bg-gray-100 w-fit">
-              {suggestion?.attachments?.map(
-                (attachment: { secure_url: string }) => (
-                  <div
-                    className="h-[150px] w-full md:w-[250px] overflow-hidden rounded shadow-lg relative bg-white"
-                    key={attachment.secure_url}
-                  >
-                    <img
-                      src={attachment.secure_url}
-                      className="object-cover h-full w-full object-center"
-                    />
-                    <div
-                      className={twMerge(
-                        "flex gap-4 items-center justify-center absolute group top-0 left-0 h-full w-full bg-black bg-opacity-0 hover:bg-opacity-35 duration-200 group"
-                      )}
-                    >
-                      <button className="text-white flex items-center justify-center gap-2 text-sm hover:text-primaryblue opacity-0 group-hover:opacity-100 duration-200">
-                        <FaDownload />
-                        Download
-                      </button>
-                      <button
-                        onClick={() => {
-                          setPreviewAttachment({
-                            isOpen: true,
-                            src: attachment.secure_url,
-                          });
-                        }}
-                        className="text-white flex items-center justify-center gap-2 text-sm hover:text-primaryblue opacity-0 group-hover:opacity-100 duration-200"
-                      >
-                        <FaRegImage />
-                        Preview
-                      </button>
-                    </div>
-                  </div>
-                )
-              )}
-            </div>
-          </div>
-        )}
+
         <div className="flex items-center gap-2 mt-4">
           <VoteComponent
             downVoteLoading={downvoteSuggestionLoading}
@@ -224,16 +179,58 @@ const Suggestion = () => {
           </Tooltip>
         </div>
       </div>
-      <div
-        className={twMerge(
-          suggestion?.status === "approved" && "hidden",
-          `-mt-4`
-        )}
-      >
+      <div className={twMerge(suggestion?.status === "approved" && "hidden")}>
         <SuggestionActionButtons
           id={suggestion?._id}
           setOpenDeleteItemModal={setOpenDeleteItemModal}
         />
+
+        {suggestion?.attachments?.length > 0 && (
+          <div className=" mt-6 flex flex-wrap gap-4">
+            {/* <div className="border-t w-40"></div>
+            <p className="flex items-center gap-1 capitalize text-gray-600">
+              <FaPaperclip className="text-sm" />
+              Attachments
+            </p> */}
+            {/* <div className="flex flex-wrap gap-4 rounded md:border md:p-4 md:bg-gray-100 w-fit"> */}
+            {suggestion?.attachments?.map(
+              (attachment: { secure_url: string }) => (
+                <div
+                  className="border h-[150px] w-full md:w-[250px] overflow-hidden rounded relative bg-white group"
+                  key={attachment.secure_url}
+                >
+                  <img
+                    src={attachment.secure_url}
+                    className="object-cover h-full w-full object-center"
+                  />
+                  <div
+                    className={twMerge(
+                      "flex gap-4 items-center justify-center absolute group top-0 left-0 h-full w-full bg-black bg-opacity-0 hover:bg-opacity-35 duration-200 opacity-0 group-hover:opacity-100 -z-10 group-hover:z-10"
+                    )}
+                  >
+                    <button className="text-white flex items-center justify-center gap-2 text-sm hover:text-primaryblue  duration-200">
+                      <FaDownload />
+                      Download
+                    </button>
+                    <button
+                      onClick={() => {
+                        setPreviewAttachment({
+                          isOpen: true,
+                          src: attachment.secure_url,
+                        });
+                      }}
+                      className="text-white flex items-center justify-center gap-2 text-sm hover:text-primaryblue duration-200"
+                    >
+                      <FaRegImage />
+                      Preview
+                    </button>
+                  </div>
+                </div>
+              )
+            )}
+            {/* </div> */}
+          </div>
+        )}
       </div>
 
       <CommentBox

@@ -116,8 +116,8 @@ const Sidebar = () => {
         ))}
         {user?.isAdmin &&
           adminMenu.map((item, index) => <MenuItem item={item} key={index} />)}
-        {(user?.adminRole.toLowerCase() === "staff" ||
-          user?.adminRole.toLowerCase() === "moderator") &&
+        {(user?.adminRole?.toLowerCase() === "staff" ||
+          user?.adminRole?.toLowerCase() === "moderator") &&
           staffMenu.map((item, index) => <MenuItem item={item} key={index} />)}
       </div>
     </div>
