@@ -179,7 +179,7 @@ const Suggestion = () => {
           </Tooltip>
         </div>
       </div>
-      <div className="">
+      <div className="grid gap-4">
         <SuggestionActionButtons
           id={suggestion?._id}
           setOpenDeleteItemModal={setOpenDeleteItemModal}
