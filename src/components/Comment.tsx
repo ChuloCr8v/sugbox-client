@@ -12,7 +12,6 @@ import { commentsProps } from "../types";
 const Comment = (props: { data: commentsProps }) => {
   const [openDeleteItemModal, setOpenDeleteItemModal] = useState(false);
   const [openEditCommentModal, setOpenEditCommentModal] = useState(false);
-
   const isAdminComment = props.data.user?.isAdmin;
   const { id } = UseGetAuth();
   const verifyCommentOwnership = id === props.data.user?._id;
