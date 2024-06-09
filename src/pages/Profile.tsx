@@ -12,6 +12,8 @@ import { useGetCommentsQuery } from "../redux/data/Comments";
 import { useGetEmployeeQuery } from "../redux/data/employees";
 import { useGetOrganizationQuery } from "../redux/data/organizations";
 import { suggestionProps } from "../types";
+import EmployeeStatusTag from "../components/EmployeeStatusTag";
+import { twMerge } from "tailwind-merge";
 
 const Profile = () => {
   const { id } = useParams();
@@ -74,6 +76,10 @@ const Profile = () => {
       data: employee?.email,
     },
     {
+      title: "Status",
+      data: <EmployeeStatusTag status={employee?.isDisabled} />,
+    },
+    {
       title: "Organization",
       data: organization?.companyName,
     },
@@ -114,12 +120,30 @@ const Profile = () => {
       <div className="w-full flex flex-col gap-8">
         {/* <SectionHeading heading={isAdmin ? profileTitle : userProfileTitle} /> */}
 
-        <div className="flex flex-col justify-center items-start lg:grid grid-cols-12 gap-4">
-          <div className="profile-pic col-span-2 w-full">{avatar()}</div>
-          <div className="col-span-10 grid gap-4 w-full border border-gray-300 rounded-lg p-4">
-            <div className="grid lg:grid-cols-2 gap-4">
+        <div className="flex flex-col lg:flex-row justify-center items-start gap-4">
+          <div className="profile-pic basis-1.5 w-full grid gap-4">
+            {avatar()}
+            {isAdmin && (
+              <div className="flex items-center gap-2">
+                <button className="rounded-lg hover:bg-hoverblue duration-200 bg-primaryblue text-white font-semibold w-full h-9">
+                  Email
+                </button>
+                <button className="rounded-lg hover:bg-red-800 duration-200 bg-red-600 text-white font-semibold w-full h-9">
+                  Deactivate
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="basis-full grid gap-4 w-full border border-gray-300 rounded-lg p-4">
+            <div className="grid lg:grid-cols-2 gap-4 ">
               {profileData.map((item) => (
-                <div className="flex flex-col items-start" key={item.title}>
+                <div
+                  className={twMerge(
+                    "flex flex-col items-start",
+                    item.title === "Status" && "space-y-2"
+                  )}
+                  key={item.title}
+                >
                   <p className="text-gray-500 capitalize">{item.title}</p>
                   <p className="font-semibold capitalize">{item.data}</p>
                 </div>
@@ -131,12 +155,8 @@ const Profile = () => {
         <div className="">
           <div className="grid gap-8">
             <SectionHeading
-              heading={
-                <SectionHeading
-                  heading={<>{isAdmin ? "Employee" : "My"} Suggestions</>}
-                  count={filteredData?.length}
-                />
-              }
+              heading={<>{isAdmin ? "Employee" : "My"} Suggestions</>}
+              count={filteredData?.length}
             />
           </div>
 
