@@ -114,7 +114,7 @@ const Suggestion = () => {
   }
 
   return (
-    <div className="py-24 px-4 w-full  grid gap-6">
+    <div className="py-24 px-4 w-full  grid gap-4">
       <div className="flex justify-between items-start">
         <div className="grid gap-2 title-box">
           <div className="flex items-center gap-2">
@@ -179,14 +179,14 @@ const Suggestion = () => {
           </Tooltip>
         </div>
       </div>
-      <div className={twMerge(suggestion?.status === "approved" && "hidden")}>
+      <div className="">
         <SuggestionActionButtons
           id={suggestion?._id}
           setOpenDeleteItemModal={setOpenDeleteItemModal}
         />
 
         {suggestion?.attachments?.length > 0 && (
-          <div className=" mt-6 flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4">
             {/* <div className="border-t w-40"></div>
             <p className="flex items-center gap-1 capitalize text-gray-600">
               <FaPaperclip className="text-sm" />
