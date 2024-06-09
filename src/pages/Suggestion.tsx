@@ -2,7 +2,6 @@ import { Button, Spin, Tooltip, message } from "antd";
 import { useState } from "react";
 import {
   FaDownload,
-  FaPaperclip,
   FaRegCalendarAlt,
   FaRegCommentAlt,
   FaRegImage,
@@ -17,7 +16,9 @@ import Comments from "../components/Comments";
 import ErrorComponent from "../components/ErrorComponent";
 import SuggestionActionButtons from "../components/SuggestionActionButtons";
 import SuggestionStatusTag from "../components/SuggestionStatusTag";
+import TrendingSuggestionCard from "../components/TrendingSuggestionCard";
 import VoteComponent from "../components/VoteComponent";
+import AttachmentPreview from "../components/modals/AttachmentPreview";
 import DeleteItemModal from "../components/modals/DeleteItemModal";
 import useDownvoteSuggestion from "../hooks/suggestion/useDownVoteSuggestion";
 import useUpvoteSuggestion from "../hooks/suggestion/useUpvoteSuggestion";
@@ -32,8 +33,6 @@ import {
 import { hideNewCommentModal } from "../redux/modals";
 import { suggestionProps } from "../types";
 import { dateFormatter } from "../utils.ts/dateFormatter";
-import TrendingSuggestionCard from "../components/TrendingSuggestionCard";
-import AttachmentPreview from "../components/modals/AttachmentPreview";
 
 const Suggestion = () => {
   const { id: userId } = UseGetAuth();
