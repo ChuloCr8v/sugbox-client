@@ -28,7 +28,7 @@ export type User = {
 };
 
 export type AuthResult = {
-  others: {};
+  others: { isDisabled: boolean };
   user: User;
   access_token: string;
 };

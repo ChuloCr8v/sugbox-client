@@ -69,6 +69,10 @@ const Suggestion = () => {
   const upvotedAlready = suggestion?.upVotes?.includes(userId);
   const downvotedAlready = suggestion?.downVotes?.includes(userId);
 
+  const isAdmin = UseGetAuth();
+
+  const verifyAdmin = isAdmin ? true : false;
+
   const handleDeleteSuggestion = async () => {
     try {
       await deleteSuggestion(id).unwrap();
@@ -99,12 +103,16 @@ const Suggestion = () => {
 
   const addCommentFunction = async () => {
     try {
-      await addComment({ comment: commentText, id: suggestion._id }).unwrap();
+      await addComment({
+        comment: commentText,
+        id: suggestion._id,
+        isAdmin: verifyAdmin,
+      }).unwrap();
       message.success("Comment added successfully");
       setCommentText("");
       dispatch(hideNewCommentModal());
     } catch (error) {
-      message.error("Uable to add comment, please try again");
+      message.error("Unable to add comment, please try again");
     }
   };
 
@@ -186,12 +194,6 @@ const Suggestion = () => {
 
         {suggestion?.attachments?.length > 0 && (
           <div className="flex flex-wrap gap-4">
-            {/* <div className="border-t w-40"></div>
-            <p className="flex items-center gap-1 capitalize text-gray-600">
-              <FaPaperclip className="text-sm" />
-              Attachments
-            </p> */}
-            {/* <div className="flex flex-wrap gap-4 rounded md:border md:p-4 md:bg-gray-100 w-fit"> */}
             {suggestion?.attachments?.map(
               (attachment: { secure_url: string }) => (
                 <div

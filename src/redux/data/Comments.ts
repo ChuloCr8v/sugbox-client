@@ -4,6 +4,7 @@ interface comment {
   _id?: string;
   id?: string;
   comment?: string;
+  isAdmin?: boolean;
 }
 
 const commentApi = api.injectEndpoints({
@@ -14,10 +15,10 @@ const commentApi = api.injectEndpoints({
     }),
 
     addComment: mutation<void, comment>({
-      query: ({ id, ...comment }) => ({
+      query: ({ id, isAdmin, ...comment }) => ({
         url: `comment/new-comment/${id}`,
         method: "POST",
-        body: comment,
+        body: { isAdmin, comment },
       }),
       invalidatesTags: ["comments", "comment", "suggestion", "suggestions"],
     }),

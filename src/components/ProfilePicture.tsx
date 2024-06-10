@@ -79,7 +79,7 @@ const ProfilePicture = (props: {
           Remove
         </div>
       )}
-      <div className="relative rounded-lg bg-blue-100 max-[390px]:w-[360px] w-auto h-[250px] flex flex-col items-center justify-center overflow-hidden group">
+      <div className="relative rounded-lg bg-blue-100 max-[350px]:w-[360px] w-auto h-[250px] flex flex-col items-center justify-center overflow-hidden group">
         {uploadingImage && (
           <div className="h-full w-full bg-black bg-opacity-50 absolute left-0 top-0 flex items-center justify-center z-50">
             <Spin />
@@ -110,6 +110,7 @@ const ProfilePicture = (props: {
               <img
                 src={props.data?.profilePicture}
                 alt={props.data.firstName}
+                className="object-cover !object-center h-full w-full absolute top-0 left-0 z-30"
               />
             ) : (
               <FaUser className="text-9xl text-primaryblue opacity-50" />

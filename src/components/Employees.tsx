@@ -9,9 +9,10 @@ import { NoDataComponent, SectionHeading } from "./Suggestions";
 import Table from "./Table";
 import { useGetEmployeesQuery } from "../redux/data/employees";
 import UseGetAuth from "../hooks/useGetAuth";
+import Loading from "./Loading";
 
 const Employees = () => {
-  const { data } = useGetEmployeesQuery("");
+  const { data, isLoading } = useGetEmployeesQuery("");
   const { employees, activeEmployees, disabledEmployees, refetch, isFetching } =
     useGetEmployees();
   const [filteredData, setFilteredData] = useState(data);
@@ -125,7 +126,9 @@ const Employees = () => {
               refetch={refetch}
             />
 
-            {!employees?.length ? (
+            {isLoading ? (
+              <Loading />
+            ) : !employees?.length ? (
               <NoDataComponent message={NoDataMessage} />
             ) : (
               <div className="mt-4 flex gap-4 w-full">

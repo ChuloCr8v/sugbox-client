@@ -42,12 +42,13 @@ const useLogin = (loginData: Props) => {
   const employeeSignIn = async () => {
     try {
       const res = await employeeLogin(loginData).unwrap();
-      // if (!res.user.isActive) {
-      //   message.error(
-      //     "Your account is currently disabled, please contact your admin."
-      //   );
-      //   return;
-      // }
+      console.log(res);
+      if (res.others.isDisabled) {
+        message.error(
+          "Your account is currently disabled, please contact your admin."
+        );
+        return;
+      }
 
       const data = { ...res };
       console.log(data);

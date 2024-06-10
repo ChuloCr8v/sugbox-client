@@ -95,6 +95,7 @@ export interface singleEmployeeStateProps {
 }
 
 export interface commentsProps {
+  isAdmin: any;
   suggestionId: string;
   _id: string;
   comment: string;

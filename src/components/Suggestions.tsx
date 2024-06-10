@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import useGetSuggestions from "../hooks/useGetSuggestions";
 import { useGetEmployeesQuery } from "../redux/data/employees";
 import Filters from "./Filters";
+import Loading from "./Loading";
 import PageHeader from "./PageHeader";
 import PieChartComponent from "./PieChart";
 import SuggestionStatusTag from "./SuggestionStatusTag";
@@ -13,6 +14,7 @@ interface Props {
   refetch: () => void;
   isRefreshing: boolean;
   setFilteredData: Dispatch<SetStateAction<never[]>>;
+  isLoading: boolean;
 }
 
 const Suggestions = (props: Props) => {
@@ -116,8 +118,6 @@ const Suggestions = (props: Props) => {
     },
   ];
 
-  console.log(currentPage);
-
   const NoDataMessage = (
     <p className="text-center">
       Uh oh! No Suggestions for your organization yet.
@@ -150,11 +150,18 @@ const Suggestions = (props: Props) => {
               setFilteredData={props.setFilteredData}
               refetch={props.refetch}
             />
-            {!suggestions?.length ? (
+            {props.isLoading ? (
+              <Loading />
+            ) : !suggestions?.length ? (
               <NoDataComponent message={NoDataMessage} />
             ) : (
               <div className="mt-4 flex gap-4">
-                <Table data={props.data} columns={columns} pageSize={4} />
+                <Table
+                  data={props.data}
+                  columns={columns}
+                  pageSize={4}
+                  loading={props.isLoading}
+                />
                 <PieChartComponent data={pieChartData} />
               </div>
             )}
@@ -175,9 +182,11 @@ export const SectionHeading = (props: {
     <h3 className="font-semibold text-lg text-left flex items-center gap-1">
       {props.heading}
 
-      <span className="border border-primaryblue rounded-full text-[12px] text-primaryblue h-5 w-5 flex items-center justify-center">
-        {props?.count && props?.count > 0 ? props.count : 0}
-      </span>
+      {props?.count && (
+        <span className="border border-primaryblue rounded-full text-[12px] text-primaryblue h-5 w-5 flex items-center justify-center">
+          {props?.count && props?.count > 0 ? props.count : 0}
+        </span>
+      )}
     </h3>
   );
 };

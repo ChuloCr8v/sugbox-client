@@ -14,6 +14,7 @@ import { useGetOrganizationQuery } from "../redux/data/organizations";
 import { suggestionProps } from "../types";
 import EmployeeStatusTag from "../components/EmployeeStatusTag";
 import { twMerge } from "tailwind-merge";
+import ChangeEmployeeStatusModal from "../components/ChangeEmployeeStatusModal";
 
 const Profile = () => {
   const { id } = useParams();
@@ -31,6 +32,10 @@ const Profile = () => {
     (comment: { userId: string }) => comment.userId === id
   );
   const { isAdmin } = UseGetAuth();
+  const [updateEmployeeStatus, setUpdateEmployeeStatus] = useState({
+    open: false,
+    id: "",
+  });
 
   const userSuggestions = suggestions?.filter(
     (suggestion: { userId: string }) => suggestion?.userId === id
@@ -115,25 +120,41 @@ const Profile = () => {
     );
   }
 
+  const updateAction = employee?.isDisabled ? "Activate" : "Deactivate";
+
   return (
     <div className="px-4 py-24 w-full flex flex-col">
       <div className="w-full flex flex-col gap-8">
         {/* <SectionHeading heading={isAdmin ? profileTitle : userProfileTitle} /> */}
 
-        <div className="flex flex-col lg:flex-row justify-center items-start gap-4">
-          <div className="profile-pic basis-1.5 w-full grid gap-4">
+        <div className="flex flex-col md:flex-row justify-center items-start gap-4">
+          <div className="profile-pic w-full basis-1.5 grid gap-4">
             {avatar()}
             {isAdmin && (
               <div className="flex items-center gap-2">
-                <button className="rounded-lg hover:bg-hoverblue duration-200 bg-primaryblue text-white font-semibold w-full h-9">
+                <button className="rounded hover:bg-hoverblue duration-200 bg-primaryblue text-white font-semibold w-full h-9 md:h-7">
                   Email
                 </button>
-                <button className="rounded-lg hover:bg-red-800 duration-200 bg-red-600 text-white font-semibold w-full h-9">
-                  Deactivate
+                <button
+                  onClick={() =>
+                    setUpdateEmployeeStatus((prev: any) => ({
+                      ...prev,
+                      open: true,
+                      id: id,
+                    }))
+                  }
+                  className={twMerge(
+                    "rounded hover:bg-red-800 duration-200 bg-red-600 text-white font-semibold w-full h-9 md:h-7",
+                    updateAction.toLowerCase() === "activate" &&
+                      "bg-green-600 hover:bg-green-800"
+                  )}
+                >
+                  {updateAction}
                 </button>
               </div>
             )}
           </div>
+
           <div className="basis-full grid gap-4 w-full border border-gray-300 rounded-lg p-4">
             <div className="grid lg:grid-cols-2 gap-4 ">
               {profileData.map((item) => (
@@ -186,6 +207,11 @@ const Profile = () => {
           </div>
         )}
       </div>
+      <ChangeEmployeeStatusModal
+        setUpdateEmployeeStatus={setUpdateEmployeeStatus}
+        open={updateEmployeeStatus.open}
+        id={updateEmployeeStatus.id}
+      />
     </div>
   );
 };

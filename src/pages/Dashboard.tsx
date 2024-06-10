@@ -14,7 +14,7 @@ import { useGetEmployeeQuery } from "../redux/data/employees";
 const Dashboard = () => {
   const {
     suggestions,
-    isLoading,
+    isLoading: isLoadingSuggestions,
     refetch,
     isFetching: isRefreshing,
     isError,
@@ -78,6 +78,7 @@ const Dashboard = () => {
             setFilteredData={setFilteredData}
             isRefreshing={isRefreshing}
             refetch={refetch}
+            isLoading={isLoadingSuggestions}
           />
           <Employees />
         </div>
@@ -90,7 +91,10 @@ const Dashboard = () => {
             Unable to get suggestions, check your internet and try again!
           </p>
         ) : (
-          <SuggestionCards data={filteredData} isLoading={isLoading} />
+          <SuggestionCards
+            data={filteredData}
+            isLoading={isLoadingSuggestions}
+          />
         ))}
     </div>
   );

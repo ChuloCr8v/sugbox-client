@@ -13,6 +13,7 @@ const employees = () => {
   return (
     <div className="pt-24 w-full min-h-screen flex flex-col px-6">
       <Suggestions
+        isLoading={isLoading}
         data={filteredData}
         refetch={refetch}
         isRefreshing={isLoading}

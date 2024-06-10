@@ -1,18 +1,17 @@
 import { Button, message } from "antd";
 import dayjs from "dayjs";
+import { useState } from "react";
 import UseGetAuth from "../hooks/useGetAuth";
 import { useDeleteCommentMutation } from "../redux/data/Comments";
-import { dateFormatter } from "../utils.ts/dateFormatter";
-import DeleteItemModal from "./modals/DeleteItemModal";
-import { useState } from "react";
-import EditCommentModal from "./modals/EditCommentModal";
 import { useGetEmployeeQuery } from "../redux/data/employees";
 import { commentsProps } from "../types";
+import { dateFormatter } from "../utils.ts/dateFormatter";
+import DeleteItemModal from "./modals/DeleteItemModal";
+import EditCommentModal from "./modals/EditCommentModal";
 
 const Comment = (props: { data: commentsProps }) => {
   const [openDeleteItemModal, setOpenDeleteItemModal] = useState(false);
   const [openEditCommentModal, setOpenEditCommentModal] = useState(false);
-  const isAdminComment = props.data.user?.isAdmin;
   const { id } = UseGetAuth();
   const verifyCommentOwnership = id === props.data.user?._id;
   const [deleteComment, { isLoading: deleteCommentLoading }] =
@@ -34,9 +33,14 @@ const Comment = (props: { data: commentsProps }) => {
     <div className="border-b-[1.5px] py-4" id={props.data._id}>
       <div className="flex items-start flex-col gap-3">
         <p className="text-[14px] font-bold text-primaryblue">
-          {isAdminComment
-            ? "Admin"
-            : `${commenter?.firstName} ${commenter?.lastName}`}
+          {props.data?.isAdmin ? (
+            <span className="flex items-center gap-1 text-yellow-600">
+              {" "}
+              Admin
+            </span>
+          ) : (
+            `${commenter?.firstName} ${commenter?.lastName}`
+          )}
         </p>
         <div className="flex flex-col items-start gap-3 w-full">
           <p className="normal-case">{props.data.comment}</p>
