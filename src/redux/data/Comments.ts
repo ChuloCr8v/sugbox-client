@@ -15,7 +15,7 @@ const commentApi = api.injectEndpoints({
     }),
 
     addComment: mutation<void, comment>({
-      query: ({ id, isAdmin, ...comment }) => ({
+      query: ({ id, isAdmin, comment }) => ({
         url: `comment/new-comment/${id}`,
         method: "POST",
         body: { isAdmin, comment },
