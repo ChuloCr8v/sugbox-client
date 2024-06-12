@@ -160,7 +160,7 @@ const Profile = () => {
                     }))
                   }
                   className={twMerge(
-                    "col-span-2 rounded border hover:border-gray-800 duration-100 border-gray-600 text-gray-600 hover:outline outline-gray-300 font-semibold w-full h-9 md:h-6 text-sm"
+                    "col-span-2 rounded border  duration-100 border-gray-600 text-gray-600 hover:text-hoverblue hover:border-hoverblue font-semibold w-full h-9 md:h-6 text-sm"
                   )}
                 >
                   Update Employee Role
