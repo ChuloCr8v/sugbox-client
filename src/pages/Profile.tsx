@@ -131,8 +131,8 @@ const Profile = () => {
           <div className="profile-pic w-full basis-1.5 grid gap-4">
             {avatar()}
             {isAdmin && (
-              <div className="flex items-center gap-2">
-                <button className="rounded hover:bg-hoverblue duration-200 bg-primaryblue text-white font-semibold w-full h-9 md:h-7">
+              <div className="grid grid-cols-2 items-center gap-2">
+                <button className="rounded border hover:outline hover:outline-blue-300 duration-100 border-primaryblue text-primaryblue font-semibold w-full h-9 md:h-6 text-sm">
                   Email
                 </button>
                 <button
@@ -144,12 +144,26 @@ const Profile = () => {
                     }))
                   }
                   className={twMerge(
-                    "rounded hover:bg-red-800 duration-200 bg-red-600 text-white font-semibold w-full h-9 md:h-7",
+                    "rounded border hover:outline hover:outline-red-300 duration-100 border-red-600 text-red-600 font-semibold w-full h-9 md:h-6 text-sm",
                     updateAction.toLowerCase() === "activate" &&
                       "bg-green-600 hover:bg-green-800"
                   )}
                 >
                   {updateAction}
+                </button>
+                <button
+                  onClick={() =>
+                    setUpdateEmployeeStatus((prev: any) => ({
+                      ...prev,
+                      open: true,
+                      id: id,
+                    }))
+                  }
+                  className={twMerge(
+                    "col-span-2 rounded border hover:border-gray-800 duration-100 border-gray-600 text-gray-600 hover:outline outline-gray-300 font-semibold w-full h-9 md:h-6 text-sm"
+                  )}
+                >
+                  Update Employee Role
                 </button>
               </div>
             )}

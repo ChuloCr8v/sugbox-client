@@ -13,7 +13,7 @@ const Comment = (props: { data: commentsProps }) => {
   const [openDeleteItemModal, setOpenDeleteItemModal] = useState(false);
   const [openEditCommentModal, setOpenEditCommentModal] = useState(false);
   const { id } = UseGetAuth();
-  const verifyCommentOwnership = id === props.data.user?._id;
+  const verifyCommentOwnership = id === props.data?.userId;
   const [deleteComment, { isLoading: deleteCommentLoading }] =
     useDeleteCommentMutation();
   const { data: commenter } = useGetEmployeeQuery(props.data.userId);
@@ -59,15 +59,16 @@ const Comment = (props: { data: commentsProps }) => {
                   disabled={deleteCommentLoading}
                   loading={deleteCommentLoading}
                   onClick={() => setOpenDeleteItemModal(true)}
-                  className="text-red-600 border-red-600 text-sm h-6 w-[60px] flex items-center justify-center"
+                  className="text-red-600 border-red-600 text-sm h-6 w-fit flex items-center justify-center"
                 >
                   Delete
                 </Button>
+
                 <Button
                   disabled={deleteCommentLoading}
                   loading={deleteCommentLoading}
                   onClick={() => setOpenEditCommentModal(true)}
-                  className="text-primaryblue border-primaryblue h-6 w-[60px] flex items-center justify-center text-sm"
+                  className="text-primaryblue border-primaryblue h-6 w-fit flex items-center justify-center text-sm"
                 >
                   Edit
                 </Button>

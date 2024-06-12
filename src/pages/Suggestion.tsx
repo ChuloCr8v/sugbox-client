@@ -69,7 +69,7 @@ const Suggestion = () => {
   const upvotedAlready = suggestion?.upVotes?.includes(userId);
   const downvotedAlready = suggestion?.downVotes?.includes(userId);
 
-  const isAdmin = UseGetAuth();
+  const { isAdmin } = UseGetAuth();
 
   const verifyAdmin = isAdmin ? true : false;
 
