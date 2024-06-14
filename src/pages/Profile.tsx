@@ -18,6 +18,8 @@ import {
 } from "../redux/data/employees";
 import { useGetOrganizationQuery } from "../redux/data/organizations";
 import { suggestionProps } from "../types";
+import { useDispatch } from "react-redux";
+import { openSendEmailModal } from "../redux/modals";
 
 const Profile = () => {
   const { id } = useParams();
@@ -32,6 +34,8 @@ const Profile = () => {
   const [filteredData, setFilteredData] = useState<Array<suggestionProps>>([]);
   const { data: comments } = useGetCommentsQuery("");
   const [updateEmployeeRole] = useUpdateEmployeeRoleMutation();
+
+  const dispatch = useDispatch();
 
   const userComments = comments?.filter(
     (comment: { userId: string }) => comment.userId === id
@@ -129,8 +133,6 @@ const Profile = () => {
 
   const employeeName = employee?.firstName + " " + employee?.lastName;
 
-  console.log(employee);
-
   return (
     <div className="px-4 py-24 w-full flex flex-col">
       <div className="w-full flex flex-col gap-8">
@@ -141,7 +143,10 @@ const Profile = () => {
             {avatar()}
             {isAdmin && (
               <div className="grid grid-cols-2 items-center gap-2">
-                <button className="rounded border hover:outline hover:outline-blue-300 duration-100 border-primaryblue text-primaryblue font-semibold w-full h-9 md:h-6 text-sm">
+                <button
+                  onClick={() => dispatch(openSendEmailModal(id))}
+                  className="rounded border hover:outline hover:outline-blue-300 duration-100 border-primaryblue text-primaryblue font-semibold w-full h-9 md:h-6 text-sm"
+                >
                   Email
                 </button>
                 <button
@@ -170,15 +175,18 @@ const Profile = () => {
                   }
                   description={
                     employee?.isModerator
-                      ? `Remove moderator priviledges <br/> for ${employeeName}`
+                      ? `Remove moderator priviledges for ${employeeName}`
                       : `Add Moderator Priviledges to ${employeeName}`
                   }
                   onConfirm={handleUpdateEmployeeRole}
                   okText={"Update"}
-                  cancelText="Cancel"
+                  okButtonProps={{
+                    rootClassName: "bg-primaryblue ",
+                  }}
+                  rootClassName="bg-red-600"
                   className="col-span-2"
                 >
-                  <Button className="border-gray-500 rounded hover:!text-gray-500 hover:outline outline-2 outline-gray-300 text-gray-500">
+                  <Button className="border-gray-500 h-9 rounded hover:!text-black duration-75 hover:!border-gray-500 hover:outline outline-2 outline-gray-300 text-black">
                     {employee?.isModerator
                       ? "Remove as Moderator"
                       : "Add as Moderator"}

@@ -24,6 +24,7 @@ import VerificationSuccessfulPage from "./VerificationSuccessfulPage";
 import LoginPageRedirect from "./LoginPageRedirect";
 import Employees from "./Employees";
 import Suggestions from "./suggestions";
+import SendEmailModal from "../components/modals/SendEmailModal";
 
 const Layout = () => {
   const { token } = UseGetAuth();
@@ -114,6 +115,7 @@ const Layout = () => {
         <PopUpAlert />
         <NewEmployeeModal />
         <EditCompanyForm />
+        <SendEmailModal />
       </div>
     </div>
   );

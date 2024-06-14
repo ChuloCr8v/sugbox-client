@@ -11,6 +11,7 @@ const initialState = {
   newSuggestionModal: false,
   newCommentModal: false,
   editSuggestionModal: "",
+  sendEmailModal: { isOpen: false, id: "" },
 };
 export const modalSlice = createSlice({
   name: "modals",
@@ -67,6 +68,14 @@ export const modalSlice = createSlice({
     hideEditSuggestionModal: (state) => {
       state.editSuggestionModal = "";
     },
+    openSendEmailModal: (state, action) => {
+      state.sendEmailModal.isOpen = true;
+      state.sendEmailModal.id = action.payload;
+    },
+    closeSendEmailModal: (state) => {
+      state.sendEmailModal.isOpen = false;
+      state.sendEmailModal.id = "";
+    },
   },
 });
 
@@ -87,5 +96,7 @@ export const {
   hideNewCommentModal,
   showEditSuggestionModal,
   hideEditSuggestionModal,
+  openSendEmailModal,
+  closeSendEmailModal,
 } = modalSlice.actions;
 export default modalSlice.reducer;

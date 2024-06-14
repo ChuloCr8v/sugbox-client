@@ -36,6 +36,15 @@ const EmployeesApi = api.injectEndpoints({
       }),
       invalidatesTags: ["employees", "employee"],
     }),
+
+    sendEmailToEmployee: mutation({
+      query: (body) => ({
+        url: `/employee/send-email`,
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["employees", "employee"],
+    }),
   }),
 });
 
@@ -44,4 +53,5 @@ export const {
   useGetEmployeeQuery,
   useEditEmployeeMutation,
   useUpdateEmployeeRoleMutation,
+  useSendEmailToEmployeeMutation,
 } = EmployeesApi;
