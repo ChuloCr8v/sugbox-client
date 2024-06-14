@@ -1,7 +1,10 @@
-import { Spin } from "antd";
+import { Button, Popconfirm, Select, Spin, message } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
+import ChangeEmployeeStatusModal from "../components/ChangeEmployeeStatusModal";
 import CommentCard from "../components/CommentsCard";
+import EmployeeStatusTag from "../components/EmployeeStatusTag";
 import ErrorComponent from "../components/ErrorComponent";
 import SuggestionTable from "../components/SuggestionTable";
 import { NoDataComponent, SectionHeading } from "../components/Suggestions";
@@ -9,12 +12,12 @@ import UseGetAuth from "../hooks/useGetAuth";
 import useGetAvatar from "../hooks/useGetAvatar";
 import useGetSuggestions from "../hooks/useGetSuggestions";
 import { useGetCommentsQuery } from "../redux/data/Comments";
-import { useGetEmployeeQuery } from "../redux/data/employees";
+import {
+  useGetEmployeeQuery,
+  useUpdateEmployeeRoleMutation,
+} from "../redux/data/employees";
 import { useGetOrganizationQuery } from "../redux/data/organizations";
 import { suggestionProps } from "../types";
-import EmployeeStatusTag from "../components/EmployeeStatusTag";
-import { twMerge } from "tailwind-merge";
-import ChangeEmployeeStatusModal from "../components/ChangeEmployeeStatusModal";
 
 const Profile = () => {
   const { id } = useParams();
@@ -27,7 +30,11 @@ const Profile = () => {
   const { avatar } = useGetAvatar(id);
   const { suggestions, isLoading } = useGetSuggestions();
   const [filteredData, setFilteredData] = useState<Array<suggestionProps>>([]);
+  const [newRole, setNewRole] = useState("");
   const { data: comments } = useGetCommentsQuery("");
+  const [updateEmployeeRole, { isLoading: updatingRole }] =
+    useUpdateEmployeeRoleMutation();
+
   const userComments = comments?.filter(
     (comment: { userId: string }) => comment.userId === id
   );
@@ -51,17 +58,6 @@ const Profile = () => {
   useEffect(() => {
     setFilteredData(data);
   }, [suggestions]);
-
-  // const PageTitle = (props: { data: Array<object>; title: ReactNode }) => {
-  //   return (
-  //     <div className="flex items-center gap-2">
-  //       <p className="capitalize">{props.title}</p>{" "}
-  //       <div className="bg-primaryblue rounded-full text-white h-6 w-6 flex items-center justify-center">
-  //         {props?.data?.length ? props?.data?.length : 0}
-  //       </div>
-  //     </div>
-  //   );
-  // };
 
   const anonymousSuggestions = () => {
     return employee?.defaultAnonymous ? "ON" : "OFF";
@@ -94,7 +90,7 @@ const Profile = () => {
     },
     {
       title: "role",
-      data: employee?.adminRole,
+      data: employee?.isModerator ? "Moderator" : "Staff",
     },
     {
       title: "anonymous suggestions",
@@ -121,6 +117,21 @@ const Profile = () => {
   }
 
   const updateAction = employee?.isDisabled ? "Activate" : "Deactivate";
+
+  const handleUpdateEmployeeRole = async () => {
+    try {
+      await updateEmployeeRole(id).unwrap();
+      message.success("Moderator role updated successfully");
+      console.log(employee);
+    } catch (error) {
+      console.log(error);
+      message.error("Employee role update failed, try again.");
+    }
+  };
+
+  const employeeName = employee?.firstName + " " + employee?.lastName;
+
+  console.log(employee);
 
   return (
     <div className="px-4 py-24 w-full flex flex-col">
@@ -151,20 +162,30 @@ const Profile = () => {
                 >
                   {updateAction}
                 </button>
-                <button
-                  onClick={() =>
-                    setUpdateEmployeeStatus((prev: any) => ({
-                      ...prev,
-                      open: true,
-                      id: id,
-                    }))
+
+                <Popconfirm
+                  icon
+                  title={
+                    employee?.isModerator
+                      ? "Remove Moderator"
+                      : "Make Moderator"
                   }
-                  className={twMerge(
-                    "col-span-2 rounded border  duration-100 border-gray-600 text-gray-600 hover:text-hoverblue hover:border-hoverblue font-semibold w-full h-9 md:h-6 text-sm"
-                  )}
+                  description={
+                    employee?.isModerator
+                      ? `Remove moderator priviledges <br/> for ${employeeName}`
+                      : `Add Moderator Priviledges to ${employeeName}`
+                  }
+                  onConfirm={handleUpdateEmployeeRole}
+                  okText={"Update"}
+                  cancelText="Cancel"
+                  className="col-span-2"
                 >
-                  Update Employee Role
-                </button>
+                  <Button className="border-gray-500 rounded hover:!text-gray-500 hover:outline outline-2 outline-gray-300 text-gray-500">
+                    {employee?.isModerator
+                      ? "Remove as Moderator"
+                      : "Add as Moderator"}
+                  </Button>
+                </Popconfirm>
               </div>
             )}
           </div>

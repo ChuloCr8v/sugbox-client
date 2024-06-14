@@ -28,6 +28,14 @@ const EmployeesApi = api.injectEndpoints({
       }),
       invalidatesTags: ["employees", "employee"],
     }),
+
+    updateEmployeeRole: mutation({
+      query: (id) => ({
+        url: `/employee/update-role/${id}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["employees", "employee"],
+    }),
   }),
 });
 
@@ -35,4 +43,5 @@ export const {
   useGetEmployeesQuery,
   useGetEmployeeQuery,
   useEditEmployeeMutation,
+  useUpdateEmployeeRoleMutation,
 } = EmployeesApi;
