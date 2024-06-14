@@ -1,4 +1,4 @@
-import { Button, Popconfirm, Select, Spin, message } from "antd";
+import { Button, Popconfirm, Spin, message } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
@@ -30,10 +30,8 @@ const Profile = () => {
   const { avatar } = useGetAvatar(id);
   const { suggestions, isLoading } = useGetSuggestions();
   const [filteredData, setFilteredData] = useState<Array<suggestionProps>>([]);
-  const [newRole, setNewRole] = useState("");
   const { data: comments } = useGetCommentsQuery("");
-  const [updateEmployeeRole, { isLoading: updatingRole }] =
-    useUpdateEmployeeRoleMutation();
+  const [updateEmployeeRole] = useUpdateEmployeeRoleMutation();
 
   const userComments = comments?.filter(
     (comment: { userId: string }) => comment.userId === id
