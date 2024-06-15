@@ -1,10 +1,8 @@
 import { Button, Spin, Tooltip, message } from "antd";
 import { useState } from "react";
 import {
-  FaDownload,
   FaRegCalendarAlt,
   FaRegCommentAlt,
-  FaRegImage,
   FaRegUser,
   FaUserNinja,
 } from "react-icons/fa";
@@ -15,15 +13,14 @@ import CommentBox from "../components/CommentBox";
 import Comments from "../components/Comments";
 import ErrorComponent from "../components/ErrorComponent";
 import SuggestionActionButtons from "../components/SuggestionActionButtons";
+import SuggestionAttachmentComponent from "../components/SuggestionAttachmentComponent";
 import SuggestionStatusTag from "../components/SuggestionStatusTag";
-import TrendingSuggestionCard from "../components/TrendingSuggestionCard";
+import TrendingSuggestions from "../components/TrendingSuggestions";
 import VoteComponent from "../components/VoteComponent";
-import AttachmentPreview from "../components/modals/AttachmentPreview";
 import DeleteItemModal from "../components/modals/DeleteItemModal";
 import useDownvoteSuggestion from "../hooks/suggestion/useDownVoteSuggestion";
 import useUpvoteSuggestion from "../hooks/suggestion/useUpvoteSuggestion";
 import UseGetAuth from "../hooks/useGetAuth";
-import useGetSuggestions from "../hooks/useGetSuggestions";
 import { useAddCommentMutation } from "../redux/data/Comments";
 import { useGetEmployeeQuery } from "../redux/data/employees";
 import {
@@ -31,7 +28,6 @@ import {
   useGetSuggestionQuery,
 } from "../redux/data/suggestions";
 import { hideNewCommentModal } from "../redux/modals";
-import { suggestionProps } from "../types";
 import { dateFormatter } from "../utils.ts/dateFormatter";
 
 const Suggestion = () => {
@@ -49,7 +45,6 @@ const Suggestion = () => {
   const { data: suggester, isLoading: loadingSuggester } = useGetEmployeeQuery(
     suggestion?.userId
   );
-  const { suggestions, isLoading: loadingAllSuggestions } = useGetSuggestions();
   const { upvoteSuggestion, upvoteSuggestionLoading } = useUpvoteSuggestion(id);
   const { downvoteSuggestion, downvoteSuggestionLoading } =
     useDownvoteSuggestion(id);
@@ -60,11 +55,6 @@ const Suggestion = () => {
     useAddCommentMutation();
   const [deleteSuggestion, { isLoading: deleteSuggestionLoading }] =
     useDeleteSuggestionMutation();
-
-  const [previewAttachment, setPreviewAttachment] = useState({
-    isOpen: false,
-    src: "",
-  });
 
   const upvotedAlready = suggestion?.upVotes?.includes(userId);
   const downvotedAlready = suggestion?.downVotes?.includes(userId);
@@ -193,44 +183,7 @@ const Suggestion = () => {
         />
 
         {suggestion?.attachments?.length > 0 && (
-          <div className="flex flex-wrap gap-4">
-            {suggestion?.attachments?.map(
-              (attachment: { secure_url: string }) => (
-                <div
-                  className="border h-[150px] w-full md:w-[250px] overflow-hidden rounded relative bg-white group"
-                  key={attachment.secure_url}
-                >
-                  <img
-                    src={attachment.secure_url}
-                    className="object-cover h-full w-full object-center"
-                  />
-                  <div
-                    className={twMerge(
-                      "flex gap-4 items-center justify-center absolute group top-0 left-0 h-full w-full bg-black bg-opacity-0 hover:bg-opacity-35 duration-200 opacity-0 group-hover:opacity-100 -z-10 group-hover:z-10"
-                    )}
-                  >
-                    <button className="text-white flex items-center justify-center gap-2 text-sm hover:text-primaryblue  duration-200">
-                      <FaDownload />
-                      Download
-                    </button>
-                    <button
-                      onClick={() => {
-                        setPreviewAttachment({
-                          isOpen: true,
-                          src: attachment.secure_url,
-                        });
-                      }}
-                      className="text-white flex items-center justify-center gap-2 text-sm hover:text-primaryblue duration-200"
-                    >
-                      <FaRegImage />
-                      Preview
-                    </button>
-                  </div>
-                </div>
-              )
-            )}
-            {/* </div> */}
-          </div>
+          <SuggestionAttachmentComponent suggestion={suggestion} />
         )}
       </div>
 
@@ -257,32 +210,7 @@ const Suggestion = () => {
         </div>
       )}
 
-      {loadingAllSuggestions ? (
-        <Spin />
-      ) : (
-        <div className="overflow-hidden">
-          <p className="font-semibold text-lg ">Trending Suggestions</p>
-          <div className="flex gap-4 mt-2 overflow-x-scroll py-2">
-            {[...suggestions]
-              ?.sort(
-                (
-                  a: { upVotes: Array<object> },
-                  b: { upVotes: Array<object> }
-                ) => b.upVotes.length - a.upVotes.length
-              )
-              .map((suggestion: suggestionProps) => (
-                <a
-                  href={`/suggestion/${suggestion._id}`}
-                  className="rounded border shadow p-4 min-w-[350px]"
-                  key={suggestion._id}
-                >
-                  <TrendingSuggestionCard suggestion={suggestion} />
-                </a>
-              ))
-              .slice(0, 5)}
-          </div>
-        </div>
-      )}
+      <TrendingSuggestions />
 
       <DeleteItemModal
         openDeleteItemModal={openDeleteItemModal}
@@ -293,13 +221,6 @@ const Suggestion = () => {
         handleDeleteItemOk={handleDeleteSuggestion}
         itemTitle={suggestion?.title}
         modalTitle={"Delete Suggestion"}
-      />
-
-      <AttachmentPreview
-        previewAttachment={previewAttachment.isOpen}
-        src={previewAttachment.src}
-        suggestionTitle={suggestion?.title}
-        setPreviewAttachment={setPreviewAttachment}
       />
     </div>
   );

@@ -8,8 +8,9 @@ const UseGetAuth = () => {
 
   const id = user?._id;
   const isAdmin = user?.isAdmin;
+  const isModerator = user?.isModerator;
 
-  return { token, user, id, isAdmin };
+  return { token, user, id, isAdmin, isModerator };
 };
 
 export default UseGetAuth;

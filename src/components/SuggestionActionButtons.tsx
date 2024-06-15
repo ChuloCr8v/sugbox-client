@@ -17,7 +17,7 @@ const SuggestionActionButtons = (props: Props) => {
   const [openUpdateStatusModal, setOpenUpdateStatusModal] = useState("");
   const { data: suggestion } = useGetSuggestionQuery(props.id);
 
-  const { id: userId, isAdmin } = UseGetAuth();
+  const { id: userId, isAdmin, isModerator } = UseGetAuth();
 
   const btns = [
     {
@@ -43,6 +43,23 @@ const SuggestionActionButtons = (props: Props) => {
 
   const verifyUser = userId === suggestion?.userId;
 
+  const canEdit = (item: string) => {
+    return verifyUser && item === "edit" && "flex";
+  };
+
+  const canDelete = (item: string) => {
+    return (verifyUser || isAdmin) && item === "delete" && "flex";
+  };
+
+  const canApproveAndReject = (item: string) => {
+    return (
+      (isAdmin || isModerator) &&
+      !verifyUser &&
+      (item === "approve" || item === "reject") &&
+      "flex"
+    );
+  };
+
   const handleBtnClick = async (action: string, id: string) => {
     switch (action) {
       case "edit":
@@ -59,7 +76,6 @@ const SuggestionActionButtons = (props: Props) => {
         break;
     }
   };
-
   return (
     <div className="flex items-center gap-2">
       {btns.map((item) => (
@@ -67,32 +83,10 @@ const SuggestionActionButtons = (props: Props) => {
           key={item.title}
           onClick={() => handleBtnClick(item.title, id)}
           className={twMerge(
-            "rounded border font-semibold flex items-center capitalize shadow-none !h-7",
-            item.title === "approve" &&
-              " border-green-600 text-green-600 hover:!border-green-800 hover:!text-green-800",
-            item.title === "edit" &&
-              "border-primaryblue hover:!border-hoverblue rounded text-primaryblue hover:!text-hoverblue ",
-            item.title === "reject" &&
-              " border-red-600 text-red-600 hover:!border-red-800 hover:!text-red-800",
-            item.title === "delete" &&
-              " border-primaryred text-primaryred hover:!text-red-800 group hover:!border-yellow-600",
-            !verifyUser &&
-              (item?.title === "delete" || item?.title === "edit") &&
-              "hidden",
-            isAdmin && item?.title === "delete" && "flex",
-            !isAdmin &&
-              (item?.title === "approve" || item?.title === "reject") &&
-              "hidden",
-            item.title.toLowerCase() === "approve" &&
-              suggestion?.status === "approved" &&
-              "hidden",
-            item.title.toLowerCase() === "reject" &&
-              suggestion?.status === "rejected" &&
-              "hidden",
-            (item.title.toLowerCase() === "delete" ||
-              item.title.toLowerCase() === "edit") &&
-              suggestion?.status === "approved" &&
-              "hidden"
+            "capitalize items-center hover:border-primaryblue text-textcolor hidden",
+            canEdit(item.title),
+            canDelete(item.title),
+            canApproveAndReject(item.title)
           )}
           icon={item.icon}
         >
