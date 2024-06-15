@@ -129,11 +129,16 @@ const Suggestion = () => {
                 Anonymous
               </div>
             ) : (
-              <div className="flex items-center gap-2 text-gray-500 ">
+              <div className="flex items-center gap-1 text-gray-500 ">
                 <FaRegUser />
-                <p className="">
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`/profile/${suggester?._id}`}
+                  className="text-primaryblue text-base"
+                >
                   {suggester?.firstName + " " + suggester?.lastName}
-                </p>
+                </a>
               </div>
             )}
 

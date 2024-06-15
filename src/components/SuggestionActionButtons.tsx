@@ -60,6 +60,15 @@ const SuggestionActionButtons = (props: Props) => {
     );
   };
 
+  const deleteButtonStyle =
+    "border-red-600 hover:!border-red-800 text-red-600 hover:!text-red-800";
+  const rejectButtonStyle =
+    "border-red-300 hover:!border-red-500 text-red-300 hover:!text-red-500";
+  const editButtonStyle =
+    "border-gray-500 hover:!border-gray-800 text-gray-500 hover:!text-gray-800";
+  const approveButtonStyle =
+    "border-green-500 hover:!border-green-800 text-green-500 hover:!text-green-800";
+
   const handleBtnClick = async (action: string, id: string) => {
     switch (action) {
       case "edit":
@@ -76,6 +85,7 @@ const SuggestionActionButtons = (props: Props) => {
         break;
     }
   };
+
   return (
     <div className="flex items-center gap-2">
       {btns.map((item) => (
@@ -83,14 +93,24 @@ const SuggestionActionButtons = (props: Props) => {
           key={item.title}
           onClick={() => handleBtnClick(item.title, id)}
           className={twMerge(
-            "capitalize items-center hover:border-primaryblue text-textcolor hidden",
+            "capitalize items-center hover:border-primaryblue text-textcolor hidden h-8 font-semibold text-base",
             canEdit(item.title),
             canDelete(item.title),
-            canApproveAndReject(item.title)
+            canApproveAndReject(item.title),
+            suggestion?.status === "approved" &&
+              item.title === "approve" &&
+              "hidden",
+            suggestion?.status === "rejected" &&
+              item.title === "reject" &&
+              "hidden",
+            item.title === "delete" && deleteButtonStyle,
+            item.title === "reject" && rejectButtonStyle,
+            item.title === "edit" && editButtonStyle,
+            item.title === "approve" && approveButtonStyle
           )}
           icon={item.icon}
         >
-          {item.title}
+          <span className="text-sm"> {item.title}</span>
         </Button>
       ))}
 
