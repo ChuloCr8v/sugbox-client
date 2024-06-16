@@ -56,15 +56,15 @@ const Employees = () => {
       title: "Role",
       align: "left",
       dataIndex: "adminRole",
-      render: (_: any, records: { adminRole: string }) => {
+      render: (_: any, records: { isModerator: boolean }) => {
         return (
           <p
             className={twMerge(
               "capitalize ",
-              records.adminRole === "moderator" && "text-primaryblue"
+              records?.isModerator && "text-primaryblue"
             )}
           >
-            {records.adminRole}
+            {records?.isModerator ? "Moderator" : "Staff"}
           </p>
         );
       },
