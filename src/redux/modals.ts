@@ -3,47 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   accountModal: false,
   signinModal: false,
-  alert: false,
-  alertText: "",
-  alertType: "",
-  isLoading: false,
   newEmployeeModal: false,
   newSuggestionModal: false,
   newCommentModal: false,
   editSuggestionModal: "",
   sendEmailModal: { isOpen: false, id: "" },
+  addModeratorModal: false,
 };
 export const modalSlice = createSlice({
   name: "modals",
   initialState,
   reducers: {
-    showAccountModal: (state) => {
-      state.accountModal = true;
-    },
-    hideAccountModal: (state) => {
-      state.accountModal = false;
-    },
-    showSigninModal: (state) => {
-      state.signinModal = true;
-    },
-    hideSigninModal: (state) => {
-      state.signinModal = false;
-    },
-    showAlert: (state, action) => {
-      state.alert = true;
-      state.alertText = action.payload.alertText;
-      state.alertType = action.payload.alertType;
-    },
-    hideAlert: (state) => {
-      state.alert = false;
-      state.alertText = "";
-    },
-    startLoading: (state) => {
-      state.isLoading = true;
-    },
-    stopLoading: (state) => {
-      state.isLoading = false;
-    },
     showNewEmployeeModal: (state) => {
       state.newEmployeeModal = true;
     },
@@ -76,18 +46,16 @@ export const modalSlice = createSlice({
       state.sendEmailModal.isOpen = false;
       state.sendEmailModal.id = "";
     },
+    openAddModeratorModal: (state) => {
+      state.addModeratorModal = true;
+    },
+    closeAddModeratorModal: (state) => {
+      state.addModeratorModal = false;
+    },
   },
 });
 
 export const {
-  showAccountModal,
-  hideAccountModal,
-  hideSigninModal,
-  showSigninModal,
-  showAlert,
-  hideAlert,
-  startLoading,
-  stopLoading,
   showNewEmployeeModal,
   hideNewEmployeeModal,
   showNewSuggestionModal,
@@ -98,5 +66,7 @@ export const {
   hideEditSuggestionModal,
   openSendEmailModal,
   closeSendEmailModal,
+  openAddModeratorModal,
+  closeAddModeratorModal,
 } = modalSlice.actions;
 export default modalSlice.reducer;

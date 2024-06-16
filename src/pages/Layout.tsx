@@ -3,7 +3,6 @@ import EditCompanyForm from "../components/EditCompanyForm";
 import Header from "../components/Header";
 import NewEmployeeModal from "../components/NewEmployeeModal";
 import SideBar from "../components/SideBar";
-import PopUpAlert from "../components/modals/Alert";
 import SuggestionModal from "../components/modals/SuggestionModal";
 import Dashboard from "./Dashboard";
 import Login from "./login";
@@ -26,6 +25,7 @@ import Employees from "./Employees";
 import Suggestions from "./suggestions";
 import SendEmailModal from "../components/modals/SendEmailModal";
 import Moderators from "./moderators";
+import AddNewModerator from "../components/modals/AddNewModerator";
 
 const Layout = () => {
   const { token } = UseGetAuth();
@@ -117,10 +117,10 @@ const Layout = () => {
         {/** Modals */}
         <SuggestionModal />
         <EditSuggestionModal />
-        <PopUpAlert />
         <NewEmployeeModal />
         <EditCompanyForm />
         <SendEmailModal />
+        <AddNewModerator />
       </div>
     </div>
   );

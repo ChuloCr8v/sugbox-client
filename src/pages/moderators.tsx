@@ -1,15 +1,19 @@
-import { Button, Popconfirm, Table, message } from "antd";
+import { Button, Popconfirm, message } from "antd";
 import { ReactNode } from "react";
-import { FaBan } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import EmployeeStatusTag from "../components/EmployeeStatusTag";
 import { SectionHeading } from "../components/Suggestions";
+import TableComponent from "../components/Table";
 import useGetEmployees from "../hooks/useGetEmployees";
 import { useUpdateEmployeeRoleMutation } from "../redux/data/employees";
+import { openAddModeratorModal } from "../redux/modals";
 import { handleUpdateEmployeeRole } from "./Profile";
 
 const Moderators = () => {
   const { employees, isLoading } = useGetEmployees();
   const [updateEmployeeRole] = useUpdateEmployeeRoleMutation();
+
+  const dispatch = useDispatch();
 
   const moderators = employees?.filter(
     (employee: { isModerator: boolean }) => employee.isModerator
@@ -69,11 +73,8 @@ const Moderators = () => {
           }}
           className="col-span-2"
         >
-          <Button
-            className="flex items-center text-red-500 border-red-500 hover:!border-red-500 hover:!text-red-500 hover:!outline outline-red-200"
-            icon={<FaBan />}
-          >
-            Remove Admin Priviledges
+          <Button className="p-0 border-none hover:border-none h-0 flex items-center text-red-500 hover:!text-red-400">
+            Remove Moderator Priviledges
           </Button>
         </Popconfirm>
       ),
@@ -81,10 +82,23 @@ const Moderators = () => {
   ];
 
   return (
-    <div className="pt-24 px-4 w-full">
-      <SectionHeading heading={"Moderators"} />
+    <div className="pt-24 px-4 w-full space-y-6">
+      <div className="flex items-center justify-between">
+        <SectionHeading heading={"Moderators"} />
+        <Button
+          onClick={() => dispatch(openAddModeratorModal())}
+          rootClassName="bg-primaryblue text-white border-none shadow-none hover:!bg-hoverblue hover:!text-white outline-blue-300"
+        >
+          Add Moderator
+        </Button>
+      </div>
       <div className="w-full">
-        <Table dataSource={moderators} columns={columns} loading={isLoading} />
+        <TableComponent
+          data={moderators}
+          columns={columns}
+          key={moderators}
+          loading={isLoading}
+        />
       </div>
     </div>
   );

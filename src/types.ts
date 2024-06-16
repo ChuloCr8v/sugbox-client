@@ -58,6 +58,26 @@ export interface ModalComponentProps {
   footerActionBtnText?: string;
 }
 
+export interface employeeType {
+  adminRole: string;
+  approvedSuggestions: Array<{}>;
+  comments: Array<String>;
+  companyId: String;
+  createdAt: String;
+  defaultAnonymousSuggestion: boolean;
+  department: string;
+  downVotes: Array<String>;
+  email: string;
+  firstName: String;
+  isDisabled: boolean;
+  isModerator: boolean;
+  lastName: string;
+  officeRole: string;
+  suggestions: Array<suggestionProps>;
+  upvotes: Array<String>;
+  _id: String;
+}
+
 export interface employeeSignupProps {
   id: string;
   signUpData: { firstName: string };
