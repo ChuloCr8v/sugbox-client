@@ -1,5 +1,11 @@
 import React from "react";
-import { FaRegLightbulb, FaRegUser, FaTable, FaUsers } from "react-icons/fa";
+import {
+  FaRegLightbulb,
+  FaRegUser,
+  FaTable,
+  FaUserCog,
+  FaUsers,
+} from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { twMerge } from "tailwind-merge";
 import UseGetAuth from "../hooks/useGetAuth";
@@ -53,6 +59,12 @@ const Sidebar = () => {
       title: "Suggestions",
       link: "/suggestions",
       icon: <FaRegLightbulb />,
+      role: "admin",
+    },
+    {
+      title: "Moderators",
+      link: "/moderators",
+      icon: <FaRegUser />,
       role: "admin",
     },
     // {

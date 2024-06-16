@@ -25,6 +25,7 @@ import LoginPageRedirect from "./LoginPageRedirect";
 import Employees from "./Employees";
 import Suggestions from "./suggestions";
 import SendEmailModal from "../components/modals/SendEmailModal";
+import Moderators from "./moderators";
 
 const Layout = () => {
   const { token } = UseGetAuth();
@@ -82,6 +83,10 @@ const Layout = () => {
               <Route
                 path="/profile/:id"
                 element={token ? <Profile /> : <Portal />}
+              />
+              <Route
+                path="/moderators/"
+                element={token ? <Moderators /> : <Portal />}
               />
 
               <Route

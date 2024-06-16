@@ -1,5 +1,5 @@
 import { Button, Popconfirm, Spin, message } from "antd";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import ChangeEmployeeStatusModal from "../components/ChangeEmployeeStatusModal";
@@ -20,6 +20,20 @@ import { useGetOrganizationQuery } from "../redux/data/organizations";
 import { suggestionProps } from "../types";
 import { useDispatch } from "react-redux";
 import { openSendEmailModal } from "../redux/modals";
+
+export const handleUpdateEmployeeRole = async (
+  message: any,
+  id: string | undefined,
+  updateEmployeeRole: any
+) => {
+  try {
+    await updateEmployeeRole(id).unwrap();
+    message.success("Moderator role updated successfully");
+  } catch (error) {
+    console.log(error);
+    message.error("Employee role update failed, try again.");
+  }
+};
 
 const Profile = () => {
   const { id } = useParams();
@@ -120,17 +134,6 @@ const Profile = () => {
 
   const updateAction = employee?.isDisabled ? "Activate" : "Deactivate";
 
-  const handleUpdateEmployeeRole = async () => {
-    try {
-      await updateEmployeeRole(id).unwrap();
-      message.success("Moderator role updated successfully");
-      console.log(employee);
-    } catch (error) {
-      console.log(error);
-      message.error("Employee role update failed, try again.");
-    }
-  };
-
   const employeeName = employee?.firstName + " " + employee?.lastName;
 
   return (
@@ -178,12 +181,13 @@ const Profile = () => {
                       ? `Remove moderator priviledges for ${employeeName}`
                       : `Add Moderator Priviledges to ${employeeName}`
                   }
-                  onConfirm={handleUpdateEmployeeRole}
+                  onConfirm={() =>
+                    handleUpdateEmployeeRole(message, id, updateEmployeeRole)
+                  }
                   okText={"Update"}
                   okButtonProps={{
                     rootClassName: "bg-primaryblue ",
                   }}
-                  rootClassName="bg-red-600"
                   className="col-span-2"
                 >
                   <Button className="border-gray-500 h-9 rounded hover:!text-black duration-75 hover:!border-gray-500 hover:outline outline-2 outline-gray-300 text-black">
