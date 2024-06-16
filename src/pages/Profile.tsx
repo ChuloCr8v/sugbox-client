@@ -1,5 +1,6 @@
 import { Button, Popconfirm, Spin, message } from "antd";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import ChangeEmployeeStatusModal from "../components/ChangeEmployeeStatusModal";
@@ -17,9 +18,8 @@ import {
   useUpdateEmployeeRoleMutation,
 } from "../redux/data/employees";
 import { useGetOrganizationQuery } from "../redux/data/organizations";
-import { suggestionProps } from "../types";
-import { useDispatch } from "react-redux";
 import { openSendEmailModal } from "../redux/modals";
+import { suggestionProps } from "../types";
 
 export const handleUpdateEmployeeRole = async (
   message: any,

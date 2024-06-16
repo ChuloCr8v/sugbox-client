@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  FaRegLightbulb,
-  FaRegUser,
-  FaTable,
-  FaUserCog,
-  FaUsers,
-} from "react-icons/fa";
+import { FaRegLightbulb, FaRegUser, FaTable, FaUsers } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { twMerge } from "tailwind-merge";
 import UseGetAuth from "../hooks/useGetAuth";

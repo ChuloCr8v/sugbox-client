@@ -7,8 +7,6 @@ import useGetEmployees from "../hooks/useGetEmployees";
 import { useUpdateEmployeeRoleMutation } from "../redux/data/employees";
 import { handleUpdateEmployeeRole } from "./Profile";
 
-type Props = {};
-
 const Moderators = () => {
   const { employees, isLoading } = useGetEmployees();
   const [updateEmployeeRole] = useUpdateEmployeeRoleMutation();
