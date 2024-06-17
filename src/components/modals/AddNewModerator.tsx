@@ -1,11 +1,11 @@
-import { Checkbox, Dropdown, Modal, Spin, message } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { closeAddModeratorModal } from "../../redux/modals";
-import useGetEmployees from "../../hooks/useGetEmployees";
+import { Checkbox, Dropdown, Modal, message } from "antd";
 import { Key, useState } from "react";
 import { FaBan, FaChevronDown } from "react-icons/fa";
-import { employeeType } from "../../types";
+import { useDispatch, useSelector } from "react-redux";
+import useGetEmployees from "../../hooks/useGetEmployees";
 import { useUpdateEmployeeRoleMutation } from "../../redux/data/employees";
+import { closeAddModeratorModal } from "../../redux/modals";
+import { employeeType } from "../../types";
 import SpinLoading from "../SpinLoading";
 
 const AddNewModerator = () => {

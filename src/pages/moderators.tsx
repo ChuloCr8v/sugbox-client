@@ -2,16 +2,14 @@ import { Button, Popconfirm, message } from "antd";
 import { ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import EmployeeStatusTag from "../components/EmployeeStatusTag";
+import ErrorComponent from "../components/ErrorComponent";
+import SpinLoading from "../components/SpinLoading";
 import { SectionHeading } from "../components/Suggestions";
 import TableComponent from "../components/Table";
 import useGetEmployees from "../hooks/useGetEmployees";
 import { useUpdateEmployeeRoleMutation } from "../redux/data/employees";
 import { openAddModeratorModal } from "../redux/modals";
 import { handleUpdateEmployeeRole } from "./Profile";
-import ErrorComponent from "../components/ErrorComponent";
-import Loading from "../components/Loading";
-import { LoadingModal } from "../components/HeaderProfile";
-import SpinLoading from "../components/SpinLoading";
 
 const Moderators = () => {
   const { employees, isLoading, isError } = useGetEmployees();

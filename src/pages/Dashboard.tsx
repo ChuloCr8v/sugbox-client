@@ -1,4 +1,3 @@
-import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import { FaBan } from "react-icons/fa";
 import Employees from "../components/Employees";
@@ -6,13 +5,13 @@ import ErrorComponent from "../components/ErrorComponent";
 import FilterCards from "../components/FilterCards";
 import Filters from "../components/Filters";
 import PageHeader from "../components/PageHeader";
+import SpinLoading from "../components/SpinLoading";
 import SuggestionCards from "../components/SuggestionCards";
 import Suggestions from "../components/Suggestions";
 import SummaryCardSection from "../components/SummaryCardSection";
 import UseGetAuth from "../hooks/useGetAuth";
 import useGetSuggestions from "../hooks/useGetSuggestions";
 import { useGetEmployeeQuery } from "../redux/data/employees";
-import SpinLoading from "../components/SpinLoading";
 
 const Dashboard = () => {
   const {
