@@ -1,5 +1,8 @@
+import { Spin } from "antd";
 import { useEffect, useState } from "react";
+import { FaBan } from "react-icons/fa";
 import Employees from "../components/Employees";
+import ErrorComponent from "../components/ErrorComponent";
 import FilterCards from "../components/FilterCards";
 import Filters from "../components/Filters";
 import PageHeader from "../components/PageHeader";
@@ -8,8 +11,8 @@ import Suggestions from "../components/Suggestions";
 import SummaryCardSection from "../components/SummaryCardSection";
 import UseGetAuth from "../hooks/useGetAuth";
 import useGetSuggestions from "../hooks/useGetSuggestions";
-import { FaBan } from "react-icons/fa";
 import { useGetEmployeeQuery } from "../redux/data/employees";
+import SpinLoading from "../components/SpinLoading";
 
 const Dashboard = () => {
   const {
@@ -54,6 +57,14 @@ const Dashboard = () => {
       Dashboard
     </p>
   );
+
+  if (isError) {
+    return <ErrorComponent />;
+  }
+
+  if (isLoadingSuggestions) {
+    return <SpinLoading />;
+  }
 
   return (
     <div className="w-full grid gap-4 px-4 py-24">

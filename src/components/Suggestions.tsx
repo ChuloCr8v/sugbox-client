@@ -8,6 +8,7 @@ import PageHeader from "./PageHeader";
 import PieChartComponent from "./PieChart";
 import SuggestionStatusTag from "./SuggestionStatusTag";
 import Table from "./Table";
+import ErrorComponent from "./ErrorComponent";
 
 interface Props {
   data: Array<object>;
@@ -23,16 +24,17 @@ const Suggestions = (props: Props) => {
     approvedSuggestions,
     rejectedSuggestions,
     pendingSuggestions,
+    isError,
   } = useGetSuggestions();
   const { data: employees } = useGetEmployeesQuery("");
 
   const currentPage = window.location.href;
 
   const suggester = (userId: string) => {
-    const res = employees.find(
-      (employee: { _id: string }) => employee._id === userId
+    const res = employees?.find(
+      (employee: { _id: string }) => employee?._id === userId
     );
-    return res.firstName + " " + res.lastName;
+    return res?.firstName + " " + res?.lastName;
   };
 
   const columns = [
@@ -124,6 +126,10 @@ const Suggestions = (props: Props) => {
       <span className="block mt-1"> Ask your employees what they think?</span>
     </p>
   );
+
+  if (isError) {
+    return <ErrorComponent />;
+  }
 
   return (
     <section>

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { FaCamera, FaUser } from "react-icons/fa";
 import UseGetAuth from "../hooks/useGetAuth";
 import { useUploadProfilePictureMutation } from "../redux/data/profilePicture";
+import { useGetEmployeeQuery } from "../redux/data/employees";
+import { useGetOrganizationQuery } from "../redux/data/organizations";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 export const convertBase64 = (file: FileType) => {
@@ -35,11 +37,15 @@ const beforeUpload = (file: FileType) => {
   return isJpgOrPng && isLt2M;
 };
 
-const ProfilePicture = (props: {
-  data: { profilePicture: string; firstName: string };
-}) => {
+const ProfilePicture = () => {
   const [imageFile, setImageFile] = useState<any>("");
   const [uploadUrl, setUploadUrl] = useState<string>("");
+  const { isAdmin, id } = UseGetAuth();
+
+  const { data: employee, isLoading: gettingEmployee } =
+    useGetEmployeeQuery(id);
+  const { data: organization, isLoading: gettingOrganization } =
+    useGetOrganizationQuery(id);
 
   const [uploadProfilePicture, { isLoading: uploadingImage }] =
     useUploadProfilePictureMutation();
@@ -51,15 +57,13 @@ const ProfilePicture = (props: {
     setUploadUrl(objectUrl);
   };
 
-  const { id } = UseGetAuth();
-
   const uploadImage = async () => {
     beforeUpload(imageFile);
 
     const profileImageUrl = await convertBase64(imageFile);
 
     try {
-      await uploadProfilePicture({ id, profileImageUrl }).unwrap();
+      await uploadProfilePicture({ id, profileImageUrl, isAdmin }).unwrap();
       setUploadUrl("");
       message.success("Profile picture updated successfully.");
     } catch (error) {
@@ -68,6 +72,7 @@ const ProfilePicture = (props: {
     }
   };
 
+  const profile = isAdmin ? organization : employee;
   return (
     <div className="grid gap-4 relative md:w-[200px] xl:w-[250px]">
       {uploadUrl && (
@@ -80,11 +85,13 @@ const ProfilePicture = (props: {
         </div>
       )}
       <div className="relative rounded-lg bg-blue-100 max-[350px]:w-[360px] w-auto h-[250px] flex flex-col items-center justify-center overflow-hidden group">
-        {uploadingImage && (
-          <div className="h-full w-full bg-black bg-opacity-50 absolute left-0 top-0 flex items-center justify-center z-50">
-            <Spin />
-          </div>
-        )}
+        {uploadingImage ||
+          gettingEmployee ||
+          (gettingOrganization && (
+            <div className="h-full w-full bg-black bg-opacity-50 absolute left-0 top-0 flex items-center justify-center z-50">
+              <Spin />
+            </div>
+          ))}
         <div className="relative">
           <input
             type="file"
@@ -106,10 +113,10 @@ const ProfilePicture = (props: {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center absolute top-0 left-0">
-            {props.data?.profilePicture ? (
+            {profile?.profilePicture ? (
               <img
-                src={props.data?.profilePicture}
-                alt={props.data.firstName}
+                src={profile?.profilePicture}
+                alt={isAdmin ? profile?.companyName : profile?.firstName}
                 className="object-cover !object-center h-full w-full absolute top-0 left-0 z-30"
               />
             ) : (

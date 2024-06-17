@@ -8,9 +8,13 @@ import useGetEmployees from "../hooks/useGetEmployees";
 import { useUpdateEmployeeRoleMutation } from "../redux/data/employees";
 import { openAddModeratorModal } from "../redux/modals";
 import { handleUpdateEmployeeRole } from "./Profile";
+import ErrorComponent from "../components/ErrorComponent";
+import Loading from "../components/Loading";
+import { LoadingModal } from "../components/HeaderProfile";
+import SpinLoading from "../components/SpinLoading";
 
 const Moderators = () => {
-  const { employees, isLoading } = useGetEmployees();
+  const { employees, isLoading, isError } = useGetEmployees();
   const [updateEmployeeRole] = useUpdateEmployeeRoleMutation();
 
   const dispatch = useDispatch();
@@ -80,6 +84,14 @@ const Moderators = () => {
       ),
     },
   ];
+
+  if (isError) {
+    return <ErrorComponent />;
+  }
+
+  if (isLoading) {
+    return <SpinLoading />;
+  }
 
   return (
     <div className="pt-24 px-4 w-full space-y-6">

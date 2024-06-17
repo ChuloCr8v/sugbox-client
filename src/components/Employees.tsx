@@ -1,25 +1,35 @@
 import { ReactNode, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import useGetEmployees from "../hooks/useGetEmployees";
+import { useGetEmployeesQuery } from "../redux/data/employees";
 import EmployeeFilters from "./EmployeeFilters";
 import EmployeeStatusTag from "./EmployeeStatusTag";
+import ErrorComponent from "./ErrorComponent";
+import Loading from "./Loading";
 import PageHeader from "./PageHeader";
 import PieChartComponent from "./PieChart";
 import { NoDataComponent, SectionHeading } from "./Suggestions";
 import Table from "./Table";
-import { useGetEmployeesQuery } from "../redux/data/employees";
-import UseGetAuth from "../hooks/useGetAuth";
-import Loading from "./Loading";
 
 const Employees = () => {
   const { data, isLoading } = useGetEmployeesQuery("");
-  const { employees, activeEmployees, disabledEmployees, refetch, isFetching } =
-    useGetEmployees();
+  const {
+    employees,
+    activeEmployees,
+    disabledEmployees,
+    refetch,
+    isFetching,
+    isError,
+  } = useGetEmployees();
   const [filteredData, setFilteredData] = useState(data);
 
-  const { user } = UseGetAuth();
+  if (isError) {
+    return <ErrorComponent />;
+  }
 
-  console.log(user);
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const columns = [
     {

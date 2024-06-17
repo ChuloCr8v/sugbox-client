@@ -6,6 +6,7 @@ import { Key, useState } from "react";
 import { FaBan, FaChevronDown } from "react-icons/fa";
 import { employeeType } from "../../types";
 import { useUpdateEmployeeRoleMutation } from "../../redux/data/employees";
+import SpinLoading from "../SpinLoading";
 
 const AddNewModerator = () => {
   const { employees, isLoading: loadingEmployees } = useGetEmployees();
@@ -78,11 +79,7 @@ const AddNewModerator = () => {
   };
 
   if (loadingEmployees) {
-    return (
-      <div className="w-full h-full py-4">
-        <Spin />
-      </div>
-    );
+    return <SpinLoading />;
   }
 
   return (
@@ -98,7 +95,7 @@ const AddNewModerator = () => {
       onOk={handleAddModerators}
       okText={"Submit"}
     >
-      <div className="">
+      <div className="my-6">
         <Dropdown menu={{ items }}>
           <a
             href=""

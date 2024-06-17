@@ -13,10 +13,10 @@ const commentApi = api.injectEndpoints({
     }),
 
     uploadProfilePicture: mutation({
-      query: ({ id, ...imageUrl }) => ({
+      query: ({ id, ...body }) => ({
         url: `/uploads/profile-picture/${id}`,
         method: "POST",
-        body: imageUrl,
+        body: body,
       }),
       invalidatesTags: ["employee", "employees"],
     }),

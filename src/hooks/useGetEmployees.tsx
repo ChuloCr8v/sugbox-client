@@ -4,7 +4,8 @@ import useGetAuth from "./useGetAuth";
 const useGetEmployees = () => {
   const { id } = useGetAuth();
 
-  const { data, isLoading, refetch, isFetching } = useGetEmployeesQuery("");
+  const { data, isLoading, refetch, isFetching, isError } =
+    useGetEmployeesQuery("");
   const employees = data?.filter(
     (e: { companyId: string }) => e.companyId === id
   );
@@ -25,6 +26,7 @@ const useGetEmployees = () => {
     activeEmployees,
     disabledEmployees,
     activeEmployeesData,
+    isError,
   };
 };
 
