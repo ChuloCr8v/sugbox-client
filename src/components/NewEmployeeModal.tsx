@@ -112,7 +112,7 @@ const NewEmployeeModal = () => {
           />
         }
       >
-        <form action="" className="grid grid-cols-2 items-start gap-4 pt-6">
+        <form action="" className="grid md:grid-cols-2 items-start gap-4 pt-6">
           {newEmployeeFormItems.map((item, index) => (
             <FormGroup
               onInputChange={(e) =>

@@ -6,6 +6,7 @@ import ProfilePicture from "../components/ProfilePicture";
 import { Label } from "../components/SmallerComponents";
 import { SectionHeading } from "../components/Suggestions";
 import ConfirmEmailUpdateModal from "../components/modals/ConfirmEmailUpdateModal";
+import UseGetAuth from "../hooks/useGetAuth";
 import {
   useEditEmployeeMutation,
   useGetEmployeeQuery,
@@ -14,7 +15,6 @@ import {
   useEditOrganizationMutation,
   useGetOrganizationQuery,
 } from "../redux/data/organizations";
-import UseGetAuth from "../hooks/useGetAuth";
 
 const employeeDataFields = {
   email: "",
@@ -34,6 +34,22 @@ const employeeDataFields = {
   },
 };
 
+const orgDataFields = {
+  companyName: "",
+  notifications: {
+    newEmployeeInvited: false,
+    employeeDeactivated: false,
+    employeeActivated: false,
+    newSuggestionForOrganization: false,
+    suggestionApproved: false,
+    suggestionRejected: false,
+    suggestionDeleted: false,
+    newLikeOnSuggestion: false,
+    newCommentOnSuggestion: false,
+    highEngagementOnSuggestion: false,
+  },
+};
+
 const Settings = () => {
   const { id } = useParams();
   const { data: employee } = useGetEmployeeQuery(id);
@@ -45,13 +61,13 @@ const Settings = () => {
 
   const [employeeData, setEmployeeData] = useState(employeeDataFields);
   const { data: organization } = useGetOrganizationQuery(id);
-  const [orgData, setOrgData] = useState({ companyName: "" });
+  const [orgData, setOrgData] = useState(orgDataFields);
 
   const { isAdmin } = UseGetAuth();
 
   useEffect(() => {
     isAdmin ? setOrgData(organization) : setEmployeeData(employee);
-  }, [employee]);
+  }, [employee, organization]);
 
   const officeRoles = [
     {
@@ -170,6 +186,69 @@ const Settings = () => {
     },
   ];
 
+  const adminNotificationData = [
+    {
+      title: "New Employee Invited",
+      type: "switch",
+      value: orgData?.notifications?.newEmployeeInvited,
+      name: "newEmployeeInvited",
+    },
+    {
+      title: "Employee Activated",
+      type: "switch",
+      value: orgData?.notifications?.employeeActivated,
+      name: "employeeActivated",
+    },
+    {
+      title: "Employee Deactivated",
+      type: "switch",
+      value: orgData?.notifications?.employeeDeactivated,
+      name: "employeeDeactivated",
+    },
+    {
+      title: "New suggestion submitted",
+      type: "switch",
+      value: orgData?.notifications?.newSuggestionForOrganization,
+      name: "newSuggestionForOrganization",
+    },
+    {
+      title: "Suggestion Approved",
+      type: "switch",
+      value: orgData?.notifications?.suggestionApproved,
+      name: "suggestionApproved",
+    },
+    {
+      title: "Suggestion Rejected",
+      type: "switch",
+      value: orgData?.notifications?.suggestionRejected,
+      name: "suggestionRejected",
+    },
+    {
+      title: "Suggestion Deleted",
+      type: "switch",
+      value: orgData?.notifications?.suggestionDeleted,
+      name: "suggestionDeleted",
+    },
+    {
+      title: "New Like On Suggestion",
+      type: "switch",
+      value: orgData?.notifications?.newLikeOnSuggestion,
+      name: "newLikeOnSuggestion",
+    },
+    {
+      title: "New Comment On Suggestion",
+      type: "switch",
+      value: orgData?.notifications?.newCommentOnSuggestion,
+      name: "newCommentOnSuggestion",
+    },
+    {
+      title: "High Engagement On Suggestion",
+      type: "switch",
+      value: orgData?.notifications?.highEngagementOnSuggestion,
+      name: "highEngagementOnSuggestion",
+    },
+  ];
+
   const handleChangeProfileDetail = (name: string, value: ReactNode) => {
     isAdmin
       ? setOrgData((prev) => ({ ...prev, [name]: value }))
@@ -195,28 +274,37 @@ const Settings = () => {
     name: string,
     value: ReactNode
   ) => {
-    setEmployeeData((prev) => ({
-      ...prev,
-      notifications: {
-        ...prev.notifications,
-        [name]: value,
-      },
-    }));
+    isAdmin
+      ? setOrgData((prev) => ({
+          ...prev,
+          notifications: {
+            ...prev.notifications,
+            [name]: value,
+          },
+        }))
+      : setEmployeeData((prev) => ({
+          ...prev,
+          notifications: {
+            ...prev.notifications,
+            [name]: value,
+          },
+        }));
   };
 
   const profileDetail = isAdmin ? organizationData : personalInfoData;
+  const notificationDetail = isAdmin ? adminNotificationData : notificationData;
 
-  const disableUpdateButton = () => {
-    if (isAdmin && orgData?.companyName === organization?.companyName) {
-      return true;
-    } else if (
-      !isAdmin &&
-      (employeeData?.firstName === employee?.firstName ||
-        employeeData?.lastName === employee?.lastName)
-    ) {
-      return true;
-    }
-  };
+  // const disableUpdateButton = () => {
+  //   if (isAdmin && orgData?.companyName === organization?.companyName) {
+  //     return true;
+  //   } else if (
+  //     !isAdmin &&
+  //     (employeeData?.firstName === employee?.firstName ||
+  //       employeeData?.lastName === employee?.lastName)
+  //   ) {
+  //     return true;
+  //   }
+  // };
 
   return (
     <div className="px-4 py-24 w-full flex flex-col relative">
@@ -305,7 +393,7 @@ const Settings = () => {
                 <SectionHeading heading={"Notification Settings"} />
               </div>
               <div className="flex flex-col lg:grid grid-cols-2 gap-y-4 justify-between w-full">
-                {notificationData.map((item) => (
+                {notificationDetail.map((item) => (
                   <div className="grid gap-2" key={item.title}>
                     <Label title={item.title} labelClassName="text-gray-500" />
 
@@ -326,7 +414,7 @@ const Settings = () => {
         <Button
           loading={updatingPersonalInfo || updatingOrgInfo}
           onClick={handleEditEmployee}
-          disabled={disableUpdateButton()}
+          //  disabled={disableUpdateButton()}
           className="fixed right-10 bottom-10 ring-4 border-none shadow-none bg-primaryblue  hover:!bg-blue-700 hover:!text-white text-white h-9 flex items-center font-semibold"
         >
           Update Profile{" "}

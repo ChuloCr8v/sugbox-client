@@ -104,6 +104,8 @@ const Employees = () => {
   }, [data]);
   const currentPage = window.location.href;
 
+  console.log(data);
+
   return (
     <section className="w-full">
       <div className="">
