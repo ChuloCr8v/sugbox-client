@@ -56,7 +56,7 @@ const HeaderProfile = () => {
           onClick={async () => {
             const id = user._id;
             try {
-              await generateOTP({ id }).unwrap();
+              await generateOTP({ id, action: "reset your password" }).unwrap();
               navigate(`/verify-otp/${id}/reset-password`);
             } catch (error) {
               message.error("Error, Please try again.");

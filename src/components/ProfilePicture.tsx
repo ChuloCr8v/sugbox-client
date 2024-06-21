@@ -8,6 +8,7 @@ import { useGetEmployeeQuery } from "../redux/data/employees";
 import { useGetOrganizationQuery } from "../redux/data/organizations";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
+
 export const convertBase64 = (file: FileType) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
@@ -73,6 +74,7 @@ const ProfilePicture = () => {
   };
 
   const profile = isAdmin ? organization : employee;
+
   return (
     <div className="grid gap-4 relative md:w-[200px] xl:w-[250px]">
       {uploadUrl && (
@@ -85,13 +87,11 @@ const ProfilePicture = () => {
         </div>
       )}
       <div className="relative rounded-lg bg-blue-100 max-[350px]:w-[360px] w-auto h-[250px] flex flex-col items-center justify-center overflow-hidden group">
-        {uploadingImage ||
-          gettingEmployee ||
-          (gettingOrganization && (
-            <div className="h-full w-full bg-black bg-opacity-50 absolute left-0 top-0 flex items-center justify-center z-50">
-              <Spin />
-            </div>
-          ))}
+        {(uploadingImage || gettingEmployee || gettingOrganization) && (
+          <div className="h-full w-full bg-black bg-opacity-50 absolute left-0 top-0 flex items-center justify-center z-50">
+            <Spin />
+          </div>
+        )}
         <div className="relative">
           <input
             type="file"

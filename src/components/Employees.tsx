@@ -27,10 +27,6 @@ const Employees = () => {
     return <ErrorComponent />;
   }
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   const columns = [
     {
       title: "Name",

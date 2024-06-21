@@ -10,6 +10,11 @@ import {
   useEditEmployeeMutation,
   useGetEmployeeQuery,
 } from "../redux/data/employees";
+import {
+  useEditOrganizationMutation,
+  useGetOrganizationQuery,
+} from "../redux/data/organizations";
+import UseGetAuth from "../hooks/useGetAuth";
 
 const employeeDataFields = {
   email: "",
@@ -34,12 +39,18 @@ const Settings = () => {
   const { data: employee } = useGetEmployeeQuery(id);
   const [editEmployee, { isLoading: updatingPersonalInfo }] =
     useEditEmployeeMutation();
+  const [editOrganization, { isLoading: updatingOrgInfo }] =
+    useEditOrganizationMutation();
   const [confirmResetPasswordIsOpen, setResetPasswordIsOpen] = useState(false);
 
   const [employeeData, setEmployeeData] = useState(employeeDataFields);
+  const { data: organization } = useGetOrganizationQuery(id);
+  const [orgData, setOrgData] = useState({ companyName: "" });
+
+  const { isAdmin } = UseGetAuth();
 
   useEffect(() => {
-    setEmployeeData(employee);
+    isAdmin ? setOrgData(organization) : setEmployeeData(employee);
   }, [employee]);
 
   const officeRoles = [
@@ -54,6 +65,21 @@ const Settings = () => {
     {
       title: "UI/UX Developer",
       id: 3,
+    },
+  ];
+
+  const organizationData = [
+    {
+      title: "email",
+      type: "email",
+      value: organization?.companyEmail,
+      name: "email",
+    },
+    {
+      title: "Organization name",
+      type: "text",
+      value: organization?.companyName,
+      name: "companyName",
     },
   ];
 
@@ -145,19 +171,18 @@ const Settings = () => {
   ];
 
   const handleChangeProfileDetail = (name: string, value: ReactNode) => {
-    setEmployeeData((prev) => ({ ...prev, [name]: value }));
-    console.log(name + " " + ":" + value);
-  };
-
-  const checkValues = () => {
-    return employeeData?.firstName === "" || employeeData?.lastName === ""
-      ? false
-      : true;
+    isAdmin
+      ? setOrgData((prev) => ({ ...prev, [name]: value }))
+      : setEmployeeData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleEditEmployee = async () => {
+    const editAction = isAdmin
+      ? editOrganization(orgData)
+      : editEmployee(employeeData);
+
     try {
-      const res = await editEmployee(employeeData).unwrap();
+      const res = await editAction.unwrap();
       message.success("Profile edited successfully.");
       console.log(res);
     } catch (error) {
@@ -179,6 +204,20 @@ const Settings = () => {
     }));
   };
 
+  const profileDetail = isAdmin ? organizationData : personalInfoData;
+
+  const disableUpdateButton = () => {
+    if (isAdmin && orgData?.companyName === organization?.companyName) {
+      return true;
+    } else if (
+      !isAdmin &&
+      (employeeData?.firstName === employee?.firstName ||
+        employeeData?.lastName === employee?.lastName)
+    ) {
+      return true;
+    }
+  };
+
   return (
     <div className="px-4 py-24 w-full flex flex-col relative">
       <div className="w-full flex flex-col gap-8">
@@ -193,11 +232,13 @@ const Settings = () => {
                 <SectionHeading heading={"Personal Details"} />
               </div>
               <div className="flex flex-col lg:grid grid-cols-2 gap-4 w-full">
-                {personalInfoData.map((item: any) => (
+                {profileDetail.map((item: any) => (
                   <div
                     className={twMerge(
                       "grid gap-2 ",
-                      item.title === "email" && "col-span-2 w-full xl:w-1/2"
+                      item.title === "email" &&
+                        !isAdmin &&
+                        "col-span-2 w-full xl:w-1/2"
                     )}
                     key={item.title}
                   >
@@ -283,9 +324,9 @@ const Settings = () => {
           </div>
         </div>
         <Button
-          loading={updatingPersonalInfo}
+          loading={updatingPersonalInfo || updatingOrgInfo}
           onClick={handleEditEmployee}
-          disabled={!checkValues()}
+          disabled={disableUpdateButton()}
           className="fixed right-10 bottom-10 ring-4 border-none shadow-none bg-primaryblue  hover:!bg-blue-700 hover:!text-white text-white h-9 flex items-center font-semibold"
         >
           Update Profile{" "}

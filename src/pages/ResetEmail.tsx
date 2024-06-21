@@ -2,30 +2,29 @@ import { Button, Input, message } from "antd";
 import { useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import UseGetAuth from "../hooks/useGetAuth";
-import { useResetEmployeeEmailMutation } from "../redux/api/auth";
+import { useResetEmailMutation } from "../redux/api/auth";
 import { useNavigate } from "react-router-dom";
 
 const ResetEmail = () => {
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [resetEmployeeEmail, { isLoading: updatingEmail }] =
-    useResetEmployeeEmailMutation();
+  const [resetEmail, { isLoading: updatingEmail }] = useResetEmailMutation();
   const navigate = useNavigate();
 
-  const { id } = UseGetAuth();
+  const { id, isAdmin } = UseGetAuth();
 
   const handleResetPassword = async () => {
     setErrorMessage("");
     try {
-      await resetEmployeeEmail({ id, email }).unwrap();
+      await resetEmail({ id, email, isAdmin }).unwrap();
       message.success("Email updated Successfully");
       setTimeout(() => {
         navigate("/portal");
       }, 2000);
     } catch (error: any) {
       console.log(error);
-      setErrorMessage("Failed, try again.");
-      message.error("Failed, try again.");
+      setErrorMessage(error.data);
+      message.error(error.data);
     }
   };
 

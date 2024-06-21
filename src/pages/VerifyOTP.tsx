@@ -6,14 +6,16 @@ import {
   useVerifyOTPMutation,
 } from "../redux/data/OTP";
 import { useNavigate, useParams } from "react-router-dom";
+import UseGetAuth from "../hooks/useGetAuth";
 
 const VerifyOTPPage = () => {
   const [OTP, setOTP] = useState("");
   const [generateOTP, { isLoading }] = useGenerateOTPMutation();
+  const { isAdmin } = UseGetAuth();
 
   const { id, action } = useParams();
 
-  const [verifyOTP] = useVerifyOTPMutation();
+  const [verifyOTP, { isLoading: verifyingOTP }] = useVerifyOTPMutation();
 
   const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ const VerifyOTPPage = () => {
 
   const handleOTPVerification = async () => {
     try {
-      await verifyOTP({ id, OTP }).unwrap();
+      await verifyOTP({ id, OTP, isAdmin }).unwrap();
       message.success("OTP Verification Successful");
       if (action === "reset-email") {
         navigate(`/reset-email/${id}`);
@@ -31,26 +33,16 @@ const VerifyOTPPage = () => {
         navigate(`/reset-password/${id}`);
       }
     } catch (error: any) {
-      if (error.status === 401) {
-        message.error("OTP has expired.");
-      } else if (error.status === 403) {
-        message.error("Incorrect OTP.");
-      } else if (error.status === 403) {
-        message.error("Incorrect OTP.");
-      } else if (error.status === 404) {
-        message.error("No OTP available for your account.");
-      } else {
-        message.error("OTP verification failed.");
-      }
-
       console.log(error);
+      message.error(error.data);
     }
   };
 
   const handleResendOTP = async () => {
     try {
-      await generateOTP({ id }).unwrap();
+      await generateOTP({ id, isAdmin }).unwrap();
       message.success("OTP resent to your email. ");
+      setOTP("");
     } catch (error) {
       message.error("Failed to generate OTP. Please try again.");
     }
@@ -59,9 +51,7 @@ const VerifyOTPPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-5">
       <div className="text-center -mt-32 grid gap-2">
-        <p className="text-2xl font-semibold text-primaryblue ">
-          Reset Password
-        </p>
+        <p className="text-2xl font-semibold text-primaryblue ">Verify OTP</p>
         <p className="text-gray-600">
           Enter the{" "}
           <span className="text-primaryblue font-semibold">
@@ -84,14 +74,14 @@ const VerifyOTPPage = () => {
         <p className="mt-2">
           Yet to recieve OTP?{" "}
           <span
-            className="text-primaryblue font-semibold"
+            className="text-primaryblue font-semibold cursor-pointer"
             onClick={handleResendOTP}
           >
             Resend OTP
           </span>
         </p>
         <Button
-          loading={isLoading}
+          loading={isLoading || verifyingOTP}
           onClick={handleOTPVerification}
           disabled={OTP.length < 4 || isLoading}
           className="bg-green-500 w-[144px] h-9 text-white font-semibold border-none shadow-none hover:!bg-green-700 hover:!text-white mt-6"

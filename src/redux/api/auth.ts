@@ -17,6 +17,7 @@ export type resetPassword = {
 export type resetEmail = {
   email?: string;
   id?: string;
+  isAdmin?: boolean;
 };
 
 export type User = {
@@ -103,9 +104,9 @@ export const authApi = api.injectEndpoints({
       }),
     }),
 
-    resetEmployeeEmail: mutation<AuthResult, resetEmail>({
+    resetEmail: mutation<AuthResult, resetEmail>({
       query: ({ id, ...data }) => ({
-        url: `/auth/employee/reset-email/${id}`,
+        url: `/auth/reset-email/${id}`,
         method: "PUT",
         body: data,
       }),
@@ -129,7 +130,7 @@ export const {
   useVerifyOldPasswordMutation,
   useResetEmployeePasswordMutation,
   useGenerateResetPasswordLinkMutation,
-  useResetEmployeeEmailMutation,
+  useResetEmailMutation,
   useAdminSignupMutation,
   useAdminVerificationMutation,
 } = authApi;

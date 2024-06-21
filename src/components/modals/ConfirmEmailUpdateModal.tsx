@@ -6,6 +6,7 @@ import UseGetAuth from "../../hooks/useGetAuth";
 import { useGenerateOTPMutation } from "../../redux/data/OTP";
 import { useGetEmployeeQuery } from "../../redux/data/employees";
 import ModalFooter from "./ModalFooter";
+import { useGetOrganizationQuery } from "../../redux/data/organizations";
 
 interface Props {
   confirmResetPasswordIsOpen: boolean;
@@ -15,16 +16,23 @@ const ConfirmEmailUpdateModal = (props: Props) => {
   const [generateOTP, { isLoading: generatingOtp }] = useGenerateOTPMutation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const { id } = UseGetAuth();
+  const { id, isAdmin } = UseGetAuth();
   const { data: employee } = useGetEmployeeQuery(id);
+  const { data: organization } = useGetOrganizationQuery(id);
+
+  const currentEmail = isAdmin ? organization?.companyEmail : employee?.email;
 
   const handleGenerateOtp = async () => {
     try {
-      if (employee?.email !== email) {
+      if (currentEmail !== email) {
         message.error("Incorrect Email address");
         return;
       }
-      await generateOTP({ id }).unwrap();
+      await generateOTP({
+        id,
+        isAdmin,
+        action: "reset your email address",
+      }).unwrap();
       message.success("OTP sent to your email");
       navigate(`/verify-otp/${id}/reset-email`);
       setEmail("");
