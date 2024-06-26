@@ -37,7 +37,7 @@ const Header = () => {
             href="/dashboard"
             className="logo_wrapper cursor-pointer font-bold text-xl text-gray-500 "
           >
-            <span className="text-primaryblue">SUG</span>box
+            <img src="/sugbox-logo.png" alt="sugbox" className="h-10" />
           </a>
           {/* <span className="text-[12px] text-gray-600 text-center leading-none">
             Your Ideas, <br />

@@ -5,24 +5,28 @@ import { AUTH_STORAGE_KEY, TOKEN_STORAGE_KEY } from "..";
 import UseGetAuth from "../hooks/useGetAuth";
 import { useLogoutMutation } from "../redux/api/auth";
 import { useGenerateOTPMutation } from "../redux/data/OTP";
+import { useGetOrganizationQuery } from "../redux/data/organizations";
+import { useGetEmployeeQuery } from "../redux/data/employees";
 
 const HeaderProfile = () => {
   const [logOut] = useLogoutMutation();
-  const { user } = UseGetAuth();
+  const { user, id, isAdmin } = UseGetAuth();
+  const { data: organization } = useGetOrganizationQuery(id);
+  const { data: employee } = useGetEmployeeQuery(id);
 
   const [generateOTP, { isLoading }] = useGenerateOTPMutation();
 
   const navigate = useNavigate();
 
   const avatar = () => {
-    if (user?.isAdmin && !user?.firstName) return user?.companyName.slice(0, 1);
-    return user?.firstName.slice(0, 1);
+    if (isAdmin) return organization?.companyName.slice(0, 1);
+    return employee?.firstName.slice(0, 1);
     // + " " + user?.lastName.slice(0, 1)
   };
 
   const username = () => {
-    if (user?.isAdmin && !user?.firstName) return user?.companyName;
-    return user?.firstName + " " + user?.lastName;
+    if (isAdmin) return organization?.companyName;
+    return employee?.firstName + " " + employee?.lastName;
   };
 
   const handleLogOut = () => {
@@ -34,11 +38,6 @@ const HeaderProfile = () => {
   };
 
   const items = [
-    // {
-    //   label: "Profile",
-    //   link: "/profile",
-    //   icon: <AppstoreAddOutlined />,
-    // },
     {
       key: 1,
       label: (

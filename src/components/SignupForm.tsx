@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import Button from "./Button";
+import { Button } from "antd";
 import { FormGroup } from "./SmallerComponents";
 
 import { ChangeEventHandler } from "react";
@@ -22,7 +22,7 @@ const SignupForm = (props: Props) => {
   return (
     <form
       action=""
-      className="bg-morph px-6 py-10 flex flex-col items-start gap-6 max-w-[400px] w-full shadow-xl rounded-md border-solid border-bordercolor border-2"
+      className="flex flex-col items-start gap-6 max-w-[500px] w-full "
     >
       {props.formValues.map(
         (
@@ -49,15 +49,15 @@ const SignupForm = (props: Props) => {
 
       <Button
         className={twMerge(
-          "w-full  bg-primaryblue hover:bg-hoverblue font-bold text-white uppercase py-3",
-          props.disabled && "bg-gray-200 hover:bg-gray-200"
+          "w-full flex items-center justify-center border-none bg-primaryblue hover:bg-hoverblue font-bold text-white uppercase py-3"
         )}
-        text={"SignUp"}
         onClick={props.handleSubmit}
         disabled={props.disabled}
-        url={""}
         loading={props.isLoading}
-      />
+      >
+        Signup
+      </Button>
+
       <div className="place-self-center">
         <span className="text-center text-white">
           Already have an account? Login{" "}

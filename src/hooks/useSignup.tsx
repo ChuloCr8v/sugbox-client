@@ -14,11 +14,11 @@ const useSignup = () => {
   const adminSignup = async (signupData: signupProps) => {
     try {
       await signup(signupData).unwrap();
-      message.success("Successful");
+      message.success("Signup Successful");
       navigate("/login-redirect");
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      message.success("Oops, an error occured, please try again.");
+      message.error(error.data);
     }
   };
 

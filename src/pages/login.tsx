@@ -1,4 +1,8 @@
+import { Button } from "antd";
 import { useState } from "react";
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import FormLayout from "../components/FormLayout";
 import Form from "../components/LoginForm";
 import useLogin from "../hooks/useLogin";
 
@@ -12,6 +16,8 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const { loginRole, adminSignIn, employeeSignIn, isLoading, employeeLoading } =
     useLogin(inputValue);
@@ -38,37 +44,64 @@ const SignIn = () => {
   };
 
   return (
-    <div className="xl:grid grid-cols-2 h-screen w-screen overflow-hidden bg-white xl:bg-primaryblue xl:bg-transparent">
-      <div className="hidden xl:flex flex-col items-center justify-center h-full w-full">
-        <img
-          src={"/box.png"}
-          height={300}
-          width={300}
-          alt={"sugbox"}
-          className=""
-        />
-        <h2 className="font-bold text-2xl text-white mt-6">Welcome Back</h2>
-        <p className="text-lg text-white mt-1 capitalize">
-          Login To{" "}
-          {loginRole !== "employee"
-            ? " View Latest Suggestions from your employees"
-            : "Leave Your Suggestions"}
-        </p>
-      </div>
-      <div className="bg-white flex flex-col items-center justify-center h-full w-full px-4">
-        <p className="text-2xl mb-4 text-center font-semibold text-black xl:hidden">
-          {loginRole !== "employee" ? "Admin" : "Employee"} Login
-        </p>
-
-        <Form
-          handleInputChange={handleInputChange}
-          handleSubmit={handleLogin}
-          disabled={checkValues() || isLoading || employeeLoading}
-          isLoading={isLoading || employeeLoading}
-        />
-      </div>
+    <div className="h-screen w-screen overflow-hidden flex items-center justify-center bg-gray-50">
+      <FormLayout
+        leftSideElements={
+          <div className="flex flex-col items-center justify-center ">
+            <img
+              src={"/box.png"}
+              height={300}
+              width={300}
+              alt={"sugbox"}
+              className=""
+            />
+            <h2 className="font-bold text-2xl text-black mt-6">Welcome Back</h2>
+            <p className="text-lg text-gray-600 mt-1 capitalize">
+              Login To{" "}
+              {loginRole !== "employee"
+                ? " View Latest Suggestions from your employees"
+                : "Leave Your Suggestions"}
+            </p>
+          </div>
+        }
+        rightSideElements={
+          <div className="bg-white flex flex-col items-center justify-center h-full w-full px-4">
+            <div className="w-full max-w-[400px]">
+              <Button
+                onClick={() => navigate("/portal")}
+                icon={<FaArrowLeft />}
+                className="mb-5 -mt-5 flex items-center justify-center"
+              >
+                Back to Portal
+              </Button>
+              <FormHeading
+                heading={`Login as ${
+                  loginRole !== "employee" ? "Organization" : "Employee"
+                }`}
+              />
+              <Form
+                handleInputChange={handleInputChange}
+                handleSubmit={handleLogin}
+                disabled={checkValues() || isLoading || employeeLoading}
+                isLoading={isLoading || employeeLoading}
+              />
+            </div>
+          </div>
+        }
+      />
     </div>
   );
 };
 
 export default SignIn;
+
+export const FormHeading = (props: { heading: string }) => {
+  return (
+    <div className="grid gap-2 mb-6">
+      <div className="h-2 w-8 bg-blue-400 rounded-full"></div>
+      <p className="text-xl mb-4 text-left font-semibold text-black">
+        {props.heading}
+      </p>
+    </div>
+  );
+};

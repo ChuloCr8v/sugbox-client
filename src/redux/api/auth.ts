@@ -96,9 +96,9 @@ export const authApi = api.injectEndpoints({
       }),
     }),
 
-    resetEmployeePassword: mutation<AuthResult, resetPassword>({
+    resetPassword: mutation<AuthResult, resetPassword>({
       query: ({ email, ...data }) => ({
-        url: `/auth/employee/reset-password/${email}`,
+        url: `/auth/reset-password/${email}`,
         method: "PUT",
         body: data,
       }),
@@ -128,7 +128,7 @@ export const {
   useGetAuthUserQuery,
   useLogoutMutation,
   useVerifyOldPasswordMutation,
-  useResetEmployeePasswordMutation,
+  useResetPasswordMutation,
   useGenerateResetPasswordLinkMutation,
   useResetEmailMutation,
   useAdminSignupMutation,

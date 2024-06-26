@@ -105,6 +105,7 @@ const Employees = () => {
   const currentPage = window.location.href;
 
   console.log(data);
+  console.log(filteredData);
 
   return (
     <section className="w-full">

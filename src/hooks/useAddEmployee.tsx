@@ -1,23 +1,20 @@
 import { message } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useEmployeeSignupMutation } from "../redux/api/auth";
-import useGetAuth from "./useGetAuth";
 import { useDispatch } from "react-redux";
+import { useEmployeeSignupMutation } from "../redux/api/auth";
 import { hideNewEmployeeModal } from "../redux/modals";
+import useGetAuth from "./useGetAuth";
 
 const useAddEmployee = () => {
   const [employeeSignUp, { isLoading: addingEmployee }] =
     useEmployeeSignupMutation();
   const { id } = useGetAuth();
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const addEmployee = async (formData: {}) => {
     try {
       await employeeSignUp({ id, formData }).unwrap();
       message.success("Employee added successfully");
-      navigate("/employees");
       dispatch(hideNewEmployeeModal());
     } catch (error) {
       console.log(error);

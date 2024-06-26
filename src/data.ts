@@ -33,14 +33,14 @@ export const loginFormValues = [
   {
     label: "Email",
     type: "email",
-    placeholder: "Enter email address",
+    placeholder: "Enter organization email address",
     name: "email",
     required: true,
   },
   {
     label: "Password",
     type: "password",
-    placeholder: "Choose a password",
+    placeholder: "Enter organization password",
     name: "password",
     required: true,
   },

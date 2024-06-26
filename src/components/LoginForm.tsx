@@ -14,12 +14,10 @@ interface Props {
 
 const LoginForm = (props: Props) => {
   return (
-    <form
-      action=""
-      className="bg-white px-6 py-10 flex flex-col items-start gap-6 max-w-[400px] w-full shadow rounded-xl border border-gray-200"
-    >
+    <form action="" className="flex flex-col items-start gap-6 w-full">
       {loginFormValues.map((v, index) => (
         <FormGroup
+          inputClassName="border-0 rounded-none border-b !border-gray-300 pl-0 hover:!border-primaryblue focus:!outline-none"
           onInputChange={props.handleInputChange}
           label={v.label}
           inputType={v.type}
@@ -39,9 +37,9 @@ const LoginForm = (props: Props) => {
         </Checkbox>
         <a
           href="/forgot-password"
-          className="hover:text-primaryblue duration-200 cursor-pointer text-[14.5px] text-white"
+          className="hover:text-primaryblue duration-200 cursor-pointer text-[14.5px] text-black"
         >
-          Forgot Password
+          Forgot Password?
         </a>
       </div>
       <Button

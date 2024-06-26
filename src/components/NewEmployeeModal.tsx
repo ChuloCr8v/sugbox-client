@@ -69,7 +69,7 @@ const NewEmployeeModal = () => {
       placeholder: "Select role",
       required: false,
       type: "select",
-      name: "adminRole",
+      name: "isModerator",
       value: formData.adminRole,
       options: [
         { value: "staff", label: "Staff" },
@@ -79,6 +79,13 @@ const NewEmployeeModal = () => {
   ];
 
   const handleInputChange = (name: string, value: string) => {
+    if (name === "isModerator") {
+      setFormData((prev) => ({
+        ...prev,
+        isModerator: value === "moderator" ? true : false,
+      }));
+      return;
+    }
     setFormData((prev) => ({
       ...prev,
       [name]: value,

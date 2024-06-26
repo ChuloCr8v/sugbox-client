@@ -10,7 +10,7 @@ const Sidebar = () => {
     (state: { sideBar: { isSideBarOpen: boolean } }) => state.sideBar
   );
   const dispatch = useDispatch();
-  const { user, id } = UseGetAuth();
+  const { user, id, isAdmin } = UseGetAuth();
   const path = window.location.pathname;
 
   const navItems = [
@@ -120,10 +120,9 @@ const Sidebar = () => {
         {allMenu.map((item, index) => (
           <MenuItem item={item} key={index} />
         ))}
-        {user?.isAdmin &&
+        {isAdmin &&
           adminMenu.map((item, index) => <MenuItem item={item} key={index} />)}
-        {(user?.adminRole?.toLowerCase() === "staff" ||
-          user?.adminRole?.toLowerCase() === "moderator") &&
+        {!isAdmin &&
           staffMenu.map((item, index) => <MenuItem item={item} key={index} />)}
       </div>
     </div>
