@@ -6,7 +6,7 @@ import useGetEmployees from "../../hooks/useGetEmployees";
 import { useUpdateEmployeeRoleMutation } from "../../redux/data/employees";
 import { closeAddModeratorModal } from "../../redux/modals";
 import { employeeType } from "../../types";
-import SpinLoading from "../SpinLoading";
+//import SpinLoading from "../SpinLoading";
 
 const AddNewModerator = () => {
   const { employees, isLoading: loadingEmployees } = useGetEmployees();
@@ -78,9 +78,9 @@ const AddNewModerator = () => {
     setSelectedEmployees(updatedList);
   };
 
-  if (loadingEmployees) {
-    return <SpinLoading />;
-  }
+  // if (loadingEmployees) {
+  //   return <SpinLoading />;
+  // }
 
   return (
     <Modal

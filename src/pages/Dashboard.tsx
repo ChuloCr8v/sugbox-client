@@ -5,7 +5,7 @@ import ErrorComponent from "../components/ErrorComponent";
 import FilterCards from "../components/FilterCards";
 import Filters from "../components/Filters";
 import PageHeader from "../components/PageHeader";
-import SpinLoading from "../components/SpinLoading";
+//import SpinLoading from "../components/SpinLoading";
 import SuggestionCards from "../components/SuggestionCards";
 import Suggestions from "../components/Suggestions";
 import SummaryCardSection from "../components/SummaryCardSection";
@@ -61,9 +61,9 @@ const Dashboard = () => {
     return <ErrorComponent />;
   }
 
-  if (isLoadingSuggestions) {
-    return <SpinLoading />;
-  }
+  // if (isLoadingSuggestions) {
+  //   return <SpinLoading />;
+  // }
 
   return (
     <div className="w-full grid gap-4 px-4 py-24">
