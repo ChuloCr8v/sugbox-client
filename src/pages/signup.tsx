@@ -57,15 +57,13 @@ const Signup = () => {
           <div className="flex flex-col items-center justify-center">
             <img
               src={"/logo-icon.png"}
-              height={300}
-              width={300}
               alt={"sugbox"}
-              className=""
+              className="lg:max-w-[200px] max-w-[300px] w-full"
             />
-            <h2 className="font-bold text-2xl text-black mt-6">
+            <h2 className="font-bold text-2xl text-black mt-6 text-center">
               Welcome To Suggbox
             </h2>
-            <p className="text-lg text-gray-600 mt-1">
+            <p className="text-lg text-gray-600 mt-1 text-center">
               Register your organization to Start Getting Suggestions
             </p>
           </div>
@@ -73,15 +71,6 @@ const Signup = () => {
         rightSideElements={
           <div className="flex flex-col items-center justify-center w-full">
             <div className="max-w-[500px] w-full">
-              <div className="w-full flex flex-col items-start mb-8 -mt-10 max-w-[400px]">
-                <Button
-                  icon={<FaArrowLeft />}
-                  onClick={() => navigate("/portal")}
-                  className="place-self-start flex items-center"
-                >
-                  Back to Login
-                </Button>
-              </div>
               <FormHeading heading="Register Your Organization" />
             </div>
             <Form

@@ -65,15 +65,8 @@ const SignIn = () => {
           </div>
         }
         rightSideElements={
-          <div className="bg-white flex flex-col items-center justify-center h-full w-full px-4">
+          <div className=" flex flex-col items-center justify-center h-full w-full px-4">
             <div className="w-full max-w-[400px]">
-              <Button
-                onClick={() => navigate("/portal")}
-                icon={<FaArrowLeft />}
-                className="mb-5 -mt-5 flex items-center justify-center"
-              >
-                Back to Portal
-              </Button>
               <FormHeading
                 heading={`Login as ${
                   loginRole !== "employee" ? "Organization" : "Employee"
@@ -98,10 +91,24 @@ export default SignIn;
 export const FormHeading = (props: { heading: string }) => {
   return (
     <div className="grid gap-2 mb-6">
-      <div className="h-2 w-8 bg-blue-400 rounded-full"></div>
+      <div className="h-2 w-8 bg-primaryblue rounded-full"></div>
       <p className="text-xl mb-4 text-left font-semibold text-black">
         {props.heading}
       </p>
     </div>
+  );
+};
+
+export const BackToButton = (props: { url: string; page: string }) => {
+  const navigate = useNavigate();
+
+  return (
+    <Button
+      onClick={() => navigate(`${props.url}`)}
+      icon={<FaArrowLeft />}
+      className="mb-5 flex items-center justify-center w-full "
+    >
+      Back to {props.page}
+    </Button>
   );
 };

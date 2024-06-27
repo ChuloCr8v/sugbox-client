@@ -4,6 +4,7 @@ import { FaArrowLeft, FaEnvelope } from "react-icons/fa";
 import { useGenerateResetPasswordLinkMutation } from "../redux/api/auth";
 import { useNavigate } from "react-router-dom";
 import FormLayout from "../components/FormLayout";
+import { BackToButton } from "./login";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -45,16 +46,6 @@ const ForgotPassword = () => {
         rightSideElements={
           <div className="space-y-4 flex flex-col justify-center items-center w-full">
             <div className="text-center space-y-1 flex flex-col items-center">
-              <div className="w-full flex items-start mb-8 -mt-10 max-w-[400px] px-4">
-                <Button
-                  icon={<FaArrowLeft />}
-                  onClick={() => navigate("/portal")}
-                  className="place-self-start flex items-center"
-                >
-                  Back to Login
-                </Button>
-              </div>
-
               <p className="text-2xl md:text-3xl font-semibold">
                 Forgot Password
               </p>
@@ -86,14 +77,19 @@ const ForgotPassword = () => {
                   type="email"
                   className="p-0 border hover:border-primaryblue h-9 rounded w-full overflow-hidden"
                 />
-                <Button
-                  loading={generatingLink}
-                  onClick={handleResetPassword}
-                  disabled={email === "" || generatingLink}
-                  className="h-9 w-full bg-primaryblue border-none text-white hover:!bg-hoverblue hover:!text-white font-semibold shadow-none"
-                >
-                  Submit
-                </Button>
+
+                <div className="grid gap-2 w-full">
+                  {" "}
+                  <Button
+                    loading={generatingLink}
+                    onClick={handleResetPassword}
+                    disabled={email === "" || generatingLink}
+                    className="h-9 w-full bg-primaryblue border-none text-white hover:!bg-hoverblue hover:!text-white font-semibold shadow-none"
+                  >
+                    Submit
+                  </Button>
+                  <BackToButton url="/portal" page={"Login"} />
+                </div>
               </div>
             </div>
           </div>

@@ -20,10 +20,7 @@ interface Props {
 
 const SignupForm = (props: Props) => {
   return (
-    <form
-      action=""
-      className="flex flex-col items-start gap-6 max-w-[500px] w-full "
-    >
+    <form action="" className="flex flex-col items-start gap-6  w-full ">
       {props.formValues.map(
         (
           v: {
@@ -59,11 +56,11 @@ const SignupForm = (props: Props) => {
       </Button>
 
       <div className="place-self-center">
-        <span className="text-center text-white">
+        <span className="text-center text-black">
           Already have an account? Login{" "}
           <a
             href="/login"
-            className="underline font-bold hover:text-[#031932] duration-200"
+            className="underline font-bold text-primaryblue hover:text-hoverblue duration-200"
           >
             here
           </a>

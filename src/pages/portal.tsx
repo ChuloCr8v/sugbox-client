@@ -15,8 +15,8 @@ const Portal = () => {
   const portalProps = [
     {
       id: 1,
-      label: "Organization ",
-      loginRole: "admin",
+      label: "Organization",
+      loginRole: "organization",
       icon: <FaUser />,
     },
     {
@@ -73,7 +73,7 @@ const Portal = () => {
                 onClick={handleSubmit}
                 className="h-10 capitalize border-none bg-primaryblue hover:!bg-hoverblue hover:!text-white text-white font-semibold mt-2"
               >
-                Visit {loginRole} Login
+                Login as an {loginRole}
               </Button>
             )}
           </div>
