@@ -102,6 +102,7 @@ const Employees = () => {
   useEffect(() => {
     data && setFilteredData(data);
   }, [data]);
+
   const currentPage = window.location.href;
 
   console.log(data);

@@ -46,7 +46,8 @@ const FormLayout = (props: Props) => {
         <div
           className={twMerge(
             "xl:bg-gray-50 w-full flex items-center justify-center md:w-[80%] xl:h-[85%] h-fit px-4 xl:px-0 md:py-24 xl:py-0 xl:my-4 xl:grid grid-cols-2 xl:shadow-xl rounded-lg xl:overflow-hidden relative z-10 xl:mt-12",
-            user && "w-full h-auto md:w-full grid-cols-1 shadow-none"
+            user &&
+              "w-full h-auto md:w-full grid-cols-1 shadow-none xl:shadow-none xl:overflow-visible"
           )}
         >
           {!user && (

@@ -6,6 +6,7 @@ import { FormGroup } from "../components/SmallerComponents";
 import { useResetPasswordMutation } from "../redux/api/auth";
 import { useGetEmployeeQuery } from "../redux/data/employees";
 import { useGetOrganizationQuery } from "../redux/data/organizations";
+import useLogout from "../hooks/useLogout";
 
 const formDataFields = {
   oldPassword: "",
@@ -20,6 +21,8 @@ const ResetPassword = () => {
     useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
+
+  const { handleLogOut } = useLogout();
 
   const { id } = useParams();
 
@@ -79,7 +82,7 @@ const ResetPassword = () => {
         action: "resetPassword",
       }).unwrap();
       message.success("Password Reset Successful.");
-      // handleLogOut();
+      handleLogOut();
     } catch (error: any) {
       console.log(error);
       setErrorMsg(error.data);
@@ -103,7 +106,7 @@ const ResetPassword = () => {
         rightSideElements={
           <div className="flex flex-col items-center justify-center gap-12 w-full">
             <div className="">
-              <p className="text-2xl font-semibold text-center">
+              <p className="text-xl font-semibold text-center">
                 Reset Password for{" "}
                 <span className="text-primaryblue font-semibold">
                   {getEmployeeLoading || getOrgLoading ? (

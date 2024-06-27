@@ -12,7 +12,7 @@ import {
   useGetEmployeeQuery,
 } from "../redux/data/employees";
 import {
-  useEditOrganizationMutation,
+  useEditCompanyMutation,
   useGetOrganizationQuery,
 } from "../redux/data/organizations";
 
@@ -55,8 +55,8 @@ const Settings = () => {
   const { data: employee } = useGetEmployeeQuery(id);
   const [editEmployee, { isLoading: updatingPersonalInfo }] =
     useEditEmployeeMutation();
-  const [editOrganization, { isLoading: updatingOrgInfo }] =
-    useEditOrganizationMutation();
+  const [editCompany, { isLoading: updatingOrgInfo }] =
+    useEditCompanyMutation();
   const [confirmResetPasswordIsOpen, setResetPasswordIsOpen] = useState(false);
 
   const [employeeData, setEmployeeData] = useState(employeeDataFields);
@@ -257,7 +257,7 @@ const Settings = () => {
 
   const handleEditEmployee = async () => {
     const editAction = isAdmin
-      ? editOrganization(orgData)
+      ? editCompany(orgData)
       : editEmployee(employeeData);
 
     try {

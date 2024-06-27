@@ -16,9 +16,9 @@ const useAddEmployee = () => {
       await employeeSignUp({ id, formData }).unwrap();
       message.success("Employee added successfully");
       dispatch(hideNewEmployeeModal());
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      message.success("Oops, an error occured, please try again.");
+      message.error(error.data);
     }
   };
 

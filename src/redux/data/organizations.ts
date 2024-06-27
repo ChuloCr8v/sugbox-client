@@ -11,7 +11,7 @@ const organizationsApi = api.injectEndpoints({
       providesTags: ["organization", "organizations"],
     }),
 
-    editOrganization: mutation({
+    editCompany: mutation({
       query: ({ _id, ...body }) => ({
         url: `/organizations/edit-organization/${_id}`,
         method: "PUT",
@@ -25,5 +25,5 @@ const organizationsApi = api.injectEndpoints({
 export const {
   useGetOrganizationsQuery,
   useGetOrganizationQuery,
-  useEditOrganizationMutation,
+  useEditCompanyMutation,
 } = organizationsApi;
