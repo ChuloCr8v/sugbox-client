@@ -4,9 +4,9 @@ import { signupFormValues } from "../data";
 import useSignup from "../hooks/useSignup";
 import FormLayout from "../components/FormLayout";
 import { FormHeading } from "./login";
-import { Button } from "antd";
-import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+// import { Button } from "antd";
+// import { FaArrowLeft } from "react-icons/fa";
+// import { useNavigate } from "react-router-dom";
 
 interface inputValueProps {
   companyEmail: string;
@@ -26,7 +26,7 @@ const Signup = () => {
   const [signupData, setSignupData] = useState<inputValueProps>(inputValues);
   const { adminSignup, isLoading } = useSignup();
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const handleInputChange = (e: {
     preventDefault: () => void;

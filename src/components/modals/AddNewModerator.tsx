@@ -9,7 +9,7 @@ import { employeeType } from "../../types";
 //import SpinLoading from "../SpinLoading";
 
 const AddNewModerator = () => {
-  const { employees, isLoading: loadingEmployees } = useGetEmployees();
+  const { employees } = useGetEmployees();
   const [updateEmployeeRole, { isLoading: updatingRole }] =
     useUpdateEmployeeRoleMutation();
   const [selectedEmployees, setSelectedEmployees] = useState<any>([]);

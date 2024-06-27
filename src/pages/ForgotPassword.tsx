@@ -1,9 +1,8 @@
 import { Button, Input, message } from "antd";
 import { useState } from "react";
-import { FaArrowLeft, FaEnvelope } from "react-icons/fa";
-import { useGenerateResetPasswordLinkMutation } from "../redux/api/auth";
-import { useNavigate } from "react-router-dom";
+import { FaEnvelope } from "react-icons/fa";
 import FormLayout from "../components/FormLayout";
+import { useGenerateResetPasswordLinkMutation } from "../redux/api/auth";
 import { BackToButton } from "./login";
 
 const ForgotPassword = () => {
@@ -11,7 +10,7 @@ const ForgotPassword = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const navigate = useNavigate();
+  //  const navigate = useNavigate();
 
   const [generateResetPassword, { isLoading: generatingLink }] =
     useGenerateResetPasswordLinkMutation();
