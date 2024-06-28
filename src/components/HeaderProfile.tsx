@@ -20,7 +20,7 @@ const HeaderProfile = () => {
 
   const avatar = () => {
     if (isAdmin) {
-      return organization.profilePicture ? (
+      return organization?.profilePicture ? (
         <img
           src={organization?.profilePicture}
           alt={organization?.companyName}
@@ -37,7 +37,7 @@ const HeaderProfile = () => {
           className="h-full w-full object-cover"
         />
       ) : (
-        employee?.firstName.slice(0, 1)
+        employee?.firstName?.slice(0, 1)
       );
     }
   };
