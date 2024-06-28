@@ -49,9 +49,9 @@ const Profile = () => {
   const { data: comments } = useGetCommentsQuery("");
   const [updateEmployeeRole] = useUpdateEmployeeRoleMutation();
 
-  const finalData = filteredData?.filter((sug) => {
-    id !== sug?.userId ? sug?.isAnonymous === false : filteredData;
-  });
+  const finalData = filteredData?.filter((sug) =>
+    id !== sug?.userId ? sug?.isAnonymous === false : true
+  );
 
   const dispatch = useDispatch();
 
