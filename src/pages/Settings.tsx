@@ -317,7 +317,11 @@ const Settings = () => {
           <div className="w-full grid gap-6 max-[390px]:pt-4">
             <div className="w-full md:border flex flex-col items-start gap-2 rounded-lg md:p-4">
               <div className="text-primaryblue font-bold !text-xl">
-                <SectionHeading heading={"Personal Details"} />
+                <SectionHeading
+                  heading={
+                    isAdmin ? "Organization Details" : "Personal Details"
+                  }
+                />
               </div>
               <div className="flex flex-col lg:grid grid-cols-2 gap-4 w-full">
                 {profileDetail.map((item: any) => (

@@ -188,13 +188,9 @@ export const SectionHeading = (props: {
     <h3 className="font-semibold text-lg text-left flex items-center gap-1">
       {props.heading}
 
-      {props?.count ? (
+      {props?.count && (
         <span className="border border-primaryblue rounded-full text-[12px] text-primaryblue h-5 w-5 flex items-center justify-center">
           {props?.count}
-        </span>
-      ) : (
-        <span className="border border-primaryblue rounded-full text-[12px] text-primaryblue h-5 w-5 flex items-center justify-center">
-          0
         </span>
       )}
     </h3>

@@ -7,7 +7,7 @@ import Filters from "../components/Filters";
 import PageHeader from "../components/PageHeader";
 //import SpinLoading from "../components/SpinLoading";
 import SuggestionCards from "../components/SuggestionCards";
-import Suggestions from "../components/Suggestions";
+import Suggestions, { SectionHeading } from "../components/Suggestions";
 import SummaryCardSection from "../components/SummaryCardSection";
 import UseGetAuth from "../hooks/useGetAuth";
 import useGetSuggestions from "../hooks/useGetSuggestions";
@@ -101,10 +101,16 @@ const Dashboard = () => {
             Unable to get suggestions, check your internet and try again!
           </p>
         ) : (
-          <SuggestionCards
-            data={filteredData}
-            isLoading={isLoadingSuggestions}
-          />
+          <div className="mt-2">
+            <SectionHeading
+              heading="Latest Suggestions"
+              count={filteredData?.length}
+            />
+            <SuggestionCards
+              data={filteredData}
+              isLoading={isLoadingSuggestions}
+            />
+          </div>
         ))}
     </div>
   );
