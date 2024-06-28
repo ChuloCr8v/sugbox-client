@@ -49,6 +49,10 @@ const Profile = () => {
   const { data: comments } = useGetCommentsQuery("");
   const [updateEmployeeRole] = useUpdateEmployeeRoleMutation();
 
+  const finalData = filteredData?.filter((sug) => {
+    id !== sug?.userId ? sug?.isAnonymous === false : filteredData;
+  });
+
   const dispatch = useDispatch();
 
   const userComments = comments?.filter(
@@ -222,16 +226,13 @@ const Profile = () => {
           <div className="grid gap-8">
             <SectionHeading
               heading={<>{isAdmin ? "Employee" : "My"} Suggestions</>}
-              count={filteredData?.length}
+              count={finalData?.length}
             />
           </div>
 
           {userSuggestions?.length > 0 ? (
             <div className="grid gap-4 mt-4">
-              <SuggestionTable
-                isLoading={isLoading}
-                filteredData={filteredData}
-              />
+              <SuggestionTable isLoading={isLoading} filteredData={finalData} />
             </div>
           ) : (
             <NoDataComponent message="No Suggestions from this employee yet" />

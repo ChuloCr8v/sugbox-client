@@ -88,7 +88,7 @@ const SuggestionTable = (props: Props) => {
       {" "}
       <TableComponent
         loading={props.isLoading}
-        data={props.filteredData}
+        data={props?.filteredData}
         columns={columns}
         onRow={(record: suggestionProps) => {
           return {
