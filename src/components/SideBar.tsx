@@ -112,7 +112,7 @@ const Sidebar = () => {
       ></div>
       <div
         className={twMerge(
-          "bg-white min-h-screen fixed lg:relative top-0 left-0 w-0 lg:w-[250px] pt-24 border-r overflow-hidden z-30 duration-200",
+          "bg-white min-h-screen fixed lg:relative top-0 left-0 w-0 lg:w-[250px] pt-24 border-r overflow-hidden z-50 duration-200",
           !user && "hidden",
           isSideBarOpen && "w-[calc(100vw-20%)] "
         )}
