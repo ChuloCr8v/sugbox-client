@@ -86,13 +86,13 @@ const ProfilePicture = () => {
           Remove
         </div>
       )}
-      <div className="relative rounded-lg bg-blue-100 max-[350px]:w-[360px] w-auto h-[250px] flex flex-col items-center justify-center overflow-hidden group">
+      <div className="relative rounded-lg bg-blue-100 max-[350px]:w-[360px] !w-full h-[250px] flex flex-col items-center justify-center overflow-hidden group">
         {(uploadingImage || gettingEmployee || gettingOrganization) && (
-          <div className="h-full w-full bg-black bg-opacity-50 absolute left-0 top-0 flex items-center justify-center z-50">
+          <div className="h-full !w-full bg-black bg-opacity-50 absolute left-0 top-0 flex items-center justify-center z-50">
             <Spin />
           </div>
         )}
-        <div className="relative">
+        <div className="relative !w-full">
           <input
             type="file"
             onChange={getImage}
@@ -102,7 +102,7 @@ const ProfilePicture = () => {
             <div className="border rounded-full p-4">
               <FaCamera className="text-white text-5xl" />
             </div>
-            <div className="h-full w-full bg-black bg-opacity-25 absolute z-50 left-0 top-0"></div>
+            <div className="h-full !w-full bg-black bg-opacity-25 absolute z-50 left-0 top-0"></div>
           </div>
         </div>
         {uploadUrl ? (

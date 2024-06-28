@@ -19,9 +19,27 @@ const HeaderProfile = () => {
   const navigate = useNavigate();
 
   const avatar = () => {
-    if (isAdmin) return organization?.companyName.slice(0, 1);
-    return employee?.firstName.slice(0, 1);
-    // + " " + user?.lastName.slice(0, 1)
+    if (isAdmin) {
+      return organization.profilePicture ? (
+        <img
+          src={organization?.profilePicture}
+          alt={organization?.companyName}
+          className="h-full w-full object-cover"
+        />
+      ) : (
+        organization?.companyName.slice(0, 1)
+      );
+    } else {
+      return employee?.profilePicture ? (
+        <img
+          src={employee?.profilePicture}
+          alt={employee?.firstName}
+          className="h-full w-full object-cover"
+        />
+      ) : (
+        employee?.firstName.slice(0, 1)
+      );
+    }
   };
 
   const username = () => {
@@ -87,7 +105,7 @@ const HeaderProfile = () => {
       >
         <LoadingModal loadingModalOpen={isLoading} />
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-full bg-primaryblue text-white flex items-center justify-center uppercase text-base font-bold ">
+          <div className="h-8 w-8 rounded-full bg-primaryblue text-white flex items-center justify-center uppercase text-base font-bold overflow-hidden">
             {avatar()}
           </div>
           <p className="hidden md:flex text-textcolor font-semibold text-base group-hover:text-primaryblue duration-200">
