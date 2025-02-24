@@ -363,6 +363,7 @@ const Settings = () => {
                     ) : item.name === "defaultAnonymous" ? (
                       <div className="">
                         <Switch
+                          size="small"
                           defaultChecked
                           className="bg-gray-400"
                           onChange={(value) =>
@@ -402,6 +403,7 @@ const Settings = () => {
                     <Label title={item.title} labelClassName="text-gray-500" />
 
                     <Switch
+                      size="small"
                       defaultChecked
                       className="bg-gray-400 w-fit"
                       onChange={(value) => {

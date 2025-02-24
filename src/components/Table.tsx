@@ -11,6 +11,7 @@ const TableComponent = (props: {
   return (
     <div className="max-w-[380px] w-full md:max-w-full overflow-x-hidden">
       <Table
+        size="small"
         scroll={{ x: "max-content" }}
         loading={props.loading}
         pagination={{ pageSize: props.pageSize }}

@@ -4,7 +4,6 @@ import { twMerge } from "tailwind-merge";
 import { loginFormValues } from "../data";
 import Button from "./Button";
 import { FormGroup } from "./SmallerComponents";
-import { BackToButton } from "../pages/login";
 
 interface Props {
   handleInputChange: ChangeEventHandler<HTMLInputElement>;
@@ -38,7 +37,7 @@ const LoginForm = (props: Props) => {
         </Checkbox>
         <a
           href="/forgot-password"
-          className="hover:text-primaryblue duration-200 cursor-pointer text-[14.5px] text-black"
+          className="hover:text-primaryblue duration-200 cursor-pointer text-black"
         >
           Forgot Password?
         </a>
@@ -46,7 +45,7 @@ const LoginForm = (props: Props) => {
       <div className="grid gap-2 w-full">
         <Button
           className={twMerge(
-            "w-full hover:bg-hoverblue bg-primaryblue font-bold text-white uppercase py-3",
+            "w-full hover:bg-hoverblue bg-primaryblue font-bold text-white capitalize py-3",
             props.disabled && "bg-gray-200 hover:bg-gray-200"
           )}
           text={"Login"}
@@ -55,7 +54,7 @@ const LoginForm = (props: Props) => {
           loading={props.isLoading}
           url={""}
         />
-        <BackToButton url={"/portal"} page="Portal" />
+        {/* <BackToButton url={"/portal"} page="Portal" /> */}
       </div>
       <div className="place-self-center">
         <span className="text-center text-gray-500">

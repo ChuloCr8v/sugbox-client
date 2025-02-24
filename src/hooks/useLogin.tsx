@@ -29,20 +29,20 @@ const useLogin = (loginData: Props) => {
       const res = await adminLogin(loginData).unwrap();
 
       dispatch(setCredentials({ ...res }));
+      message.success("Login Successful");
       navigate("/dashboard");
       window.location.reload();
-      message.success("Login Successful");
     } catch (error: any) {
-      console.log("error");
-      error.status === 404 && message.error("Organization does not exist!");
-      error.status === 401 && message.error("Wrong password!");
+      console.log(error);
+      error.originalStatus === 404 &&
+        message.error("Organization does not exist!");
+      error.originalStatus === 401 && message.error("Wrong password!");
     }
   };
 
   const employeeSignIn = async () => {
     try {
       const res = await employeeLogin(loginData).unwrap();
-      console.log(res);
       if (res.others.isDisabled) {
         message.error(
           "Your account is currently disabled, please contact your admin."
@@ -53,16 +53,16 @@ const useLogin = (loginData: Props) => {
       const data = { ...res };
       console.log(data);
       dispatch(setCredentials(data));
-      navigate("/dashboard");
       message.success("Login Successful");
+      navigate("/dashboard");
       window.location.reload();
     } catch (error: any) {
       console.log(error);
-      error.status === 404 &&
+      error.originalStatus === 404 &&
         message.error(
           "Account does not exist, please contact your admin for account creation."
         );
-      error.status === 401 && message.error("Wrong employee password.");
+      error.originalStatus === 401 && message.error("Wrong employee password.");
     }
   };
 

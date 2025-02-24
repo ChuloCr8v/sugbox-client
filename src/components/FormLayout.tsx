@@ -1,7 +1,9 @@
+import { Button } from "antd";
 import { ReactNode } from "react";
+import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import UseGetAuth from "../hooks/useGetAuth";
 import { twMerge } from "tailwind-merge";
+import UseGetAuth from "../hooks/useGetAuth";
 
 interface Props {
   leftSideElements: ReactNode;
@@ -12,6 +14,8 @@ const FormLayout = (props: Props) => {
   const navigate = useNavigate();
 
   const { user } = UseGetAuth();
+
+  const currentPage = window.location;
 
   return (
     <div
@@ -45,17 +49,27 @@ const FormLayout = (props: Props) => {
 
         <div
           className={twMerge(
-            "xl:bg-gray-50 w-full flex items-center justify-center md:w-[80%] xl:h-[85%] h-fit px-4 xl:px-0 md:py-24 xl:py-0 xl:my-4 xl:grid grid-cols-2 xl:shadow-xl rounded-lg xl:overflow-hidden relative z-10 xl:mt-12",
+            "xl:bg-gray-50 w-full flex items-center justify-center md:w-[80%] xl:h-[85%] h-fit px-4 xl:px-0 md:py-24 xl:py-0 xl:my-4 xl:grid grid-cols-2 xl:border-2 rounded-lg xl:overflow-hidden relative z-10 xl:mt-12",
             user &&
               "w-full h-auto md:w-full grid-cols-1 shadow-none xl:shadow-none xl:overflow-visible"
           )}
         >
           {!user && (
-            <div className="xl:bg-gray-100 h-full w-full hidden xl:flex flex-col items-center justify-center">
+            <div className="xl:bg-gray-100 h-full w-full hidden xl:flex flex-col items-center justify-center xl:-mt-10">
               {props.leftSideElements}
             </div>
           )}
-          <div className="max-w-[500px] place-self-center bg-gray-50 xl:bg-transparent w-full xl:h-full rounded-xl pb-12 flex flex-col items-center justify-center xl:pb-8">
+          <div className="max-w-[500px] place-self-center bg-gray-50 xl:bg-transparent w-full xl:h-full rounded-xl pb-12 flex flex-col items-start justify-center xl:pb-8 xl:pl-12">
+            {currentPage.pathname !== "/portal" && (
+              <Button
+                type="link"
+                onClick={() => navigate("/portal")}
+                className="flex items-center gap-2 p-0 mb-10 text-black"
+              >
+                <FaArrowLeft />
+                Back
+              </Button>
+            )}
             {props.rightSideElements}
           </div>
         </div>

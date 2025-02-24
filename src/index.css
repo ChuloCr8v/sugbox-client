@@ -2,10 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "raleway";
+  src: url("./fonts/RalewayRaleway-Italic-VariableFont_wght.ttf")
+      format("truetype"),
+    url("./fonts/Raleway/Raleway-VariableFont_wght.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "raleway", sans-serif;
+  font-size: 12px;
+  /* border: 2px red solid; */
 }
 
 body,

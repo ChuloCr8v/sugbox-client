@@ -56,7 +56,7 @@ const SignIn = () => {
               className=""
             />
             <h2 className="font-bold text-2xl text-black mt-6">Welcome Back</h2>
-            <p className="text-lg text-gray-600 mt-1 capitalize">
+            <p className="text-base text-gray-600 mt-1 capitalize">
               Login To{" "}
               {loginRole !== "employee"
                 ? " View Latest Suggestions from your employees"
@@ -65,8 +65,8 @@ const SignIn = () => {
           </div>
         }
         rightSideElements={
-          <div className=" flex flex-col items-center justify-center h-full w-full px-4">
-            <div className="w-full max-w-[400px]">
+          <div className=" flex flex-col items-center justify-center w-full">
+            <div className="w-full max-w-[400px] place-self-start">
               <FormHeading
                 heading={`Login as ${
                   loginRole !== "employee" ? "Organization" : "Employee"
@@ -106,7 +106,7 @@ export const BackToButton = (props: { url: string; page: string }) => {
     <Button
       onClick={() => navigate(`${props.url}`)}
       icon={<FaArrowLeft />}
-      className="mb-5 flex items-center justify-center w-full "
+      className="mb-5 flex items-center justify-center w-full h-8"
     >
       Back to {props.page}
     </Button>
