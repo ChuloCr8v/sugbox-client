@@ -1,41 +1,41 @@
 import { Route, Routes } from "react-router-dom";
 import EditCompanyForm from "../components/EditCompanyForm";
 import Header from "../components/Header";
+import AddNewModerator from "../components/modals/AddNewModerator";
+import EditSuggestionModal from "../components/modals/EditSuggestionModal";
+import SendEmailModal from "../components/modals/SendEmailModal";
+import SuggestionModal from "../components/modals/SuggestionModal";
 import NewEmployeeModal from "../components/NewEmployeeModal";
 import SideBar from "../components/SideBar";
-import SuggestionModal from "../components/modals/SuggestionModal";
-import Dashboard from "./Dashboard";
-import Login from "./login";
-import Profile from "./Profile";
-import Portal from "./portal";
-import Suggestion from "./Suggestion";
 import UseGetAuth from "../hooks/useGetAuth";
-import EditSuggestionModal from "../components/modals/EditSuggestionModal";
-import MySuggestions from "./MySuggestions";
-import ResetPassword from "./ResetPassword";
-import VerifyOTPPage from "./VerifyOTP";
-import ForgotPassword from "./ForgotPassword";
 import ChangePassword from "./ChangePassword";
-import Settings from "./Settings";
-import ResetEmail from "./ResetEmail";
-import Signup from "./signup";
-import VerificationSuccessfulPage from "./VerificationSuccessfulPage";
-import LoginPageRedirect from "./LoginPageRedirect";
+import Dashboard from "./Dashboard";
 import Employees from "./Employees";
-import Suggestions from "./suggestions";
-import SendEmailModal from "../components/modals/SendEmailModal";
+import ForgotPassword from "./ForgotPassword";
+import Login from "./login";
+import LoginPageRedirect from "./LoginPageRedirect";
 import Moderators from "./moderators";
-import AddNewModerator from "../components/modals/AddNewModerator";
+import MySuggestions from "./MySuggestions";
+import Portal from "./portal";
+import Profile from "./Profile";
+import ResetEmail from "./ResetEmail";
+import ResetPassword from "./ResetPassword";
+import Settings from "./Settings";
+import Signup from "./signup";
+import Suggestion from "./Suggestion";
+import Suggestions from "./suggestions";
+import VerificationSuccessfulPage from "./VerificationSuccessfulPage";
+import VerifyOTPPage from "./VerifyOTP";
 
 const Layout = () => {
   const { token } = UseGetAuth();
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-gray-100 min-h-screen">
       <div className="flex w-full">
         <Header />
         <SideBar />
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full flex flex-col items-center lg:pl-16">
           <div className="flex flex-col items-center  w-full">
             <Routes>
               <Route
@@ -121,6 +121,7 @@ const Layout = () => {
         <EditCompanyForm />
         <SendEmailModal />
         <AddNewModerator />
+        {/* <CustomModal /> */}
       </div>
     </div>
   );

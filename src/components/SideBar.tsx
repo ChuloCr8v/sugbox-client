@@ -1,9 +1,10 @@
-import React from "react";
 import { FaRegLightbulb, FaRegUser, FaTable, FaUsers } from "react-icons/fa";
+import { IconType } from "react-icons/lib";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import UseGetAuth from "../hooks/useGetAuth";
-import { closeSideBar } from "../redux/sideBar";
+import { closeSideBar, openSideBar } from "../redux/sideBar";
 
 const Sidebar = () => {
   const { isSideBarOpen } = useSelector(
@@ -17,13 +18,13 @@ const Sidebar = () => {
     {
       title: "Dashboard",
       link: "/dashboard",
-      icon: <FaTable />,
+      icon: FaTable,
       role: "all",
     },
     {
       title: "Employees",
       link: "/employees",
-      icon: <FaUsers />,
+      icon: FaUsers,
       role: "admin",
     },
     // {
@@ -40,31 +41,31 @@ const Sidebar = () => {
     {
       title: "My Suggestions",
       link: "/my-suggestions",
-      icon: <FaRegLightbulb />,
+      icon: FaRegLightbulb,
       role: "staff",
     },
     {
       title: "My Profile",
       link: `/my-profile/${id}`,
-      icon: <FaRegUser />,
+      icon: FaRegUser,
       role: "staff",
     },
     {
       title: "Suggestions",
       link: "/suggestions",
-      icon: <FaRegLightbulb />,
+      icon: FaRegLightbulb,
       role: "admin",
     },
     {
       title: "Moderators",
       link: "/moderators",
-      icon: <FaRegUser />,
+      icon: FaRegUser,
       role: "admin",
     },
     // {
     //   title: "Admin Suggestions",
     //   link: "/admin-suggestions",
-    //   icon: <BulbOutlined />,
+    //   icon: BulbOutlined ,
     // },
   ];
 
@@ -74,16 +75,16 @@ const Sidebar = () => {
     item: {
       title: string;
       link: string;
-      icon: React.JSX.Element;
+      icon: IconType;
       role: string;
     };
   }) => {
     return (
-      <a
-        href={item.link}
+      <Link
+        to={item.link}
         onClick={() => dispatch(closeSideBar())}
         className={twMerge(
-          "w-full flex items-center gap-2  pr-6 px-4 lg:px-10 py-2 border-l-4 hover:border-l-4 border-transparent border-solid hover:border-primaryblue hover:text-primaryblue duration-200",
+          "w-full flex items-center gap-2 lg:gap-5 pr-6 px-4 py-3 border-l-2 border-transparent border-solid hover:border-primaryblue hover:text-primaryblue duration-200",
           path.toLowerCase().includes(`${item.link}`) &&
             "text-primaryblue border-primaryblue",
           path === "/" &&
@@ -91,16 +92,25 @@ const Sidebar = () => {
             "text-primaryblue border-primaryblue"
         )}
       >
-        {item.icon}
-        <span>{item.title}</span>
-      </a>
+        <span className="">
+          <item.icon className="text-xl" />
+        </span>
+        <span
+          className={twMerge(
+            "opacity-0 transition-all duration-1000 leading-none",
+            isSideBarOpen && "opacity-100"
+          )}
+        >
+          {item.title}
+        </span>
+      </Link>
     );
   };
 
   const adminMenu = navItems.filter((item) => item.role === "admin");
   const staffMenu = navItems.filter((item) => item.role === "staff");
   const allMenu = navItems.filter((item) => item.role === "all");
-  console.log(user);
+
   return (
     <div className="">
       <div
@@ -111,10 +121,12 @@ const Sidebar = () => {
         )}
       ></div>
       <div
+        onMouseEnter={() => dispatch(openSideBar())}
+        onMouseLeave={() => dispatch(closeSideBar())}
         className={twMerge(
-          "bg-white min-h-screen fixed lg:relative top-0 left-0 w-0 lg:w-[250px] pt-24 border-r overflow-hidden z-50 duration-200",
+          "bg-white min-h-screen fixed top-0 left-0 w-0 lg:w-16 pt-24 border-r overflow-hidden z-50 duration-200",
           !user && "hidden",
-          isSideBarOpen && "w-[calc(100vw-20%)] "
+          isSideBarOpen && "w-[180px] lg:w-[180px]"
         )}
       >
         {allMenu.map((item, index) => (

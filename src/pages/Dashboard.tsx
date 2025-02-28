@@ -5,7 +5,6 @@ import ErrorComponent from "../components/ErrorComponent";
 import FilterCards from "../components/FilterCards";
 import Filters from "../components/Filters";
 import PageHeader from "../components/PageHeader";
-//import SpinLoading from "../components/SpinLoading";
 import SuggestionCards from "../components/SuggestionCards";
 import Suggestions, { SectionHeading } from "../components/Suggestions";
 import SummaryCardSection from "../components/SummaryCardSection";
@@ -61,10 +60,6 @@ const Dashboard = () => {
     return <ErrorComponent />;
   }
 
-  // if (isLoadingSuggestions) {
-  //   return <SpinLoading />;
-  // }
-
   return (
     <div className="w-full grid gap-4 px-4 py-24">
       <PageHeader
@@ -84,13 +79,14 @@ const Dashboard = () => {
         <div className="space-y-6 ">
           <SummaryCardSection />
           <Suggestions
+            showFilter={false}
             data={filteredData}
             setFilteredData={setFilteredData}
             isRefreshing={isRefreshing}
             refetch={refetch}
             isLoading={isLoadingSuggestions}
           />
-          <Employees />
+          <Employees showFilter={false} />
         </div>
       )}
 

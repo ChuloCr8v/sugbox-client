@@ -16,7 +16,8 @@ const useGetEmployees = () => {
   const activeEmployeesData = employees?.filter(
     (employee: { isDisabled: boolean }) => employee?.isDisabled === false
   );
-  const activeEmployees = employees?.length - disabledEmployees?.length;
+  const activeEmployees =
+    (employees?.length ?? 0) - (disabledEmployees?.length ?? 0);
 
   return {
     isFetching,

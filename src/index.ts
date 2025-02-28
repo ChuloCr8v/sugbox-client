@@ -1,4 +1,4 @@
-export const API_URL = "https://sug-server-gf7y.onrender.com";
+export const API_URL = "https://sug-server-gf7y.onrender.com/api";
 // export const API_URL = "http://localhost:8000/api/";
 
 export const AUTH_STORAGE_KEY = "sugbox_authKey";

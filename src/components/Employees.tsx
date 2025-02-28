@@ -10,8 +10,9 @@ import PageHeader from "./PageHeader";
 import PieChartComponent from "./PieChart";
 import { NoDataComponent, SectionHeading } from "./Suggestions";
 import Table from "./Table";
+import { Link } from "react-router-dom";
 
-const Employees = () => {
+const Employees = ({ showFilter }: { showFilter?: boolean }) => {
   const { data, isLoading } = useGetEmployeesQuery("");
   const {
     employees,
@@ -23,10 +24,6 @@ const Employees = () => {
   } = useGetEmployees();
   const [filteredData, setFilteredData] = useState(data);
 
-  if (isError) {
-    return <ErrorComponent />;
-  }
-
   const columns = [
     {
       title: "Name",
@@ -37,12 +34,12 @@ const Employees = () => {
         _: ReactNode,
         record: { _id: string; firstName: string; lastName: string }
       ) => (
-        <a
-          href={`/profile/${record._id}`}
+        <Link
+          to={`/profile/${record._id}`}
           className="capitalize font-bold text-primaryblue"
         >
           {record.firstName + " " + record.lastName}
-        </a>
+        </Link>
       ),
     },
     {
@@ -105,55 +102,58 @@ const Employees = () => {
 
   const currentPage = window.location.href;
 
-  console.log(data);
-  console.log(filteredData);
-
   return (
     <section className="w-full">
-      <div className="">
-        <div className="table w-full space-y-4">
-          {currentPage.includes("dashboard") ? (
-            <SectionHeading
-              heading={"Employees"}
-              count={filteredData?.length}
-            />
-          ) : (
-            <PageHeader
-              title={"Employees"}
-              showActionButton={currentPage.includes("employees")}
-            />
-          )}
-          <div
-            className={twMerge(
-              "!mt-8 w-full",
-              currentPage.includes("dashboard") && "!mt-4"
-            )}
-          >
-            <EmployeeFilters
-              data={employees}
-              isRefreshing={isFetching}
-              setFilteredData={setFilteredData}
-              refetch={refetch}
-            />
-
-            {isLoading ? (
-              <Loading />
-            ) : !employees?.length ? (
-              <NoDataComponent message={NoDataMessage} />
+      {isError ? (
+        <ErrorComponent />
+      ) : (
+        <div className="">
+          <div className="table w-full space-y-4">
+            {currentPage.includes("dashboard") ? (
+              <SectionHeading
+                heading={"Employees"}
+                count={filteredData?.length}
+              />
             ) : (
-              <div className="mt-4 flex gap-4 w-full">
-                <Table
-                  data={filteredData}
-                  columns={columns}
-                  key={filteredData}
-                />
-
-                <PieChartComponent data={pieChartData} />
-              </div>
+              <PageHeader
+                title={"Employees"}
+                showActionButton={currentPage.includes("employees")}
+              />
             )}
+            <div
+              className={twMerge(
+                "!mt-8 w-full",
+                currentPage.includes("dashboard") && "!mt-4"
+              )}
+            >
+              {showFilter !== false && (
+                <EmployeeFilters
+                  data={employees}
+                  isRefreshing={isFetching}
+                  setFilteredData={setFilteredData}
+                  refetch={refetch}
+                />
+              )}
+
+              {isLoading ? (
+                <Loading />
+              ) : !employees?.length ? (
+                <NoDataComponent message={NoDataMessage} />
+              ) : (
+                <div className="mt-4 flex gap-4 w-full">
+                  <Table
+                    data={filteredData}
+                    columns={columns}
+                    key={filteredData}
+                  />
+
+                  <PieChartComponent data={pieChartData} />
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };

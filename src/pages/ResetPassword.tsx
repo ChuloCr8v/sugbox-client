@@ -95,20 +95,22 @@ const ResetPassword = () => {
     formData.newPassword !== "" &&
     formData.repeatNewPassword !== "";
 
-  console.log(organization);
-
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center">
       <FormLayout
         leftSideElements={
-          <img src="/reset-pass.svg" className="max-w-[400px] w-full" />
+          <img
+            src="/reset-pass.svg"
+            alt="reset-password"
+            className="max-w-[400px] w-full"
+          />
         }
         rightSideElements={
           <div className="flex flex-col items-center justify-center gap-12 w-full">
             <div className="">
               <p className="text-xl font-semibold text-center">
                 Reset Password for{" "}
-                <span className="text-primaryblue font-semibold">
+                <span className="text-primaryblue font-semibold text-2xl">
                   {getEmployeeLoading || getOrgLoading ? (
                     <Spin />
                   ) : employee ? (

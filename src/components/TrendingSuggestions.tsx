@@ -2,6 +2,7 @@ import useGetSuggestions from "../hooks/useGetSuggestions";
 import TrendingSuggestionCard from "../components/TrendingSuggestionCard";
 import { suggestionProps } from "../types";
 import { Spin } from "antd";
+import { Link } from "react-router-dom";
 
 const TrendingSuggestions = () => {
   const { suggestions, isLoading: loadingAllSuggestions } = useGetSuggestions();
@@ -24,13 +25,13 @@ const TrendingSuggestions = () => {
               b.upVotes.length - a.upVotes.length
           )
           .map((suggestion: suggestionProps) => (
-            <a
-              href={`/suggestion/${suggestion._id}`}
+            <Link
+              to={`/suggestion/${suggestion._id}`}
               className="rounded border shadow p-4 min-w-[350px]"
               key={suggestion._id}
             >
               <TrendingSuggestionCard suggestion={suggestion} />
-            </a>
+            </Link>
           ))
           .slice(0, 5)}
       </div>

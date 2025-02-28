@@ -66,7 +66,7 @@ const SignIn = () => {
         }
         rightSideElements={
           <div className=" flex flex-col items-center justify-center w-full">
-            <div className="w-full max-w-[400px] place-self-start">
+            <div className="w-full max-w-[400px] xl:place-self-start">
               <FormHeading
                 heading={`Login as ${
                   loginRole !== "employee" ? "Organization" : "Employee"

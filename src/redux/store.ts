@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { api } from "./api/base";
 import sideBar from "./sideBar";
 import modals from "./modals";
+import customModal from "./customModalSlice";
 import editCompany from "./editCompany";
 import authReducer from "./data/auth";
 
@@ -12,6 +13,7 @@ export const store = configureStore({
     auth: authReducer,
     sideBar: sideBar,
     modals: modals,
+    customModal: customModal,
     editCompanyModal: editCompany,
   },
   middleware: (getDefaultMiddleware) =>

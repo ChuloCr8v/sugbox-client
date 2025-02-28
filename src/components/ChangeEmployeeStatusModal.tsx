@@ -28,13 +28,6 @@ const ChangeEmployeeStatusModal = (props: Props) => {
 
   const updateAction = employee?.isDisabled ? "Activate" : "Deactivate";
 
-  if (isLoading) {
-    return (
-      <div className="h-full w-full">
-        <Spin />
-      </div>
-    );
-  }
   const handleUpdateEmployeeStatus = async () => {
     const updatedEmployeeData = {
       ...employeeData,
@@ -77,12 +70,16 @@ const ChangeEmployeeStatusModal = (props: Props) => {
         />
       }
     >
-      <div className="flex flex-col items-center justify-center gap-4 pt-6">
-        <FaBan className="text-red-600 text-5xl" />
-        <p className="text-lg">
-          {updateAction} {employee?.firstName + " " + employee?.lastName}?
-        </p>
-      </div>
+      {isLoading ? (
+        <Spin />
+      ) : (
+        <div className="flex flex-col items-center justify-center gap-4 pt-6">
+          <FaBan className="text-red-600 text-5xl" />
+          <p className="text-lg">
+            {updateAction} {employee?.firstName + " " + employee?.lastName}?
+          </p>
+        </div>
+      )}
     </Modal>
   );
 };

@@ -3,7 +3,6 @@ import { ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import EmployeeStatusTag from "../components/EmployeeStatusTag";
 import ErrorComponent from "../components/ErrorComponent";
-//import SpinLoading from "../components/SpinLoading";
 import { SectionHeading } from "../components/Suggestions";
 import TableComponent from "../components/Table";
 import useGetEmployees from "../hooks/useGetEmployees";
@@ -86,10 +85,6 @@ const Moderators = () => {
   if (isError) {
     return <ErrorComponent />;
   }
-
-  // if (isLoading) {
-  //   return <SpinLoading />;
-  // }
 
   return (
     <div className="pt-24 px-4 w-full space-y-6">

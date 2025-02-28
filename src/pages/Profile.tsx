@@ -1,4 +1,4 @@
-import { Button, Popconfirm, Spin, message } from "antd";
+import { Button, Popconfirm, message } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -37,11 +37,7 @@ export const handleUpdateEmployeeRole = async (
 
 const Profile = () => {
   const { id } = useParams();
-  const {
-    data: employee,
-    isError,
-    isLoading: loadingEmployees,
-  } = useGetEmployeeQuery(id);
+  const { data: employee, isError } = useGetEmployeeQuery(id);
   const { data: organization } = useGetOrganizationQuery(employee?.companyId);
   const { avatar } = useGetAvatar(id);
   const { suggestions, isLoading } = useGetSuggestions();
@@ -122,13 +118,7 @@ const Profile = () => {
     },
   ];
 
-  if (loadingEmployees) {
-    return (
-      <div className="h-screen w-full flex justify-center items-center gap-4">
-        <Spin /> Loading...
-      </div>
-    );
-  } else if (isError) {
+  if (isError) {
     return (
       <div className="">
         <ErrorComponent />
@@ -150,13 +140,18 @@ const Profile = () => {
             {avatar()}
             {isAdmin && (
               <div className="grid grid-cols-2 items-center gap-2">
-                <button
+                <Button
                   onClick={() => dispatch(openSendEmailModal(id))}
-                  className="rounded border hover:outline hover:outline-blue-300 duration-100 border-primaryblue text-primaryblue font-semibold w-full h-9 md:h-6 text-sm"
+                  className="border-primaryblue text-primaryblue w-full h-8 text-sm"
                 >
                   Email
-                </button>
-                <button
+                </Button>
+                <Button
+                  className={twMerge(
+                    "h-8 flex items-center justify-center text-red-600 border-red-600 hover:!border-red-800 hover:!text-red-800",
+                    updateAction.toLowerCase() === "activate" &&
+                      "border-green-600 text-green-600 hover:!border-green-800 hover:!text-green-800"
+                  )}
                   onClick={() =>
                     setUpdateEmployeeStatus((prev: any) => ({
                       ...prev,
@@ -164,14 +159,9 @@ const Profile = () => {
                       id: id,
                     }))
                   }
-                  className={twMerge(
-                    "rounded border hover:outline hover:outline-red-300 duration-100 border-red-600 text-red-600 font-semibold w-full h-9 md:h-6 text-sm",
-                    updateAction.toLowerCase() === "activate" &&
-                      "bg-green-600 hover:bg-green-800"
-                  )}
                 >
                   {updateAction}
-                </button>
+                </Button>
 
                 <Popconfirm
                   icon
@@ -194,7 +184,7 @@ const Profile = () => {
                   }}
                   className="col-span-2"
                 >
-                  <Button className="border-gray-500 h-9 rounded hover:!text-black duration-75 hover:!border-gray-500 hover:outline outline-2 outline-gray-300 text-black">
+                  <Button className="h-8 flex items-center justify-center">
                     {employee?.isModerator
                       ? "Remove as Moderator"
                       : "Add as Moderator"}
@@ -215,7 +205,14 @@ const Profile = () => {
                   key={item.title}
                 >
                   <p className="text-gray-500 capitalize">{item.title}</p>
-                  <p className="font-semibold capitalize">{item.data}</p>
+                  <p
+                    className={twMerge(
+                      "font-semibold capitalize",
+                      item.title.toLowerCase() === "email" && "lowercase"
+                    )}
+                  >
+                    {item.data}
+                  </p>
                 </div>
               ))}
             </div>

@@ -9,7 +9,7 @@ const TableComponent = (props: {
   onRow?: any;
 }) => {
   return (
-    <div className="max-w-[380px] w-full md:max-w-full overflow-x-hidden">
+    <div className="w-full md:max-w-full overflow-x-hidden">
       <Table
         size="small"
         scroll={{ x: "max-content" }}
@@ -18,7 +18,7 @@ const TableComponent = (props: {
         columns={props.columns}
         dataSource={props.data}
         onRow={props.onRow}
-        className="border-gray-200 border rounded !shadow-none overflow-hidden w-full"
+        className="border-gray-200 bg-white h-full border rounded !shadow-none overflow-hidden w-full"
       />
     </div>
   );

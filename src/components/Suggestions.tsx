@@ -16,6 +16,7 @@ interface Props {
   isRefreshing: boolean;
   setFilteredData: Dispatch<SetStateAction<never[]>>;
   isLoading: boolean;
+  showFilter?: boolean;
 }
 
 const Suggestions = (props: Props) => {
@@ -150,12 +151,14 @@ const Suggestions = (props: Props) => {
               currentPage.includes("dashboard") && "!mt-4"
             )}
           >
-            <Filters
-              data={suggestions}
-              isRefreshing={props.isRefreshing}
-              setFilteredData={props.setFilteredData}
-              refetch={props.refetch}
-            />
+            {props.showFilter !== false && (
+              <Filters
+                data={suggestions}
+                isRefreshing={props.isRefreshing}
+                setFilteredData={props.setFilteredData}
+                refetch={props.refetch}
+              />
+            )}
             {props.isLoading ? (
               <Loading />
             ) : !suggestions?.length ? (
@@ -188,10 +191,12 @@ export const SectionHeading = (props: {
     <h3 className="font-semibold text-lg text-left flex items-center gap-1">
       {props.heading}
 
-      {props?.count && (
+      {props?.count ? (
         <span className="border border-primaryblue rounded-full text-[12px] text-primaryblue h-5 w-5 flex items-center justify-center">
           {props?.count}
         </span>
+      ) : (
+        ""
       )}
     </h3>
   );

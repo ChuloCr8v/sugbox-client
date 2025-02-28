@@ -34,10 +34,6 @@ const SendEmailModal = () => {
     emailData.emailAddress = employee?.email;
   }, [id]);
 
-  if (isLoading) {
-    return <Spin />;
-  }
-
   const handleUpdateEmailData = (name: string, value: string) => {
     setEmailData((prev) => ({ ...prev, [name]: value }));
     console.log(emailData);
@@ -69,33 +65,37 @@ const SendEmailModal = () => {
       onOk={handleSendEmail}
       confirmLoading={sendingEmail}
     >
-      <form className="grid gap-4 mt-8">
-        <FormGroup
-          label="Email Address"
-          inputType="email"
-          required
-          name="emailAddress"
-          value={employee?.email}
-          inputClassName="text-gray-700"
-          onInputChange={() => handleUpdateEmailData}
-        />
-        <FormGroup
-          label="Subject"
-          inputType="text"
-          name="subject"
-          inputClassName="text-gray-700"
-          onInputChange={() => handleUpdateEmailData}
-        />
-        <FormGroup
-          label="Email"
-          inputType="textarea"
-          name="email"
-          inputClassName="text-gray-700"
-          onInputChange={(e: any) =>
-            handleUpdateEmailData("email", e.target.value)
-          }
-        />
-      </form>
+      {isLoading ? (
+        <Spin />
+      ) : (
+        <form className="grid gap-4 mt-8">
+          <FormGroup
+            label="Email Address"
+            inputType="email"
+            required
+            name="emailAddress"
+            value={employee?.email}
+            inputClassName="text-gray-700"
+            onInputChange={() => handleUpdateEmailData}
+          />
+          <FormGroup
+            label="Subject"
+            inputType="text"
+            name="subject"
+            inputClassName="text-gray-700"
+            onInputChange={() => handleUpdateEmailData}
+          />
+          <FormGroup
+            label="Email"
+            inputType="textarea"
+            name="email"
+            inputClassName="text-gray-700"
+            onInputChange={(e: any) =>
+              handleUpdateEmailData("email", e.target.value)
+            }
+          />
+        </form>
+      )}
     </Modal>
   );
 };

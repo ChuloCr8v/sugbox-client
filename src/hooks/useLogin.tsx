@@ -33,10 +33,7 @@ const useLogin = (loginData: Props) => {
       navigate("/dashboard");
       window.location.reload();
     } catch (error: any) {
-      console.log(error);
-      error.originalStatus === 404 &&
-        message.error("Organization does not exist!");
-      error.originalStatus === 401 && message.error("Wrong password!");
+      message.error(error.data.message);
     }
   };
 
