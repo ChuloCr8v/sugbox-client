@@ -90,11 +90,11 @@ export default SignIn;
 
 export const FormHeading = (props: { heading: string }) => {
   return (
-    <div className="grid gap-2 mb-6">
-      <div className="h-2 w-8 bg-primaryblue rounded-full"></div>
-      <p className="text-xl mb-4 text-left font-semibold text-black">
+    <div className="grid gap-2">
+      <p className="text-xl text-left font-semibold text-white">
         {props.heading}
       </p>
+      <div className="h-2 w-8 bg-primaryblue rounded-full"></div>
     </div>
   );
 };

@@ -1,16 +1,14 @@
-import { Button, Radio } from "antd";
-import { useState } from "react";
+import { Radio } from "antd";
 import { FaUser, FaUsers } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-import FormLayout from "../components/FormLayout";
-import { FormHeading } from "./login";
+import UseGetAuth from "../hooks/useGetAuth";
+import { FormHeading } from "../pages/login";
 
 const Portal = () => {
-  const [isChecked, setIsChecked] = useState(0);
-  const [loginRole, setLoginRole] = useState("");
-
   const navigate = useNavigate();
+
+  const { user } = UseGetAuth();
 
   const portalProps = [
     {
@@ -27,64 +25,52 @@ const Portal = () => {
     },
   ];
 
-  const handleSignInRole = (id: number, loginRole: string) => {
-    setIsChecked(id);
-    setLoginRole(loginRole);
-  };
-
-  const handleSubmit = () => {
+  const handleSubmit = (loginRole: string) => {
     navigate(`/login/${loginRole}`);
   };
 
   return (
-    <div className="portal fixed left-0 top-0 h-screen w-screen min-h-screen flex flex-col  items-center px-4">
-      <FormLayout
-        leftSideElements={
-          <img
-            src="/portal.svg"
-            className="max-h-[400px] w-full"
-            alt="portal"
-          />
-        }
-        rightSideElements={
-          <div className="grid grid-cols-1 gap-4 w-full max-w-[400px]">
-            <FormHeading heading="Choose your portal" />
-            {portalProps.map((p, index) => (
-              <div
-                onClick={() => handleSignInRole(p.id, p.loginRole)}
-                className={twMerge(
-                  "group bg-white cursor-pointer h-12 px-4 relative flex items-center justify-between rounded-lg border border-gray-200 duration-200 hover:text-primaryblue hover:border-primaryblue",
-                  isChecked === p.id && "border-primaryblue"
-                )}
-                key={index}
-              >
-                <p
-                  className={twMerge(
-                    "text-black font-semibold duration-200 lg:text-2xl xl:text-base group-hover:text-primaryblue",
-                    p.id === isChecked && "text-primaryblue"
-                  )}
-                >
-                  {p.label}
-                </p>
-                <Radio
-                  checked={isChecked === p.id}
-                  className="align-self-end justify-self-end"
-                />
-              </div>
-            ))}
-            <div className="h-10 w-full">
-              {loginRole && (
-                <Button
-                  onClick={handleSubmit}
-                  className="h-full w-full capitalize border-none bg-primaryblue hover:!bg-hoverblue hover:!text-white text-white font-semibold mt-2"
-                >
-                  Login as an {loginRole}
-                </Button>
+    <div
+      className={twMerge(
+        "h-full w-screen flex flex-col items-center justify-start px-4",
+        user && "h-fit w-full"
+      )}
+    >
+      <div className="h-[40vh] w-screen bg-gradient-to-b from-primary to-primary/20 flex flex-col justify-center items-center relative">
+        <div className="pb-3 space-y-4 text-center w-full px-4 max-w-3xl">
+          <p className="text-5xl font-semibold text-white">SuggBox</p>
+          <p className="text-base text-gray-300">
+            Your NO.1 digital Suggestion Box
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-[450px] -mt-24 bg-black/20 rounded-3xl border border-outline/40 px-6 max-w-[400px] w-full backdrop-blur py-10 space-y-6">
+        <FormHeading heading="Choose your portal" />
+        <div className="w-full space-y-4">
+          {portalProps.map((p, index) => (
+            <div
+              onClick={() => handleSubmit(p.loginRole)}
+              className={twMerge(
+                "group bg-black/40 backdrop-blur-xl cursor-pointer h-14 px-4 relative flex items-center justify-between rounded-2xl border border-outline/40 duration-200 hover:text-primaryblue hover:border-primaryblue"
               )}
+              key={index}
+            >
+              <p
+                className={twMerge(
+                  "text-white duration-200 lg:text-2xl xl:text-base group-hover:text-primaryblue"
+                )}
+              >
+                {p.label}
+              </p>
+              <Radio
+                rootClassName="border-primary"
+                className="align-self-end justify-self-end "
+              />
             </div>
-          </div>
-        }
-      />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
