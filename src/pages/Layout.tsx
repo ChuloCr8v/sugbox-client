@@ -31,7 +31,7 @@ const Layout = () => {
   const { token } = UseGetAuth();
 
   return (
-    <div className="flex flex-col bg-gray-100 min-h-screen">
+    <div className="flex flex-col bg-background min-h-screen">
       <div className="flex w-full">
         <Header />
         <SideBar />

@@ -106,7 +106,7 @@ const Suggestion = () => {
     }
   };
 
-  if (getSuggestionError) {
+  if (!getSuggestionError) {
     return <ErrorComponent />;
   }
 

@@ -37,10 +37,14 @@ const Portal = () => {
   };
 
   return (
-    <div className="portal fixed left-0 top-0 h-screen w-screen bg-blue-50 min-h-screen flex flex-col  items-center px-4">
+    <div className="portal fixed left-0 top-0 h-screen w-screen min-h-screen flex flex-col  items-center px-4">
       <FormLayout
         leftSideElements={
-          <img src="/portal.svg" className="max-h-[400px] w-full" />
+          <img
+            src="/portal.svg"
+            className="max-h-[400px] w-full"
+            alt="portal"
+          />
         }
         rightSideElements={
           <div className="grid grid-cols-1 gap-4 w-full max-w-[400px]">
@@ -68,14 +72,16 @@ const Portal = () => {
                 />
               </div>
             ))}
-            {loginRole && (
-              <Button
-                onClick={handleSubmit}
-                className="h-10 capitalize border-none bg-primaryblue hover:!bg-hoverblue hover:!text-white text-white font-semibold mt-2"
-              >
-                Login as an {loginRole}
-              </Button>
-            )}
+            <div className="h-10 w-full">
+              {loginRole && (
+                <Button
+                  onClick={handleSubmit}
+                  className="h-full w-full capitalize border-none bg-primaryblue hover:!bg-hoverblue hover:!text-white text-white font-semibold mt-2"
+                >
+                  Login as an {loginRole}
+                </Button>
+              )}
+            </div>
           </div>
         }
       />
