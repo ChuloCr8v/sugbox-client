@@ -7,7 +7,7 @@ export const Label = (props: labelProps) => {
   return (
     <label
       className={twMerge(
-        "text-black flex items-center gap-1",
+        "text-gray-300 flex items-center gap-1 text-sm",
         props.labelClassName
       )}
     >

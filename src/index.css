@@ -16,13 +16,46 @@
   margin: 0;
   box-sizing: border-box;
   font-family: "raleway", sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   /* border: 2px red solid; */
 }
 
 body,
 html {
   overflow-x: hidden !important;
+}
+/* Light theme (default) */
+:root {
+  --bg: 255 255 255; /* RGB values are convenient for rgba() */
+  --surface: 250 250 250;
+  --text: 17 24 39; /* slate-900 */
+  --muted: 107 114 128; /* slate-500 */
+  --accent: 79 70 229; /* indigo-600 */
+  --card-border: 226 232 240; /* slate-200 */
+}
+
+/* Dark theme — activated with the .dark class on <html> or <body> */
+.dark {
+  --bg: 15 23 42; /* slate-900 */
+  --surface: 23 30 50;
+  --text: 226 232 240; /* slate-200 */
+  --muted: 148 163 184; /* slate-400 */
+  --accent: 99 102 241; /* indigo-500 */
+  --card-border: 40 44 59;
+}
+
+/* Utility classes to use variables with Tailwind */
+.bg-theme {
+  background-color: rgb(var(--bg));
+}
+.text-theme {
+  color: rgb(var(--text));
+}
+.surface {
+  background-color: rgb(var(--surface));
+}
+.muted {
+  color: rgb(var(--muted));
 }
 
 .ant-select {

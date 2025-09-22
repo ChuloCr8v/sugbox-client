@@ -26,12 +26,13 @@ import Suggestion from "./Suggestion";
 import Suggestions from "./suggestions";
 import VerificationSuccessfulPage from "./VerificationSuccessfulPage";
 import VerifyOTPPage from "./VerifyOTP";
+import ThemeToggle from "../components/ThemeToggle";
 
 const Layout = () => {
   const { token } = UseGetAuth();
 
   return (
-    <div className="flex flex-col bg-background min-h-screen">
+    <div className="flex flex-col bg-gray-50 dark:bg-background min-h-screen">
       <div className="flex w-full">
         <Header />
         <SideBar />
@@ -122,6 +123,8 @@ const Layout = () => {
         <SendEmailModal />
         <AddNewModerator />
         {/* <CustomModal /> */}
+
+        <ThemeToggle />
       </div>
     </div>
   );

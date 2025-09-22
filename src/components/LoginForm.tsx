@@ -1,73 +1,79 @@
-import { Checkbox } from "antd";
-import { ChangeEventHandler } from "react";
-import { twMerge } from "tailwind-merge";
+import { Button, Checkbox, Form } from "antd";
 import { loginFormValues } from "../data";
-import Button from "./Button";
-import { FormGroup } from "./SmallerComponents";
+import FormItemComponent from "./RenderFormItem";
+import { Label } from "./SmallerComponents";
+import { Link, useParams } from "react-router-dom";
+import useLogin from "../hooks/useLogin";
+import { useForm } from "antd/es/form/Form";
 
-interface Props {
-  handleInputChange: ChangeEventHandler<HTMLInputElement>;
-  disabled: boolean;
-  handleSubmit: any;
-  isLoading: boolean;
-}
+const LoginForm = () => {
+  const [form] = useForm();
+  const { formItem } = FormItemComponent({ form });
 
-const LoginForm = (props: Props) => {
+  const { login } = useLogin();
+
+  const { loginRole } = useParams();
+
+  console.log(loginRole);
+
+  const handleSubmit = async () => {
+    try {
+      const values = await form.validateFields();
+      login(values);
+    } catch (error) {}
+  };
+
   return (
-    <form action="" className="flex flex-col items-start gap-6 w-full">
-      {loginFormValues.map((v, index) => (
-        <FormGroup
-          inputClassName="border-0 rounded-none border-b !border-gray-300 pl-0 hover:!border-primaryblue focus:!outline-none"
-          onInputChange={props.handleInputChange}
-          label={v.label}
-          inputType={v.type}
-          placeholder={v.placeholder}
-          name={v.name}
-          key={index}
-          required={v.required}
-        />
-      ))}
+    <>
+      <Form className="w-full" form={form}>
+        {loginFormValues.map((item) => (
+          <Form.Item
+            style={{
+              marginBottom: 10,
+            }}
+            label={<Label title={item.label} />}
+            className="w-full"
+            rules={[{ required: true, message: `${item.label} is required` }]}
+          >
+            {formItem(item)}
+          </Form.Item>
+        ))}
+      </Form>
 
       <div className="w-full flex justify-between items-center">
         <Checkbox
           onChange={() => {}}
-          className="hover:text-primaryblue duration-200 text-base text-black"
+          className="hover:text-primaryblue duration-200 text-base text-gray-300"
         >
           Remember Me
         </Checkbox>
-        <a
-          href="/forgot-password"
-          className="hover:text-primaryblue duration-200 cursor-pointer text-black"
+        <Link
+          to="/forgot-password"
+          className="hover:text-gray-300 duration-200 cursor-pointer text-gray-100"
         >
           Forgot Password?
-        </a>
+        </Link>
       </div>
-      <div className="grid gap-2 w-full">
-        <Button
-          className={twMerge(
-            "w-full hover:bg-hoverblue bg-primaryblue font-bold text-white capitalize py-3",
-            props.disabled && "bg-gray-200 hover:bg-gray-200"
-          )}
-          text={"Login"}
-          onClick={props.handleSubmit}
-          disabled={props.disabled}
-          loading={props.isLoading}
-          url={""}
-        />
-        {/* <BackToButton url={"/portal"} page="Portal" /> */}
-      </div>
-      <div className="place-self-center">
-        <span className="text-center text-gray-500">
+      <Button
+        size="large"
+        type="primary"
+        onClick={handleSubmit}
+        className="w-full !mt-8"
+      >
+        Login
+      </Button>
+      <div className="place-self-center !mt-8">
+        <span className="text-center text-gray-300">
           Don't have an account? Sign up{" "}
-          <a
-            href="/signup"
+          <Link
+            to="/signup"
             className="underline font-bold text-primaryblue hover:bg-hoverblue duration-200"
           >
             here
-          </a>
+          </Link>
         </span>
       </div>
-    </form>
+    </>
   );
 };
 

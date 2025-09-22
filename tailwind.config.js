@@ -11,6 +11,7 @@ export default {
       backgroundColor: {
         primaryblue: "#0275ff",
       },
+      darkMode: "class",
       colors: {
         background: "#212121",
         primaryblue: "#0275ff",

@@ -1,50 +1,13 @@
-import { Button } from "antd";
-import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FormLayout from "../components/FormLayout";
 import Form from "../components/LoginForm";
-import useLogin from "../hooks/useLogin";
-
-interface inputValueProps {
-  email: string;
-  password: string;
-}
+import AuthLayout from "../components/AuthLayout";
+import { ReactNode } from "react";
 
 const SignIn = () => {
-  const [inputValue, setInputValue] = useState<inputValueProps>({
-    email: "",
-    password: "",
-  });
-
-  //const navigate = useNavigate();
-
-  const { loginRole, adminSignIn, employeeSignIn, isLoading, employeeLoading } =
-    useLogin(inputValue);
-
-  const handleInputChange = (e: {
-    preventDefault: () => void;
-    target: { name: any; value: any };
-  }) => {
-    e.preventDefault();
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-  };
-
-  const checkValues = () => {
-    return inputValue.email && inputValue.password ? false : true;
-  };
-
-  const handleLogin = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    if (loginRole === "employee") {
-      employeeSignIn();
-      return;
-    }
-    adminSignIn();
-  };
-
   return (
-    <div className="h-screen w-screen overflow-hidden flex items-center justify-center bg-gray-50">
+    <AuthLayout heading={`Employee Login`}>
       <FormLayout
         leftSideElements={
           <div className="flex flex-col items-center justify-center ">
@@ -57,58 +20,49 @@ const SignIn = () => {
             />
             <h2 className="font-bold text-2xl text-black mt-6">Welcome Back</h2>
             <p className="text-base text-gray-600 mt-1 capitalize">
-              Login To{" "}
-              {loginRole !== "employee"
-                ? " View Latest Suggestions from your employees"
-                : "Leave Your Suggestions"}
+              Login To Leave Your Suggestions
             </p>
           </div>
         }
         rightSideElements={
-          <div className=" flex flex-col items-center justify-center w-full">
-            <div className="w-full max-w-[400px] xl:place-self-start">
-              <FormHeading
-                heading={`Login as ${
-                  loginRole !== "employee" ? "Organization" : "Employee"
-                }`}
-              />
-              <Form
-                handleInputChange={handleInputChange}
-                handleSubmit={handleLogin}
-                disabled={checkValues() || isLoading || employeeLoading}
-                isLoading={isLoading || employeeLoading}
-              />
+          <div className="flex flex-col items-center justify-center">
+            <div className=" max-w-[400px] xl:place-self-start  w-full space-y-6">
+              <Form />
+              <BackToButton url={"portal"} page={"Portal"} />
             </div>
           </div>
         }
       />
-    </div>
+    </AuthLayout>
   );
 };
 
 export default SignIn;
 
-export const FormHeading = (props: { heading: string }) => {
+export const FormHeading = (props: {
+  subheading?: ReactNode;
+  heading: string;
+}) => {
   return (
     <div className="grid gap-2">
       <p className="text-xl text-left font-semibold text-white">
         {props.heading}
       </p>
+      {props.subheading && (
+        <p className="text-sm text-left text-gray-300">{props.subheading}</p>
+      )}
       <div className="h-2 w-8 bg-primaryblue rounded-full"></div>
     </div>
   );
 };
 
 export const BackToButton = (props: { url: string; page: string }) => {
-  const navigate = useNavigate();
-
   return (
-    <Button
-      onClick={() => navigate(`${props.url}`)}
-      icon={<FaArrowLeft />}
-      className="mb-5 flex items-center justify-center w-full h-8"
+    <Link
+      to={`${props.url}`}
+      className="!mt-20 flex items-center justify-center w-full h-8 text-gray-200 gap-3"
     >
-      Back to {props.page}
-    </Button>
+      <FaArrowLeft /> <span className="">Back to {props.page}</span>
+    </Link>
   );
 };

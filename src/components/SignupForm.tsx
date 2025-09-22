@@ -1,73 +1,40 @@
-import { twMerge } from "tailwind-merge";
-import { Button } from "antd";
-import { FormGroup } from "./SmallerComponents";
+import { Button, Form } from "antd";
+import { signupFormValues } from "../data";
+import FormItemComponent from "./RenderFormItem";
+import { useForm } from "antd/es/form/Form";
+import { Label } from "./SmallerComponents";
 
-import { ChangeEventHandler } from "react";
+const LoginForm = () => {
+  const [form] = useForm();
+  const { formItem } = FormItemComponent({ form });
 
-interface Props {
-  handleInputChange: ChangeEventHandler<HTMLInputElement>;
-  formValues: {
-    label: string;
-    type: string;
-    placeholder: string;
-    name: string;
-    required: boolean;
-  }[];
-  handleSubmit: (e: { preventDefault: () => void }) => void;
-  disabled: boolean;
-  isLoading: boolean;
-}
-
-const SignupForm = (props: Props) => {
   return (
-    <form action="" className="flex flex-col items-start gap-6  w-full ">
-      {props.formValues.map(
-        (
-          v: {
-            required: boolean;
-            label: string;
-            type: string;
-            placeholder: string;
-            name: string;
-          },
-          index: React.Key
-        ) => (
-          <FormGroup
-            key={index}
-            onInputChange={props.handleInputChange}
-            label={v.label}
-            inputType={v.type}
-            placeholder={v.placeholder}
-            name={v.name}
-            required={v.required}
-          />
-        )
-      )}
+    <Form className="w-full" form={form}>
+      {signupFormValues.map((item) => (
+        <Form.Item
+          style={{
+            marginBottom: 10,
+          }}
+          label={<Label title={item.label} />}
+          className="w-full"
+          rules={[
+            { required: item.required, message: `${item.label} is required` },
+          ]}
+        >
+          {formItem(item)}
+        </Form.Item>
+      ))}
 
       <Button
-        className={twMerge(
-          "w-full flex items-center justify-center border-none bg-primaryblue hover:bg-hoverblue font-bold text-white uppercase py-3"
-        )}
-        onClick={props.handleSubmit}
-        disabled={props.disabled}
-        loading={props.isLoading}
+        size="large"
+        type="primary"
+        onClick={() => {}}
+        className="w-full !mt-8"
       >
         Signup
       </Button>
-
-      <div className="place-self-center">
-        <span className="text-center text-black">
-          Already have an account? Login{" "}
-          <a
-            href="/login"
-            className="underline font-bold text-primaryblue hover:text-hoverblue duration-200"
-          >
-            here
-          </a>
-        </span>
-      </div>
-    </form>
+    </Form>
   );
 };
 
-export default SignupForm;
+export default LoginForm;

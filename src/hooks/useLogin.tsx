@@ -14,19 +14,21 @@ type Props = {
 
 export type loginRoleProps = { auth: { loginRole: String } };
 
-const useLogin = (loginData: Props) => {
+const useLogin = () => {
   const [adminLogin, { isLoading }] = useAdminLoginMutation();
   const [employeeLogin, { isLoading: employeeLoading }] =
     useEmployeeLoginMutation();
+
+  const loading = isLoading || employeeLoading;
 
   const { loginRole } = useParams();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const adminSignIn = async () => {
+  const adminSignin = async (values: Props) => {
     try {
-      const res = await adminLogin(loginData).unwrap();
+      const res = await adminLogin(values).unwrap();
 
       dispatch(setCredentials({ ...res }));
       message.success("Login Successful");
@@ -37,9 +39,9 @@ const useLogin = (loginData: Props) => {
     }
   };
 
-  const employeeSignIn = async () => {
+  const employeeSignin = async (values: Props) => {
     try {
-      const res = await employeeLogin(loginData).unwrap();
+      const res = await employeeLogin(values).unwrap();
       if (res.others.isDisabled) {
         message.error(
           "Your account is currently disabled, please contact your admin."
@@ -63,7 +65,20 @@ const useLogin = (loginData: Props) => {
     }
   };
 
-  return { isLoading, loginRole, adminSignIn, employeeSignIn, employeeLoading };
+  const login = async (values: Props) => {
+    try {
+      if (loginRole === "organization") {
+        adminSignin(values);
+      } else {
+        employeeSignin(values);
+      }
+    } catch (error) {
+      message.error("Error, try again");
+      console.log(error);
+    }
+  };
+
+  return { login, loading };
 };
 
 export default useLogin;
