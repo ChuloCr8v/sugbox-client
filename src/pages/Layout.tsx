@@ -27,6 +27,8 @@ import Suggestions from "./suggestions";
 import VerificationSuccessfulPage from "./VerificationSuccessfulPage";
 import VerifyOTPPage from "./VerifyOTP";
 import ThemeToggle from "../components/ThemeToggle";
+import { twMerge } from "tailwind-merge";
+import AuthLayout from "../components/AuthLayout";
 
 const Layout = () => {
   const { token } = UseGetAuth();
@@ -36,14 +38,22 @@ const Layout = () => {
       <div className="flex w-full">
         <Header />
         <SideBar />
-        <div className="w-full flex flex-col items-center lg:pl-16">
+        <div
+          className={twMerge(
+            "w-full flex flex-col items-center",
+            token && "lg:pl-16"
+          )}
+        >
           <div className="flex flex-col items-center  w-full">
             <Routes>
               <Route
                 path="/portal"
-                element={token ? <Dashboard /> : <Portal />}
+                element={token ? <Dashboard /> : <AuthLayout />}
               />
-              <Route path="/*" element={token ? <Dashboard /> : <Portal />} />
+              <Route
+                path="/*"
+                element={token ? <Dashboard /> : <AuthLayout />}
+              />
               <Route
                 path="/signup"
                 element={token ? <Dashboard /> : <Signup />}

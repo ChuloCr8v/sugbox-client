@@ -1,33 +1,58 @@
-import { Button, Checkbox, Form } from "antd";
+import { Button, Checkbox, Form, message } from "antd";
 import { loginFormValues } from "../data";
 import FormItemComponent from "./RenderFormItem";
 import { Label } from "./SmallerComponents";
-import { Link, useParams } from "react-router-dom";
-import useLogin from "../hooks/useLogin";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "antd/es/form/Form";
+import {
+  useAdminLoginMutation,
+  useEmployeeLoginMutation,
+} from "../redux/api/auth";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../redux/data/auth";
+import { setAuthIndex } from "../redux/authSlide";
+import { useAppSelector } from "../redux/store";
 
 const LoginForm = () => {
   const [form] = useForm();
   const { formItem } = FormItemComponent({ form });
+  const { loginRole } = useAppSelector((state) => state.authSlide);
 
-  const { login } = useLogin();
+  const [adminLogin, { isLoading: adminLoggingIn }] = useAdminLoginMutation();
+  const [employeeLogin, { isLoading: employeeLoggingIn }] =
+    useEmployeeLoginMutation();
 
-  const { loginRole } = useParams();
-
-  console.log(loginRole);
+  const isLoading = adminLoggingIn || employeeLoggingIn;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
-      login(values);
-    } catch (error) {}
+
+      let data;
+      if (loginRole === "ADMIN") {
+        data = await adminLogin(values).unwrap();
+      } else {
+        data = await employeeLogin(values).unwrap();
+      }
+
+      dispatch(setCredentials(data));
+      message.success("Login Successful");
+      navigate("/dashboard");
+      window.location.reload();
+    } catch (error: any) {
+      console.log(error);
+      message.error("Error" + " " + error.data.message);
+    }
   };
 
   return (
-    <>
-      <Form className="w-full" form={form}>
+    <div className="flex flex-col justify-center items-center h-full">
+      <Form className="w-full space-y-6" form={form} layout="vertical">
         {loginFormValues.map((item) => (
           <Form.Item
+            name={item.name}
             style={{
               marginBottom: 10,
             }}
@@ -38,42 +63,46 @@ const LoginForm = () => {
             {formItem(item)}
           </Form.Item>
         ))}
+
+        <div className="w-full flex justify-between items-center">
+          <Checkbox
+            onChange={() => {}}
+            className="hover:text-primaryblue duration-200 text-base text-gray-300"
+          >
+            Remember Me
+          </Checkbox>
+          <Link
+            to="/forgot-password"
+            className="hover:text-gray-300 duration-200 cursor-pointer text-gray-100"
+          >
+            Forgot Password?
+          </Link>
+        </div>
+        <Button
+          size="large"
+          type="primary"
+          onClick={handleSubmit}
+          className="w-full !mt-8"
+          loading={isLoading}
+        >
+          Login
+        </Button>
       </Form>
 
-      <div className="w-full flex justify-between items-center">
-        <Checkbox
-          onChange={() => {}}
-          className="hover:text-primaryblue duration-200 text-base text-gray-300"
-        >
-          Remember Me
-        </Checkbox>
-        <Link
-          to="/forgot-password"
-          className="hover:text-gray-300 duration-200 cursor-pointer text-gray-100"
-        >
-          Forgot Password?
-        </Link>
-      </div>
-      <Button
-        size="large"
-        type="primary"
-        onClick={handleSubmit}
-        className="w-full !mt-8"
-      >
-        Login
-      </Button>
       <div className="place-self-center !mt-8">
         <span className="text-center text-gray-300">
           Don't have an account? Sign up{" "}
-          <Link
-            to="/signup"
-            className="underline font-bold text-primaryblue hover:bg-hoverblue duration-200"
+          <Button
+            onClick={() => dispatch(setAuthIndex(1))}
+            type="link"
+            size="large"
+            className="underline px-0.5 font-bold text-primaryblue hover:bg-hoverblue duration-200"
           >
             here
-          </Link>
+          </Button>
         </span>
       </div>
-    </>
+    </div>
   );
 };
 

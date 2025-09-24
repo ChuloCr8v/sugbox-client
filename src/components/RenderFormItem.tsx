@@ -64,8 +64,13 @@ const FormItemComponent = ({ form }: Props) => {
             placeholder={item.placeholder}
             allowClear
             disabled={item.disabled}
-            className="!bg-transparent !text-white !rounded-lg "
+            className="!bg-transparent !text-white !rounded-lg placeholder:!text-gray-100 !border-gray-600 hover:!border-primary"
             size="large"
+            styles={{
+              input: {
+                color: "white",
+              },
+            }}
           />
         );
       case "password":
@@ -76,7 +81,7 @@ const FormItemComponent = ({ form }: Props) => {
             placeholder={item.placeholder}
             allowClear
             disabled={item.disabled}
-            className="!bg-transparent !text-white !rounded-lg"
+            className="!bg-transparent !text-white !rounded-lg !border-gray-600 hover:!border-primary placeholder:!text-5xl"
             size="large"
             visibilityToggle={{ visible: true }}
           />
@@ -89,6 +94,7 @@ const FormItemComponent = ({ form }: Props) => {
             placeholder={item.placeholder}
             allowClear
             disabled={item.disabled}
+            className="!bg-transparent !text-white !rounded-lg !border-gray-600 hover:!border-primary"
           />
         );
       // case "phone":

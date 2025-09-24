@@ -8,7 +8,6 @@ import {
 } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { twMerge } from "tailwind-merge";
 import CommentBox from "../components/CommentBox";
 import Comments from "../components/Comments";
 import ErrorComponent from "../components/ErrorComponent";
@@ -31,7 +30,7 @@ import { hideNewCommentModal } from "../redux/modals";
 import { dateFormatter } from "../utils.ts/dateFormatter";
 
 const Suggestion = () => {
-  const { id: userId } = UseGetAuth();
+  const { id: userId, isAdmin } = UseGetAuth();
   const params = useParams();
   const id = params.id;
   const dispatch = useDispatch();
@@ -42,15 +41,19 @@ const Suggestion = () => {
     isLoading,
     error: getSuggestionError,
   } = useGetSuggestionQuery(id);
+
   const { data: suggester, isLoading: loadingSuggester } = useGetEmployeeQuery(
     suggestion?.userId
   );
+
   const { upvoteSuggestion, upvoteSuggestionLoading } = useUpvoteSuggestion(id);
   const { downvoteSuggestion, downvoteSuggestionLoading } =
     useDownvoteSuggestion(id);
+
   const [openCommentSection, setOpenCommentSection] = useState(true);
   const [openDeleteItemModal, setOpenDeleteItemModal] = useState(false);
   const [commentText, setCommentText] = useState("");
+
   const [addComment, { isLoading: addCommentLoading }] =
     useAddCommentMutation();
   const [deleteSuggestion, { isLoading: deleteSuggestionLoading }] =
@@ -59,10 +62,6 @@ const Suggestion = () => {
   const upvotedAlready = suggestion?.upVotes?.includes(userId);
   const downvotedAlready = suggestion?.downVotes?.includes(userId);
 
-  const { isAdmin } = UseGetAuth();
-
-  const verifyAdmin = isAdmin ? true : false;
-
   const handleDeleteSuggestion = async () => {
     try {
       await deleteSuggestion(id).unwrap();
@@ -70,18 +69,15 @@ const Suggestion = () => {
       setOpenDeleteItemModal(false);
       navigate("/dashboard");
     } catch (error) {
-      console.log(error);
       message.error("Unable to delete suggestion, please try again.");
     }
   };
 
-  const disableVoteFunction = () => {
-    return suggestion?.userId === userId || upvotedAlready;
-  };
+  const disableVoteFunction = () =>
+    suggestion?.userId === userId || upvotedAlready;
 
-  const disableDownVoteFunction = () => {
-    return suggestion?.userId === userId || downvotedAlready;
-  };
+  const disableDownVoteFunction = () =>
+    suggestion?.userId === userId || downvotedAlready;
 
   if (isLoading) {
     return (
@@ -96,7 +92,7 @@ const Suggestion = () => {
       await addComment({
         comment: commentText,
         id: suggestion._id,
-        isAdmin: verifyAdmin,
+        isAdmin: isAdmin,
       }).unwrap();
       message.success("Comment added successfully");
       setCommentText("");
@@ -106,53 +102,58 @@ const Suggestion = () => {
     }
   };
 
-  if (!getSuggestionError) {
+  if (getSuggestionError) {
     return <ErrorComponent />;
   }
 
   return (
-    <div className="py-24 px-4 w-full  grid gap-4">
-      <div className="flex justify-between items-start">
-        <div className="grid gap-2 title-box">
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl capitalize font-semibold text-primaryblue leading-none">
+    <div className="py-20 px-4 sm:px-6 lg:px-12 w-full grid gap-6 max-w-6xl mx-auto">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
+        <div className="grid gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-xl sm:text-2xl font-bold capitalize text-primaryblue leading-tight">
               {suggestion?.title}
             </h1>
             <SuggestionStatusTag status={suggestion?.status} />
           </div>
-          <div className="flex items-center gap-4 text-sm">
+
+          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
             {loadingSuggester ? (
               <Spin />
             ) : suggestion?.isAnonymous ? (
-              <div className="flex items-center gap-2 text-gray-500 font-semibold">
+              <div className="flex items-center gap-2 font-medium">
                 <FaUserNinja />
                 Anonymous
               </div>
             ) : (
-              <div className="flex items-center gap-1 text-gray-500 ">
+              <div className="flex items-center gap-2">
                 <FaRegUser />
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
                   href={`/profile/${suggester?._id}`}
-                  className="text-primaryblue text-base"
+                  className="text-primaryblue hover:underline"
                 >
                   {suggester?.firstName + " " + suggester?.lastName}
                 </a>
               </div>
             )}
-
-            <div className="text-gray-500  flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <FaRegCalendarAlt />
               {dateFormatter(suggestion?.createdAt)}
             </div>
           </div>
         </div>
       </div>
-      <div className="suggestion-body border rounded-md p-4">
-        <p className="pb-5">{suggestion?.suggestion}</p>
 
-        <div className="flex items-center gap-2 mt-4">
+      {/* Body */}
+      <div className="suggestion-body border border-gray-300 dark:border-gray-700 rounded-lg p-4 sm:p-6 bg-white dark:bg-black/40 shadow-sm">
+        <p className="pb-5 text-gray-800 dark:text-gray-200 leading-relaxed">
+          {suggestion?.suggestion}
+        </p>
+
+        <div className="flex items-center flex-wrap gap-3 mt-4">
           <VoteComponent
             downVoteLoading={downvoteSuggestionLoading}
             upVoteLoading={upvoteSuggestionLoading}
@@ -166,66 +167,59 @@ const Suggestion = () => {
           />
 
           <Tooltip title="Click to view or hide comments">
-            {" "}
             <Button
-              icon={<FaRegCommentAlt className="text-sm mt-0.5" />}
+              icon={<FaRegCommentAlt className="text-sm" />}
               onClick={() => setOpenCommentSection(!openCommentSection)}
-              className="flex items-center border-gray-200 rounded h-8 w-fit hover:text-hoverblue group"
+              className="flex items-center gap-1 border border-gray-300 dark:border-gray-600 rounded-md h-9 px-3 bg-white dark:bg-black/40 hover:border-primaryblue hover:text-primaryblue transition"
             >
-              {suggestion?.comments?.length > 0
-                ? suggestion?.comments?.length
-                : "0"}{" "}
-              Comment
-              {suggestion?.comments.length > 1 && "s"}
+              {suggestion?.comments?.length || 0}{" "}
+              {suggestion?.comments?.length === 1 ? "Comment" : "Comments"}
             </Button>
           </Tooltip>
         </div>
       </div>
+
+      {/* Actions + Attachments */}
       <div className="grid gap-4">
         <SuggestionActionButtons
           id={suggestion?._id}
           setOpenDeleteItemModal={setOpenDeleteItemModal}
         />
-
         {suggestion?.attachments?.length > 0 && (
           <SuggestionAttachmentComponent suggestion={suggestion} />
         )}
       </div>
 
+      {/* Comment Box */}
       <CommentBox
         handleBtnClick={addCommentFunction}
-        placeholder={"Start typing..."}
+        placeholder="Start typing..."
         comment={commentText}
-        onchange={(e) => {
-          setCommentText(e.target.value);
-        }}
+        onchange={(e) => setCommentText(e.target.value)}
         setComment={setCommentText}
         addCommentLoading={addCommentLoading}
       />
 
+      {/* Comment Section */}
       {openCommentSection && (
-        <div
-          className={twMerge(
-            "comment_section border rounded-md overflow-hidden"
-          )}
-        >
-          <div className="">
-            <Comments suggestionId={id} />
-          </div>
+        <div className="comment_section border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-black/40">
+          <Comments suggestionId={id} />
         </div>
       )}
 
+      {/* Trending Suggestions */}
       <TrendingSuggestions />
 
+      {/* Delete Modal */}
       <DeleteItemModal
         openDeleteItemModal={openDeleteItemModal}
         isLoading={deleteSuggestionLoading}
         disabled={deleteSuggestionLoading}
-        okText={"Delete"}
+        okText="Delete"
         closeDeleteItemModal={() => setOpenDeleteItemModal(false)}
         handleDeleteItemOk={handleDeleteSuggestion}
         itemTitle={suggestion?.title}
-        modalTitle={"Delete Suggestion"}
+        modalTitle="Delete Suggestion"
       />
     </div>
   );

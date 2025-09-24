@@ -6,6 +6,7 @@ import modals from "./modals";
 import customModal from "./customModalSlice";
 import editCompany from "./editCompany";
 import authReducer from "./data/auth";
+import authSlide from "./authSlide";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     modals: modals,
     customModal: customModal,
     editCompanyModal: editCompany,
+    authSlide
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

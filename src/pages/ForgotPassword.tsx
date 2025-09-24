@@ -2,12 +2,12 @@ import { Button, Form, message } from "antd";
 import { useState } from "react";
 import FormLayout from "../components/FormLayout";
 import { useGenerateResetPasswordLinkMutation } from "../redux/api/auth";
-import { BackToButton } from "./login";
 import AuthLayout from "../components/AuthLayout";
 import FormItemComponent from "../components/RenderFormItem";
 import { useForm } from "antd/es/form/Form";
 import { Label } from "../components/SmallerComponents";
 import { useNavigate } from "react-router-dom";
+import BackToButton from "../components/global/BackToButton";
 
 const ForgotPassword = () => {
   const [successMessage, setSuccessMessage] = useState("");

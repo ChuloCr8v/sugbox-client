@@ -65,20 +65,7 @@ const useLogin = () => {
     }
   };
 
-  const login = async (values: Props) => {
-    try {
-      if (loginRole === "organization") {
-        adminSignin(values);
-      } else {
-        employeeSignin(values);
-      }
-    } catch (error) {
-      message.error("Error, try again");
-      console.log(error);
-    }
-  };
-
-  return { login, loading };
+  return { employeeSignin, adminSignin, loading, loginRole };
 };
 
 export default useLogin;

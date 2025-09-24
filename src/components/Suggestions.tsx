@@ -188,7 +188,7 @@ export const SectionHeading = (props: {
   heading: ReactNode;
 }) => {
   return (
-    <h3 className="font-semibold text-lg text-left flex items-center gap-1">
+    <h3 className="font-semibold text-lg text-left flex items-center gap-1 text-gray-300">
       {props.heading}
 
       {props?.count ? (

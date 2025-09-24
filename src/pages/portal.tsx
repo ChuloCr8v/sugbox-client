@@ -1,53 +1,76 @@
 import { FaArrowRight, FaUser, FaUsers } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { twMerge } from "tailwind-merge";
-import AuthLayout from "../components/AuthLayout";
+import {
+  LoginRole,
+  setAuthIndex,
+  setLoginRole,
+  setSlideIndex,
+} from "../redux/authSlide";
+import { Button } from "antd";
 
 const Portal = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const portalProps = [
     {
       id: 1,
-      label: "Organization",
-      loginRole: "organization",
+      label: "Login as an Organization",
+      loginRole: LoginRole.ADMIN,
       icon: <FaUser />,
     },
     {
       id: 2,
-      label: "Employee",
-      loginRole: "employee",
+      label: "Login as an Employee",
+      loginRole: LoginRole.EMPLOYEE,
       icon: <FaUsers />,
     },
   ];
 
   const handleSubmit = (loginRole: string) => {
-    navigate(`/login/${loginRole}`);
+    dispatch(setSlideIndex(1));
+    dispatch(setLoginRole(loginRole));
   };
 
   return (
-    <AuthLayout heading="Choose your portal">
-      <div className="w-full space-y-4 pt-10">
-        {portalProps.map((p, index) => (
-          <div
-            onClick={() => handleSubmit(p.loginRole)}
+    <div className="w-full space-y-4 mt-20">
+      {/* <p className="text-gray-300 text-2xl !mb-2">Choose your Portal</p> */}
+      {portalProps.map((p, index) => (
+        <Button
+          type="text"
+          onClick={() => handleSubmit(p.loginRole)}
+          className={twMerge(
+            "overflow-hidden w-full group bg-transparent cursor-pointer h-14 px-8 relative flex items-center justify-between rounded-full border border-outline/40 duration-200 hover:text-secondary hover:border-secondary"
+          )}
+          key={index}
+        >
+          <p
             className={twMerge(
-              "group md:bg-black/40 md:backdrop-blur-xl cursor-pointer h-14 px-4 relative flex items-center justify-between rounded-xl border border-outline/40 duration-200 hover:text-primaryblue hover:border-primaryblue"
+              "text-white duration-200 text-base group-hover:text-secondary relative z-50"
             )}
-            key={index}
           >
-            <p
-              className={twMerge(
-                "text-white duration-200 lg:text-2xl xl:text-base group-hover:text-primaryblue"
-              )}
-            >
-              {p.label}
-            </p>
-            <FaArrowRight color="white" />
-          </div>
-        ))}
-      </div>
-    </AuthLayout>
+            {p.label}
+          </p>
+          <FaArrowRight className="text-gray-300 group-hover:text-secondary" />
+          <div className="absolute left-0 w-0 h-full rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 group-hover:w-full duration-200"></div>
+        </Button>
+      ))}
+
+      <p className="text-center text-gray-300 !mt-10">
+        Don't have an account?{" "}
+        <Button
+          size="large"
+          type="link"
+          className="text-primary block place-self-center"
+          onClick={() => {
+            dispatch(setSlideIndex(2));
+            dispatch(setAuthIndex(1));
+          }}
+        >
+          Get Started
+        </Button>
+      </p>
+    </div>
   );
 };
 

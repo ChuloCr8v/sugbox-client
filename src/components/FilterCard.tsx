@@ -82,19 +82,15 @@ const FilterCard = (props: Props) => {
   // };
 
   return (
-    <button
+    <div
       //  onClick={() => props.setFilter(props.data.title)}
-      className={twMerge(
-        `group max-w-500 w-full border bg-white rounded-md flex items-center justify-between p-4 py-2 duration-200`
-        // setBg(),
-        //  hoverBg(props.data.title)
-      )}
+      className="flex justify-between p-4 bg-black/40 backdrop-blur-sm w-full rounded-xl border border-gray-600"
     >
-      <div className="flex  items-center gap-1">
+      <div className="flex  items-center gap-3">
         <p className="font-bold text-base text-left text-primaryblue">
           {props.data?.number}
         </p>
-        <p className=" text-base capitalize">{props.data?.title}</p>
+        <p className=" text-base capitalize text-white">{props.data?.title}</p>
       </div>
       <div
         className={twMerge(
@@ -105,7 +101,7 @@ const FilterCard = (props: Props) => {
       >
         {icon(props.data?.title)}
       </div>
-    </button>
+    </div>
   );
 };
 

@@ -38,7 +38,7 @@ const Dashboard = () => {
   }, [suggestions]);
 
   const userProfileTitle = (
-    <p className="">
+    <p className="text-gray-600 dark:text-gray-300">
       Hello {employee?.firstName}, <br className=" md:hidden" />
       any{" "}
       <span className="text-primaryblue font-semibold capitalize">

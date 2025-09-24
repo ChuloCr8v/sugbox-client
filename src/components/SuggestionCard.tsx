@@ -14,20 +14,21 @@ const SuggestionCard = (props: Props) => {
   const id = props.data.userId;
   const { data: user } = useGetEmployeeQuery(id);
 
-  const titleColor = (status: string) => {
-    if (status === "pending") {
-      return "orange-500";
-    } else if (status === "approved") {
-      return "green-500";
-    } else if (status === "rejected") {
-      return "red-500";
-    } else return "primaryblue";
+  // Map statuses to fixed Tailwind classes
+  const statusStyles: Record<string, string> = {
+    pending: "text-orange-500 bg-orange-500/15 border border-orange-500/30",
+    approved: "text-green-500 bg-green-500/15 border border-green-500/30",
+    rejected: "text-red-500 bg-red-500/15 border border-red-500/30",
+    default: "text-primaryblue bg-primaryblue/15 border border-primaryblue/30",
   };
+
+  const getStatusClasses = (status: string) =>
+    statusStyles[status] ?? statusStyles.default;
 
   return (
     <a
       href={`/suggestion/${props.data._id}`}
-      className="bg-white w-full rounded border border-gray-200 hover:border-blue-100 duration-200"
+      className="bg-black/40 backdrop-blur-sm w-full rounded-xl border border-gray-600 hover:border-primaryblue/50 hover:shadow-md hover:shadow-primaryblue/10 transition duration-200"
     >
       {props.isLoading ? (
         <div className="p-2">
@@ -35,66 +36,66 @@ const SuggestionCard = (props: Props) => {
         </div>
       ) : (
         <>
-          <div className="flex flex-col p-2 border-b border-gray-100 w-full ">
-            <p className="font-semibold text-primaryblue capitalize">
+          {/* Header */}
+          <div className="flex flex-col p-4 border-b border-gray-600">
+            <p className="font-semibold text-primaryblue capitalize text-lg">
               {props.data.title.slice(0, 30)}
               {props.data.title.length > 30 && "..."}
             </p>
-            <div className="text-sm flex gap-2 items-center">
+            <div className="text-sm flex gap-3 items-center mt-1">
               <p
                 className={twMerge(
-                  " text-primaryblue",
-                  props.data.isAnonymous && "text-gray-500"
+                  "text-primaryblue flex items-center gap-1",
+                  props.data.isAnonymous && "text-gray-300"
                 )}
               >
                 {props.data.isAnonymous ? (
-                  <span className="flex gap-1 ">
+                  <>
                     <FaUserNinja className="mt-0.5" /> Anonymous
-                  </span>
+                  </>
                 ) : (
-                  user?.firstName + " " + user?.lastName
+                  `${user?.firstName ?? ""} ${user?.lastName ?? ""}`
                 )}
               </p>
-              <p className="text-gray-500 text-[12px]">
+              <span className="text-gray-400 text-xs">
                 {dayjs(props.data.createdAt).format("DD.MM.YYYY")}
-              </p>
+              </span>
             </div>
           </div>
-          <div className="p-2 flex flex-col justify-between">
-            <p className=" text-textcolor text-sm">
+
+          {/* Suggestion text */}
+          <div className="p-4 flex flex-col">
+            <p className="text-textcolor text-sm leading-relaxed">
               {props.data.suggestion.slice(0, 100)}
               {props.data.suggestion.length > 100 && "..."}
             </p>
 
-            <p className="mt-2 text-[13px] text-primaryblue">
+            <p className="mt-3 text-xs text-gray-400">
               {props.data.comments.length}{" "}
               <span className="capitalize text-textcolor">
                 comment
-                {props.data.comments.length > 1 && (
-                  <span className="lowercase">s</span>
-                )}
+                {props.data.comments.length > 1 && "s"}
               </span>
             </p>
           </div>
 
-          <div className="p-2 flex justify-between items-center border-t border-gray-100 ">
-            <p className="capitalize font-semibold text-sm">
-              status:
-              <span
-                className={twMerge(
-                  `text-${titleColor(props.data.status)} ml-1`
-                )}
-              >
-                {props.data.status}
+          {/* Footer */}
+          <div className="p-4 flex justify-between items-center border-t border-gray-600">
+            <span
+              className={twMerge(
+                "capitalize font-medium text-xs rounded-full px-3 py-1",
+                getStatusClasses(props.data.status)
+              )}
+            >
+              {props.data.status}
+            </span>
+
+            <div className="flex items-center gap-5 text-sm">
+              <span className="flex items-center gap-1 text-green-500">
+                <FaThumbsUp /> {props.data.upVotes.length}
               </span>
-            </p>
-            <div className="flex items-center gap-4 text-sm">
-              <span className="flex items-center gap-2">
-                <FaThumbsUp className="text-green-500" />
-                {props.data.upVotes.length}
-              </span>
-              <span className="flex items-center gap-2">
-                <FaThumbsDown className="mt-[5px] text-red-500" />
+              <span className="flex items-center gap-1 text-red-500">
+                <FaThumbsDown className="mt-[2px]" />{" "}
                 {props.data.downVotes.length}
               </span>
             </div>
