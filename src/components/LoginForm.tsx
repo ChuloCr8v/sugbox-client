@@ -2,7 +2,7 @@ import { Button, Checkbox, Form, message } from "antd";
 import { loginFormValues } from "../data";
 import FormItemComponent from "./RenderFormItem";
 import { Label } from "./SmallerComponents";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "antd/es/form/Form";
 import {
   useAdminLoginMutation,
@@ -48,8 +48,12 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-full">
-      <Form className="w-full space-y-6" form={form} layout="vertical">
+    <div className="flex flex-col justify-center items-center">
+      <Form
+        className="w-full space-y-6 lg:space-y-0"
+        form={form}
+        layout="vertical"
+      >
         {loginFormValues.map((item) => (
           <Form.Item
             name={item.name}
@@ -67,30 +71,31 @@ const LoginForm = () => {
         <div className="w-full flex justify-between items-center">
           <Checkbox
             onChange={() => {}}
-            className="hover:text-primaryblue duration-200 text-base text-gray-300"
+            className="hover:text-primaryblue duration-200 text-base text-gray-300 !text-sm"
           >
             Remember Me
           </Checkbox>
-          <Link
-            to="/forgot-password"
-            className="hover:text-gray-300 duration-200 cursor-pointer text-gray-100"
+          <Button
+            type="link"
+            onClick={() => dispatch(setAuthIndex(3))}
+            className="hover:text-gray-300 duration-200 cursor-pointer !text-gray-300 !text-sm px-0"
           >
             Forgot Password?
-          </Link>
+          </Button>
         </div>
         <Button
           size="large"
           type="primary"
           onClick={handleSubmit}
-          className="w-full !mt-8"
+          className="w-full !mt-8 text-sm"
           loading={isLoading}
         >
           Login
         </Button>
       </Form>
 
-      <div className="place-self-center !mt-8">
-        <span className="text-center text-gray-300">
+      <div className="place-self-center !mt-4">
+        <span className="text-center text-gray-300 text-sm">
           Don't have an account? Sign up{" "}
           <Button
             onClick={() => dispatch(setAuthIndex(1))}

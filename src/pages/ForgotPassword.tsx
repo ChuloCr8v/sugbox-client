@@ -45,7 +45,7 @@ const ForgotPassword = () => {
 
   return (
     <AuthLayout
-      heading="Forgot Password"
+      // heading="Forgot Password"
       subheading="Enter your email for a link to reset your password"
     >
       <FormLayout

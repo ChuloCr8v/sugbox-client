@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import BackAction from "./global/BackAction";
 import { setAuthIndex, setSlideIndex } from "../redux/authSlide";
 import { useAppSelector } from "../redux/store";
+import { motion } from "framer-motion";
 
 interface Props {
   children?: ReactNode;
@@ -53,40 +54,67 @@ const AuthLayout = ({ heading, subheading }: Props) => {
     <div
       className={twMerge(
         "h-screen w-screen flex flex-col items-center p-4 gap-10 lg:gap-5 duration-200 overflow-hidden",
-        !isPortal && "lg:grid grid-cols-2"
+        !isPortal && "xl:grid grid-cols-2"
       )}
     >
       <div
         className={twMerge(
-          "w-full h-40 rounded-[30px] overflow-hidden relative duration-200 z-50",
-          "md:h-full",
-          "lg:",
-          isPortal && "h-72 md:h-[50vh]",
-          // isPortal && "md:h-full w-full",
-          isSignup && "!h-28 md:!h-full"
+          "w-full flex flex-col justify-center items-center relative",
+          !isPortal && "xl:h-full"
         )}
       >
-        <div
+        <motion.div
+          initial={{
+            y: -200,
+          }}
+          animate={{
+            y: 0,
+          }}
+          // layout
           className={twMerge(
-            "h-full w-full bg-gradient-to-br from-primary/40 to-secondary/70 backdrop-blur absolute",
-            isPortal && "md:bg-gradient-to-b"
+            "absolute z-0 !h-full !w-[94%] flex flex-col justify-center w-full rounded-[30px] overflow-hidden duration-200 z-50 bg-gradient-to-tl from-primary/40 to-secondary/70 backdrop-blur max-xl:hidden",
+            "xl:!h-full",
+            isPortal && "opacity-0"
           )}
-        />
+        ></motion.div>
+        <motion.div
+          initial={{
+            y: -100,
+          }}
+          animate={{
+            y: 0,
+          }}
+          className={twMerge(
+            "relative z-20 flex flex-col justify-center w-full h-[30vh] rounded-[30px] duration-200 z-50 bg-gradient-to-br from-primary/40 to-secondary/70 backdrop-blur",
+            "md:h-[30vh]",
+            "xl:shadow-xl xl:!h-[50vh]",
+            isPortal && "h-[40vh] w-full",
+            isPortal && "lg:h-[50vh]",
+            isSignup && "md:!h-[30vh]"
+          )}
+        >
+          <div className="place-self-center">{authIndex !== 2 && <Logo />}</div>
+        </motion.div>
       </div>
 
-      <div
+      <motion.div
+        initial={{
+          y: 100,
+        }}
+        animate={{
+          y: 0,
+        }}
         className={twMerge(
-          "!w-full md:backdrop-blur duration-200 relative z-50 flex flex-col justify-center items-center !max-w-[500px]",
-          "md:px-8 md:rounded-[50px] md:!-mt-60 md:bg-background/60 md:backdrop-blur-[120px] md:border-[8px] md:border-background md:py-16 place-self-center ",
+          "!w-full duration-200 relative z-50 flex flex-col justify-center items-center !max-w-[500px] px-4 -mt-24 bg-background/60 backdrop-blur border-[8px] border-background place-self-center ",
+          "md:px-8 rounded-[50px] md:!-mt-30",
+          "lg:!-mt-20",
           !isPortal &&
-            "lg:max-w-full lg:py-8 lg:!m-0 lg:border-0 lg:backdrop-blur-none lg:bg-transparent lg:space-y-8",
-          isPortal && "md:!max-w-[600px] "
+            "xl:max-w-full xl:py-8 xl:!m-0 xl:border-0 xl:backdrop-blur-none xl:bg-transparent xl:space-y-8"
+          // isPortal && "md:!max-w-[600px] "
         )}
       >
-        {authIndex !== 2 && <Logo />}
-
         {heading && <FormHeading heading={heading} subheading={subheading} />}
-        <div className="w-full lg:mt-0 space-y-6 flex flex-col justify-center items-center">
+        <div className="w-full xl:mt-0 space-y-3 flex flex-col justify-center items-center">
           {renderView()}
           {slideIndex !== 0 && (
             // <BackAction
@@ -103,7 +131,7 @@ const AuthLayout = ({ heading, subheading }: Props) => {
             />
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

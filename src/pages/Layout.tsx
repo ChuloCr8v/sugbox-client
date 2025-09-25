@@ -16,7 +16,6 @@ import Login from "./login";
 import LoginPageRedirect from "./LoginPageRedirect";
 import Moderators from "./moderators";
 import MySuggestions from "./MySuggestions";
-import Portal from "./portal";
 import Profile from "./Profile";
 import ResetEmail from "./ResetEmail";
 import ResetPassword from "./ResetPassword";
@@ -65,48 +64,48 @@ const Layout = () => {
               />
               <Route
                 path="/dashboard"
-                element={token ? <Dashboard /> : <Portal />}
+                element={token ? <Dashboard /> : <AuthLayout />}
               />
               <Route
                 path="/profile/:id"
-                element={token ? <Profile /> : <Portal />}
+                element={token ? <Profile /> : <AuthLayout />}
               />
               <Route
                 path="/suggestion/:id"
-                element={token ? <Suggestion /> : <Portal />}
+                element={token ? <Suggestion /> : <AuthLayout />}
               />
               <Route
                 path="/employees"
-                element={token ? <Employees /> : <Portal />}
+                element={token ? <Employees /> : <AuthLayout />}
               />
               <Route
                 path="/suggestions"
-                element={token ? <Suggestions /> : <Portal />}
+                element={token ? <Suggestions /> : <AuthLayout />}
               />
               <Route
                 path="/my-suggestions"
-                element={token ? <MySuggestions /> : <Portal />}
+                element={token ? <MySuggestions /> : <AuthLayout />}
               />
               <Route
                 path="/my-profile/:id"
-                element={token ? <Profile /> : <Portal />}
+                element={token ? <Profile /> : <AuthLayout />}
               />
               <Route
                 path="/profile/:id"
-                element={token ? <Profile /> : <Portal />}
+                element={token ? <Profile /> : <AuthLayout />}
               />
               <Route
                 path="/moderators/"
-                element={token ? <Moderators /> : <Portal />}
+                element={token ? <Moderators /> : <AuthLayout />}
               />
 
               <Route
                 path="/settings/:id"
-                element={token ? <Settings /> : <Portal />}
+                element={token ? <Settings /> : <AuthLayout />}
               />
               <Route
                 path="/reset-email/:id"
-                element={token ? <ResetEmail /> : <Portal />}
+                element={token ? <ResetEmail /> : <AuthLayout />}
               />
               <Route
                 path="/verify-otp/:id/:action"

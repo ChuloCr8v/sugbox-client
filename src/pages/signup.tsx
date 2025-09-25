@@ -33,9 +33,13 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full mt-8">
+    <div className="flex flex-col items-start justify-center w-full mt-8">
+      <div className="space-y-1 max-xl:hidden mb-12 w-full">
+        <p className="text-gray-200 text-xl">Create Organization</p>
+        <div className="w-full h-1 rounded-full bg-gradient-to-r from-primary to-transparent"></div>
+      </div>
       <Form
-        className="w-full space-y-6 lg:grid grid-cols-2 lg:space-y-0 lg:gap-4"
+        className="w-full space-y-6 lg:grid grid-cols-2 lg:space-y-0 lg:gap-x-3"
         layout="vertical"
         form={form}
       >
@@ -63,7 +67,7 @@ const Signup = () => {
         size="large"
         type="primary"
         onClick={adminSignup}
-        className="w-full !mt-8"
+        className="w-full !my-4 text-sm"
         loading={isLoading}
       >
         Signup

@@ -31,7 +31,7 @@ export default function ThemeToggle() {
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       layout
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
-      className={`fixed  flex items-center justify-center bottom-10 right-10 w-10 h-10 rounded-full shadow-md ${
+      className={`fixed z-50 flex items-center justify-center bottom-10 right-10 w-10 h-10 rounded-full shadow-md ${
         theme === "light"
           ? "bg-white shadow-[0_0_8px_2px_rgba(250,204,21,0.6)]"
           : "bg-gray-900 shadow-[0_0_8px_2px_rgba(99,102,241,0.6)]"

@@ -17,7 +17,8 @@ const BackAction = (props: {
         props.wrapperClassName
       )}
     >
-      <FaArrowLeft /> <span className="">Back to {props.page}</span>
+      <FaArrowLeft className="text-sm" />{" "}
+      <span className="text-sm">Back to {props.page}</span>
     </Button>
   );
 };

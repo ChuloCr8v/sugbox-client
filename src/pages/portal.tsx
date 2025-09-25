@@ -33,20 +33,20 @@ const Portal = () => {
   };
 
   return (
-    <div className="w-full space-y-4 mt-20">
+    <div className="w-full space-y-4 pt-10">
       {/* <p className="text-gray-300 text-2xl !mb-2">Choose your Portal</p> */}
       {portalProps.map((p, index) => (
         <Button
           type="text"
           onClick={() => handleSubmit(p.loginRole)}
           className={twMerge(
-            "overflow-hidden w-full group bg-transparent cursor-pointer h-14 px-8 relative flex items-center justify-between rounded-full border border-outline/40 duration-200 hover:text-secondary hover:border-secondary"
+            "overflow-hidden w-full group bg-transparent cursor-pointer h-12 px-8 relative flex items-center justify-between rounded-full border border-outline/40 duration-200 hover:text-secondary hover:border-secondary"
           )}
           key={index}
         >
           <p
             className={twMerge(
-              "text-white duration-200 text-base group-hover:text-secondary relative z-50"
+              "text-white duration-200 text-sm group-hover:text-secondary relative z-50"
             )}
           >
             {p.label}
@@ -56,18 +56,20 @@ const Portal = () => {
         </Button>
       ))}
 
-      <p className="text-center text-gray-300 !mt-10">
+      <p className="text-center text-gray-300 !mt-10 text-sm">
         Don't have an account?{" "}
         <Button
           size="large"
           type="link"
-          className="text-primary block place-self-center"
+          className="text-primary block place-self-center text-sm flex items-center gap-2"
+          iconPosition="end"
           onClick={() => {
             dispatch(setSlideIndex(2));
             dispatch(setAuthIndex(1));
           }}
         >
-          Get Started
+          <FaArrowRight />
+          <span>Get Started</span>
         </Button>
       </p>
     </div>
