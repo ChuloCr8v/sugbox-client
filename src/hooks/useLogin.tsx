@@ -2,19 +2,15 @@ import { message } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  LoginInput,
   useAdminLoginMutation,
   useEmployeeLoginMutation,
 } from "../redux/api/auth";
 import { setCredentials } from "../redux/data/auth";
 
-type Props = {
-  email: string;
-  password: string;
-};
-
 export type loginRoleProps = { auth: { loginRole: String } };
 
-const useLogin = (loginData: Props) => {
+const useLogin = () => {
   const [adminLogin, { isLoading }] = useAdminLoginMutation();
   const [employeeLogin, { isLoading: employeeLoading }] =
     useEmployeeLoginMutation();
@@ -24,9 +20,9 @@ const useLogin = (loginData: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const adminSignIn = async () => {
+  const adminSignIn = async (values: LoginInput) => {
     try {
-      const res = await adminLogin(loginData).unwrap();
+      const res = await adminLogin(values).unwrap();
 
       dispatch(setCredentials({ ...res }));
       message.success("Login Successful");
@@ -37,9 +33,9 @@ const useLogin = (loginData: Props) => {
     }
   };
 
-  const employeeSignIn = async () => {
+  const employeeSignIn = async (values: LoginInput) => {
     try {
-      const res = await employeeLogin(loginData).unwrap();
+      const res = await employeeLogin(values).unwrap();
       if (res.others.isDisabled) {
         message.error(
           "Your account is currently disabled, please contact your admin."
@@ -60,6 +56,7 @@ const useLogin = (loginData: Props) => {
           "Account does not exist, please contact your admin for account creation."
         );
       error.originalStatus === 401 && message.error("Wrong employee password.");
+      message.error(error.data.message);
     }
   };
 

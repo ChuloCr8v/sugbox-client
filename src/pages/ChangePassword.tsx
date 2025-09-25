@@ -1,21 +1,16 @@
 import { Button, Spin, message } from "antd";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FormGroup } from "../components/SmallerComponents";
+import FormItemWrapper from "../components/FormItemWrapper";
 import { useResetPasswordMutation } from "../redux/api/auth";
 import { useGetEmployeeQuery } from "../redux/data/employees";
 import { useGetOrganizationQuery } from "../redux/data/organizations";
 import FormLayout from "../components/FormLayout";
-
-const formDataFields = {
-  newPassword: "",
-  repeatNewPassword: "",
-};
+import { useForm } from "antd/es/form/Form";
 
 const ChangePassword = () => {
-  const [formData, setFormData] = useState(formDataFields);
-  const [newPasswordDontMatchError, setNewPasswordDontMatchError] =
-    useState(false);
+  const [form] = useForm();
+
   const [errorMsg, setErrorMsg] = useState("");
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
@@ -33,57 +28,33 @@ const ChangePassword = () => {
   const formFields = [
     {
       label: "New Password",
-      value: formData.newPassword,
       name: "newPassword",
     },
     {
       label: "Repeat New Password",
-      value: formData.repeatNewPassword,
       name: "repeatNewPassword",
     },
   ];
 
-  const handleInputChange = async (e: {
-    target: { value: string; name: string };
-  }) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (name === "repeatNewPassword" || name === "newPassword") {
-      const newPassword = name === "newPassword" ? value : formData.newPassword;
-      const repeatNewPassword =
-        name === "repeatNewPassword" ? value : formData.repeatNewPassword;
-
-      if (newPassword !== repeatNewPassword) {
-        setNewPasswordDontMatchError(true);
-      } else {
-        setNewPasswordDontMatchError(false);
-      }
-    }
-  };
-
   const handleUpdatePassword = async () => {
     setErrorMsg("");
     try {
+      const values = await form.validateFields();
       await resetPassword({
         email: employee ? currentAccount?.email : currentAccount?.companyEmail,
-        formData,
+        formData: values,
         action: "forgotPassword",
         token: token,
       }).unwrap();
       message.success("Password Reset Successful.");
-      formData.newPassword = "";
-      formData.repeatNewPassword = "";
+      values.newPassword = "";
+      values.repeatNewPassword = "";
       navigate("/");
     } catch (error: any) {
       setErrorMsg(error.data);
       message.error(error.data);
     }
   };
-
-  const checkFormValues =
-    formData.newPassword !== "" && formData.repeatNewPassword !== "";
 
   return (
     <div className="h-screen overflow-hidden w-screen flex flex-col items-center justify-center relative">
@@ -120,16 +91,9 @@ const ChangePassword = () => {
               <div className="grid gap-4">
                 {formFields.map((item) => (
                   <div className="relative" key={item.label}>
-                    <FormGroup
-                      inputError={
-                        newPasswordDontMatchError &&
-                        item.name === "repeatNewPassword"
-                          ? "Passwords don't match!"
-                          : ""
-                      }
+                    <FormItemWrapper
                       label={item.label}
                       name={item.name}
-                      onInputChange={handleInputChange}
                       inputType={"password"}
                     />
                   </div>
@@ -139,9 +103,7 @@ const ChangePassword = () => {
                 loading={isLoading}
                 onClick={handleUpdatePassword}
                 className="bg-primaryblue border-none text-white hover:!bg-hoverblue hover:!text-white"
-                disabled={
-                  isLoading || newPasswordDontMatchError || !checkFormValues
-                }
+                disabled={isLoading}
               >
                 Submit
               </Button>

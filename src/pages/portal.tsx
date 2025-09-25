@@ -37,26 +37,32 @@ const Portal = () => {
   };
 
   return (
-    <div className="portal fixed left-0 top-0 h-screen w-screen bg-blue-50 min-h-screen flex flex-col  items-center px-4">
+    <div className="portal fixed left-0 top-0 h-screen w-screen bg-blue-50 min-h-screen flex flex-col items-center px-4">
       <FormLayout
         leftSideElements={
-          <img src="/portal.svg" className="max-h-[400px] w-full" />
+          <img
+            alt="sugbox"
+            src="/portal.svg"
+            className="max-h-[400px] w-full"
+          />
         }
         rightSideElements={
-          <div className="grid grid-cols-1 gap-4 w-full max-w-[400px]">
+          <div className="grid grid-cols-1 gap-4 w-full max-w-[400px] md:max-w-full lg:p-6">
             <FormHeading heading="Choose your portal" />
             {portalProps.map((p, index) => (
-              <div
+              <Button
+                type="text"
+                size="large"
                 onClick={() => handleSignInRole(p.id, p.loginRole)}
                 className={twMerge(
-                  "group bg-white cursor-pointer h-12 px-4 relative flex items-center justify-between rounded-lg border border-gray-200 duration-200 hover:text-primaryblue hover:border-primaryblue",
+                  "group bg-white cursor-pointer px-4 relative flex items-center justify-between rounded-lg border border-gray-200 duration-200 hover:text-primaryblue hover:border-primaryblue",
                   isChecked === p.id && "border-primaryblue"
                 )}
                 key={index}
               >
                 <p
                   className={twMerge(
-                    "text-black font-semibold duration-200 lg:text-2xl xl:text-base group-hover:text-primaryblue",
+                    "text-black font-semibold duration-200 lg:text-base group-hover:text-primaryblue",
                     p.id === isChecked && "text-primaryblue"
                   )}
                 >
@@ -66,16 +72,18 @@ const Portal = () => {
                   checked={isChecked === p.id}
                   className="align-self-end justify-self-end"
                 />
-              </div>
-            ))}
-            {loginRole && (
-              <Button
-                onClick={handleSubmit}
-                className="h-10 capitalize border-none bg-primaryblue hover:!bg-hoverblue hover:!text-white text-white font-semibold mt-2"
-              >
-                Login as an {loginRole}
               </Button>
-            )}
+            ))}
+            <div className="h-12 w-full">
+              {loginRole && (
+                <Button
+                  onClick={handleSubmit}
+                  className="h-full w-full capitalize border-none bg-primaryblue hover:!bg-hoverblue hover:!text-white text-white font-semibold mt-2"
+                >
+                  Login as an {loginRole}
+                </Button>
+              )}
+            </div>
           </div>
         }
       />

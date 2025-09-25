@@ -30,7 +30,7 @@ const FormLayout = (props: Props) => {
             <img
               src="/wave.png"
               alt="sugbox"
-              className="fixed -bottom-32 md:-bottom-60 lg:-bottom-80 xl:-bottom-1/2 left-0 -z-0"
+              className="fixed -bottom-32 md:-bottom-60  opacity-50 lg:-bottom-80 xl:-bottom-1/2 left-0 -z-0"
             />
           </div>
         )}

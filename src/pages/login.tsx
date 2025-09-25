@@ -1,47 +1,12 @@
 import { Button } from "antd";
-import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import FormLayout from "../components/FormLayout";
-import Form from "../components/LoginForm";
 import useLogin from "../hooks/useLogin";
-
-interface inputValueProps {
-  email: string;
-  password: string;
-}
+import LoginForm from "../components/LoginForm";
 
 const SignIn = () => {
-  const [inputValue, setInputValue] = useState<inputValueProps>({
-    email: "",
-    password: "",
-  });
-
-  //const navigate = useNavigate();
-
-  const { loginRole, adminSignIn, employeeSignIn, isLoading, employeeLoading } =
-    useLogin(inputValue);
-
-  const handleInputChange = (e: {
-    preventDefault: () => void;
-    target: { name: any; value: any };
-  }) => {
-    e.preventDefault();
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-  };
-
-  const checkValues = () => {
-    return inputValue.email && inputValue.password ? false : true;
-  };
-
-  const handleLogin = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    if (loginRole === "employee") {
-      employeeSignIn();
-      return;
-    }
-    adminSignIn();
-  };
+  const { loginRole } = useLogin();
 
   return (
     <div className="h-screen w-screen overflow-hidden flex items-center justify-center bg-gray-50">
@@ -66,18 +31,13 @@ const SignIn = () => {
         }
         rightSideElements={
           <div className=" flex flex-col items-center justify-center w-full">
-            <div className="w-full max-w-[400px] xl:place-self-start">
+            <div className="w-full max-w-[400px] lg:p-6 lg:max-w-full xl:place-self-start">
               <FormHeading
                 heading={`Login as ${
                   loginRole !== "employee" ? "Organization" : "Employee"
                 }`}
               />
-              <Form
-                handleInputChange={handleInputChange}
-                handleSubmit={handleLogin}
-                disabled={checkValues() || isLoading || employeeLoading}
-                isLoading={isLoading || employeeLoading}
-              />
+              <LoginForm />
             </div>
           </div>
         }

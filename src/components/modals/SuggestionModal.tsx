@@ -8,8 +8,8 @@ import UseGetAuth from "../../hooks/useGetAuth";
 import { useGetEmployeeQuery } from "../../redux/data/employees";
 import { useAddSuggestionMutation } from "../../redux/data/suggestions";
 import { hideNewSuggestionModal } from "../../redux/modals";
-import { FormGroup } from "../SmallerComponents";
 import { API_URL } from "../..";
+import FormItemWrapper from "../FormItemWrapper";
 interface newSuggestionModalProps {
   modals: {
     newSuggestionModal: boolean;
@@ -121,13 +121,6 @@ const SuggestionModal = () => {
     }
   };
 
-  const handleUpdateNewSuggestion = (e: {
-    target: { value: string; name: string };
-  }) => {
-    const { name, value } = e.target;
-    setNewSuggestion((prev) => ({ ...prev, [name]: value }));
-  };
-
   const disabled =
     isLoading || newSuggestion.suggestion === "" || newSuggestion.title === "";
 
@@ -145,17 +138,13 @@ const SuggestionModal = () => {
         footer={false}
       >
         <form className="flex flex-col items-start gap-4 mt-6">
-          <FormGroup
-            value={newSuggestion.title}
-            onInputChange={handleUpdateNewSuggestion}
+          <FormItemWrapper
             label={"Title"}
             inputType={"text"}
             placeholder={"Suggestion Title"}
             name={"title"}
           />
-          <FormGroup
-            value={newSuggestion.suggestion}
-            onInputChange={handleUpdateNewSuggestion}
+          <FormItemWrapper
             label={"Suggestion"}
             inputType={"textarea"}
             placeholder={"Leave your suggestion"}

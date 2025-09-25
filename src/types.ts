@@ -32,19 +32,13 @@ export interface selectProps {
 
 export interface formGroupProps {
   options?: DefaultOptionType[] | undefined;
-  defaultValue?: string | undefined;
-  selectOnchange?: (arg: string) => void;
-  labelClassName?: string;
   className?: string;
-  onInputChange: ChangeEventHandler<HTMLInputElement>;
+
   label: string;
   inputType?: string;
   placeholder?: string;
   name: string;
   required?: boolean;
-  value?: string;
-  inputClassName?: string;
-  inputError?: string;
 }
 
 export interface ModalComponentProps {

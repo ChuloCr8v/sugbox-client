@@ -7,7 +7,7 @@ import {
   useGetSuggestionQuery,
 } from "../../redux/data/suggestions";
 import { hideEditSuggestionModal } from "../../redux/modals";
-import { FormGroup } from "../SmallerComponents";
+import FormItemWrapper from "../FormItemWrapper";
 
 interface editSuggestionModalProps {
   modals: {
@@ -29,16 +29,6 @@ const EditSuggestionModal = () => {
     useEditSuggestionMutation();
 
   const dispatch = useDispatch();
-
-  const handleUpdateSuggestion = (e: {
-    target: { name: string; value: string };
-  }) => {
-    const { value, name } = e.target;
-    setFormData((prevState: object) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
 
   useEffect(() => {
     if (data) {
@@ -89,23 +79,17 @@ const EditSuggestionModal = () => {
         footer={false}
       >
         <form className="flex flex-col items-start gap-4 pt-6">
-          <FormGroup
-            onInputChange={handleUpdateSuggestion}
+          <FormItemWrapper
             label={"Title"}
             inputType={"text"}
             placeholder={"Suggestion Title"}
             name={"title"}
-            value={formData?.title}
-            labelClassName="font-semibold"
           />
-          <FormGroup
-            onInputChange={handleUpdateSuggestion}
+          <FormItemWrapper
             label={"Suggestion"}
             inputType={"textarea"}
             placeholder={"Leave your suggestion"}
             name={"suggestion"}
-            value={formData?.suggestion}
-            labelClassName="font-semibold"
           />
           <div className="formGroup">
             <Checkbox

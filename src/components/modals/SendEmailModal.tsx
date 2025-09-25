@@ -7,7 +7,7 @@ import {
   useSendEmailToEmployeeMutation,
 } from "../../redux/data/employees";
 import { closeSendEmailModal } from "../../redux/modals";
-import { FormGroup } from "../SmallerComponents";
+import FormItemWrapper from "../FormItemWrapper";
 
 interface sendEmailModalProps {
   modals: { sendEmailModal: { id: string; isOpen: boolean } };
@@ -20,7 +20,7 @@ const SendEmailModal = () => {
 
   const { id, isOpen } = sendEmailModal;
   const { data: employee, isLoading } = useGetEmployeeQuery(id);
-  const [emailData, setEmailData] = useState({
+  const [emailData, _setEmailData] = useState({
     email: "",
     emailAddress: employee?.email,
   });
@@ -33,11 +33,6 @@ const SendEmailModal = () => {
   useEffect(() => {
     emailData.emailAddress = employee?.email;
   }, [id]);
-
-  const handleUpdateEmailData = (name: string, value: string) => {
-    setEmailData((prev) => ({ ...prev, [name]: value }));
-    console.log(emailData);
-  };
 
   const handleSendEmail = async () => {
     try {
@@ -69,31 +64,14 @@ const SendEmailModal = () => {
         <Spin />
       ) : (
         <form className="grid gap-4 mt-8">
-          <FormGroup
+          <FormItemWrapper
             label="Email Address"
             inputType="email"
             required
             name="emailAddress"
-            value={employee?.email}
-            inputClassName="text-gray-700"
-            onInputChange={() => handleUpdateEmailData}
           />
-          <FormGroup
-            label="Subject"
-            inputType="text"
-            name="subject"
-            inputClassName="text-gray-700"
-            onInputChange={() => handleUpdateEmailData}
-          />
-          <FormGroup
-            label="Email"
-            inputType="textarea"
-            name="email"
-            inputClassName="text-gray-700"
-            onInputChange={(e: any) =>
-              handleUpdateEmailData("email", e.target.value)
-            }
-          />
+          <FormItemWrapper label="Subject" inputType="text" name="subject" />
+          <FormItemWrapper label="Email" inputType="textarea" name="email" />
         </form>
       )}
     </Modal>

@@ -1,11 +1,11 @@
 import { Modal, message } from "antd";
-import { Label, TextArea } from "../SmallerComponents";
 import { useEffect, useState } from "react";
 import ModalFooter from "./ModalFooter";
 import {
   useEditCommentMutation,
   useGetCommentQuery,
 } from "../../redux/data/Comments";
+import TextArea from "antd/es/input/TextArea";
 
 type Props = {
   openEditCommentModal: boolean | undefined;
@@ -58,17 +58,8 @@ const EditCommentModal = (props: Props) => {
       }
     >
       <div className="grid gap-2 pt-2">
-        <Label title={"Comment"} labelClassName="text-gray-500 text-base" />
-        <TextArea
-          name={"comment"}
-          onchange={(e: any) =>
-            setFormData((prev: object) => ({
-              ...prev,
-              comment: e.target.value,
-            }))
-          }
-          value={formData?.comment}
-        />
+        <p className="text-gray-500 text-base">{"Comment"} </p>
+        <TextArea name={"comment"} />
       </div>
     </Modal>
   );

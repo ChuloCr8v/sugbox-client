@@ -2,23 +2,15 @@ import { Button, Spin, message } from "antd";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import FormLayout from "../components/FormLayout";
-import { FormGroup } from "../components/SmallerComponents";
+import FormItemWrapper from "../components/FormItemWrapper";
 import { useResetPasswordMutation } from "../redux/api/auth";
 import { useGetEmployeeQuery } from "../redux/data/employees";
 import { useGetOrganizationQuery } from "../redux/data/organizations";
 import useLogout from "../hooks/useLogout";
-
-const formDataFields = {
-  oldPassword: "",
-  newPassword: "",
-  repeatNewPassword: "",
-};
+import { useForm } from "antd/es/form/Form";
 
 const ResetPassword = () => {
-  const [formData, setFormData] = useState(formDataFields);
-  const [passwordDontMatch, setPasswordDontMatch] = useState(false);
-  const [newPasswordDontMatchError, setNewPasswordDontMatchError] =
-    useState(false);
+  const [form] = useForm();
   const [errorMsg, setErrorMsg] = useState("");
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
@@ -35,46 +27,22 @@ const ResetPassword = () => {
   const formFields = [
     {
       label: "Old Password",
-      value: formData.oldPassword,
       name: "oldPassword",
     },
     {
       label: "New Password",
-      value: formData.oldPassword,
       name: "newPassword",
     },
     {
       label: "Repeat New Password",
-      value: formData.oldPassword,
       name: "repeatNewPassword",
     },
   ];
 
-  const handleInputChange = async (e: {
-    target: { value: string; name: string };
-  }) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    name === "oldPassword" && setPasswordDontMatch(false);
-
-    if (name === "repeatNewPassword" || name === "newPassword") {
-      const newPassword = name === "newPassword" ? value : formData.newPassword;
-      const repeatNewPassword =
-        name === "repeatNewPassword" ? value : formData.repeatNewPassword;
-
-      if (newPassword !== repeatNewPassword) {
-        setNewPasswordDontMatchError(true);
-      } else {
-        setNewPasswordDontMatchError(false);
-      }
-    }
-  };
-
   const handleUpdatePassword = async () => {
     setErrorMsg("");
-    setPasswordDontMatch(false);
 
+    const formData = await form.validateFields();
     try {
       await resetPassword({
         email: employee ? employee.email : organization.companyEmail,
@@ -89,11 +57,6 @@ const ResetPassword = () => {
       message.error(error.data);
     }
   };
-
-  const checkFormValues =
-    formData.oldPassword !== "" &&
-    formData.newPassword !== "" &&
-    formData.repeatNewPassword !== "";
 
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center">
@@ -130,18 +93,9 @@ const ResetPassword = () => {
               <div className="grid gap-4">
                 {formFields.map((item) => (
                   <div className="relative">
-                    <FormGroup
-                      inputError={
-                        newPasswordDontMatchError &&
-                        item.name === "repeatNewPassword"
-                          ? "Passwords don't match!"
-                          : passwordDontMatch && item.name === "oldPassword"
-                          ? "Incorrect old password"
-                          : ""
-                      }
+                    <FormItemWrapper
                       label={item.label}
                       name={item.name}
-                      onInputChange={handleInputChange}
                       inputType={"password"}
                     />
                   </div>
@@ -151,9 +105,7 @@ const ResetPassword = () => {
                 loading={isLoading}
                 onClick={handleUpdatePassword}
                 className="bg-primaryblue border-none text-white hover:!bg-hoverblue hover:!text-white"
-                disabled={
-                  isLoading || newPasswordDontMatchError || !checkFormValues
-                }
+                disabled={isLoading}
               >
                 Submit
               </Button>

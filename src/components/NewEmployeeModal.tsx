@@ -3,9 +3,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { hideNewEmployeeModal } from "../redux/modals";
-import { FormGroup } from "./SmallerComponents";
 import ModalFooter from "./modals/ModalFooter";
 import useAddEmployee from "../hooks/useAddEmployee";
+import FormItemWrapper from "./FormItemWrapper";
 
 type newEmployeeFormInput = {
   firstName: string;
@@ -77,23 +77,6 @@ const NewEmployeeModal = () => {
       ],
     },
   ];
-
-  const handleInputChange = (name: string, value: string) => {
-    if (name === "isModerator") {
-      setFormData((prev) => ({
-        ...prev,
-        isModerator: value === "moderator" ? true : false,
-      }));
-      return;
-    }
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    console.log(formData);
-  };
-
   const onClose = () => {
     dispatch(hideNewEmployeeModal());
     setFormData(newEmployeeInputValues);
@@ -121,24 +104,17 @@ const NewEmployeeModal = () => {
       >
         <form action="" className="grid md:grid-cols-2 items-start gap-4 pt-6">
           {newEmployeeFormItems.map((item, index) => (
-            <FormGroup
-              onInputChange={(e) =>
-                handleInputChange(item.name, e.target.value)
-              }
+            <FormItemWrapper
               required={item.required}
               label={item.label}
               inputType={item.type}
               placeholder={item.placeholder}
               name={item.name}
-              value={item.value}
               key={index}
-              labelClassName="text-textcolor text-sm"
               options={item.options?.map((o) => ({
                 label: o.label,
                 value: o.value,
               }))}
-              defaultValue={item.value}
-              selectOnchange={(value) => handleInputChange(item.name, value)}
             />
           ))}
         </form>

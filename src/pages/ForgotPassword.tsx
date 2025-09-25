@@ -1,9 +1,7 @@
 import { Button, Input, message } from "antd";
 import { useState } from "react";
-import { FaEnvelope } from "react-icons/fa";
 import FormLayout from "../components/FormLayout";
 import { useGenerateResetPasswordLinkMutation } from "../redux/api/auth";
-import { BackToButton } from "./login";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -63,31 +61,31 @@ const ForgotPassword = () => {
               )}
             </div>
 
-            <div className="grid gap-2 max-w-[400px] w-full  p-4 rounded-lg ">
+            <div className="grid gap-2 max-w-[400px] lg:max-w-full w-full p-4 lg:p-6 rounded-lg ">
               <label className="font-semibold text-base text-left">
                 Email Address
               </label>
               <div className="flex flex-col items-center gap-4">
                 <Input
+                  variant="underlined"
+                  size="large"
                   onChange={(e) => setEmail(e.target.value)}
-                  prefix={
-                    <FaEnvelope className="bg-gray-200 p-2 text-gray-500 h-full w-full" />
-                  }
                   type="email"
-                  className="p-0 border hover:border-primaryblue h-9 rounded w-full overflow-hidden"
+                  className="w-full overflow-hidden"
                 />
 
                 <div className="grid gap-2 w-full">
                   {" "}
                   <Button
+                    size="large"
                     loading={generatingLink}
                     onClick={handleResetPassword}
                     disabled={email === "" || generatingLink}
-                    className="h-9 w-full bg-primaryblue border-none text-white hover:!bg-hoverblue hover:!text-white font-semibold shadow-none"
+                    className=" w-full bg-primaryblue border-none text-white hover:!bg-hoverblue hover:!text-white font-semibold shadow-none"
                   >
                     Submit
                   </Button>
-                  <BackToButton url="/portal" page={"Login"} />
+                  {/* <BackToButton url="/portal" page={"Login"} /> */}
                 </div>
               </div>
             </div>

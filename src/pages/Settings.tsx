@@ -3,7 +3,6 @@ import { ReactNode, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import ProfilePicture from "../components/ProfilePicture";
-import { Label } from "../components/SmallerComponents";
 import { SectionHeading } from "../components/Suggestions";
 import ConfirmEmailUpdateModal from "../components/modals/ConfirmEmailUpdateModal";
 import UseGetAuth from "../hooks/useGetAuth";
@@ -400,7 +399,7 @@ const Settings = () => {
               <div className="flex flex-col lg:grid grid-cols-2 gap-y-4 justify-between w-full">
                 {notificationDetail.map((item) => (
                   <div className="grid gap-2" key={item.title}>
-                    <Label title={item.title} labelClassName="text-gray-500" />
+                    <p>{item.title}</p>
 
                     <Switch
                       size="small"
