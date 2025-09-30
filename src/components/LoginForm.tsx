@@ -50,7 +50,7 @@ const LoginForm = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <Form
-        className="w-full space-y-6 lg:space-y-0"
+        className="w-full space-y-4 lg:space-y-0"
         form={form}
         layout="vertical"
       >
@@ -68,7 +68,7 @@ const LoginForm = () => {
           </Form.Item>
         ))}
 
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full flex justify-between items-center !mt-4">
           <Checkbox
             onChange={() => {}}
             className="hover:text-primaryblue duration-200 text-base text-gray-300 !text-sm"
@@ -87,7 +87,7 @@ const LoginForm = () => {
           size="large"
           type="primary"
           onClick={handleSubmit}
-          className="w-full !mt-8 text-sm"
+          className="w-full !mt-4 text-sm"
           loading={isLoading}
         >
           Login

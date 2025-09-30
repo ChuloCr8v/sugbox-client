@@ -25,8 +25,6 @@ const ForgotPassword = () => {
   const handleResetPassword = async () => {
     const email = await form.validateFields();
 
-    console.log(email);
-
     setErrorMessage("");
     setSuccessMessage("");
 

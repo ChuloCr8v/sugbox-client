@@ -17,8 +17,8 @@ const TrendingSuggestions = () => {
 
   return (
     <div className="overflow-hidden">
-      <p className="font-semibold text-lg ">Trending Suggestions</p>
-      <div className="flex gap-4 mt-2 overflow-x-scroll py-2">
+      <p className="font-semibold text-lg text-gray-300">Trending</p>
+      <div className="flex gap-3 mt-2 overflow-x-scroll py-2">
         {[...suggestions]
           ?.sort(
             (a: { upVotes: Array<object> }, b: { upVotes: Array<object> }) =>
@@ -27,8 +27,8 @@ const TrendingSuggestions = () => {
           .map((suggestion: suggestionProps) => (
             <Link
               to={`/suggestion/${suggestion._id}`}
-              className="rounded border shadow p-4 min-w-[350px]"
               key={suggestion._id}
+              className="w-full"
             >
               <TrendingSuggestionCard suggestion={suggestion} />
             </Link>

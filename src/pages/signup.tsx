@@ -34,12 +34,12 @@ const Signup = () => {
 
   return (
     <div className="flex flex-col items-start justify-center w-full mt-8">
-      <div className="space-y-1 max-xl:hidden mb-12 w-full">
+      <div className="space-y-1 max-xl:hidden mb-6 w-full">
         <p className="text-gray-200 text-xl">Create Organization</p>
         <div className="w-full h-1 rounded-full bg-gradient-to-r from-primary to-transparent"></div>
       </div>
       <Form
-        className="w-full space-y-6 lg:grid grid-cols-2 lg:space-y-0 lg:gap-x-3"
+        className="w-full lg:grid grid-cols-2 lg:gap-x-3 space-y-4 lg:space-y-0"
         layout="vertical"
         form={form}
       >

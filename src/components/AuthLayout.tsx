@@ -39,7 +39,7 @@ const AuthLayout = ({ heading, subheading }: Props) => {
   //   }
   // };
 
-  console.log(authIndex, slideIndex);
+  // console.log(authIndex, slideIndex);
 
   const renderView = () => {
     switch (slideIndex) {

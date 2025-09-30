@@ -33,14 +33,13 @@ const Layout = () => {
   const { token } = UseGetAuth();
 
   return (
-    <div className="flex flex-col bg-gray-50 dark:bg-background min-h-screen">
-      <div className="flex w-full">
+    <div className="flex flex-col bg-gray-50 dark:bg-background h-screen overflow-hidden">
+      <div className="flex w-full h-full">
         <Header />
         <SideBar />
         <div
           className={twMerge(
-            "w-full flex flex-col items-center",
-            token && "lg:pl-16"
+            "w-full flex flex-col items-center overflow-y-auto h-full"
           )}
         >
           <div className="flex flex-col items-center  w-full">

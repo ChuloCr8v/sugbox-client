@@ -56,7 +56,7 @@ const Portal = () => {
         </Button>
       ))}
 
-      <p className="text-center text-gray-300 !mt-10 text-sm">
+      <p className="text-center text-gray-300 !mt-10 text-sm flex flex-col justify-center items-center">
         Don't have an account?{" "}
         <Button
           size="large"

@@ -1,4 +1,5 @@
 import FilterCard from "./FilterCard";
+import CardWrapper from "./global/CardWrapper";
 
 interface Props {
   data: { status: string }[];
@@ -21,29 +22,12 @@ const FilterCards = (props: Props) => {
     { title: "rejected", number: rejected?.length },
   ];
 
-  // const handleChange = (value: string) => {
-  //   props.setFilter(value);
-  //   console.log(value);
-  // };
-
   return (
-    <div className="">
-      <div className="hidden lg:grid md:grid-cols-2 xl:grid-cols-4 items-center gap-4 mt-4">
-        {" "}
-        {filters.map((d, index) => (
-          <FilterCard data={d} key={index} />
-        ))}
-      </div>
-      {/* <div className="lg:hidden mt-4">
-        <Select
-          defaultValue="All"
-          style={{ width: 120 }}
-          onChange={handleChange}
-          options={filters.map((v) => ({ label: v.title, value: v.title }))}
-          className="w-full"
-        />
-      </div> */}
-    </div>
+    <CardWrapper>
+      {filters.map((d, index) => (
+        <FilterCard data={d} key={index} />
+      ))}
+    </CardWrapper>
   );
 };
 

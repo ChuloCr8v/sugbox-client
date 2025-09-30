@@ -1,7 +1,10 @@
-import { Button, Spin, Tooltip, message } from "antd";
+import { Button, Dropdown, Spin, Tooltip, message } from "antd";
 import { useState } from "react";
 import {
+  FaBan,
+  FaChevronDown,
   FaRegCalendarAlt,
+  FaRegCheckCircle,
   FaRegCommentAlt,
   FaRegUser,
   FaUserNinja,
@@ -106,107 +109,129 @@ const Suggestion = () => {
     return <ErrorComponent />;
   }
 
+  const actionItems = [
+    {
+      key: "approve",
+      label: "Approve",
+      icon: <FaRegCheckCircle />,
+    },
+    {
+      key: "Reject",
+      label: "Reject",
+      icon: <FaBan />,
+    },
+  ];
+
   return (
-    <div className="py-20 px-4 sm:px-6 lg:px-12 w-full grid gap-6 max-w-6xl mx-auto">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
-        <div className="grid gap-2">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h1 className="text-xl sm:text-2xl font-bold capitalize text-primaryblue leading-tight">
+    <div className="py-2 h-screen overflow-y-auto px-4 w-full gap-6 bg-gradient-to-t from-primary/5 backdrop-blur-xl to-transparent flex flex-col justify-between">
+      <div className="space-y-4">
+        {/* Header */}
+        <div className="border-b border-gray-600 flex flex-col sm:flex-row justify-between items-center gap-3">
+          <div className="grid gap-2">
+            <h1 className="text-xl sm:text-2xl font-bold capitalize text-primary leading-tight">
               {suggestion?.title}
             </h1>
-            <SuggestionStatusTag status={suggestion?.status} />
-          </div>
 
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-            {loadingSuggester ? (
-              <Spin />
-            ) : suggestion?.isAnonymous ? (
-              <div className="flex items-center gap-2 font-medium">
-                <FaUserNinja />
-                Anonymous
-              </div>
-            ) : (
+            <div className="flex gap-2 flex-wrap items-center text-sm text-gray-500 dark:text-gray-400">
+              <SuggestionStatusTag status={suggestion?.status} />
+
+              <div className="border-l-2 mx-2 mr-2 h-6 w-0 border-gray-600"></div>
+
+              {loadingSuggester ? (
+                <Spin />
+              ) : suggestion?.isAnonymous ? (
+                <div className="flex items-center gap-2 font-medium">
+                  <FaUserNinja />
+                  Anonymous
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <FaRegUser />
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`/profile/${suggester?._id}`}
+                    className="text-primaryblue hover:underline"
+                  >
+                    {suggester?.firstName + " " + suggester?.lastName}
+                  </a>
+                </div>
+              )}
               <div className="flex items-center gap-2">
-                <FaRegUser />
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`/profile/${suggester?._id}`}
-                  className="text-primaryblue hover:underline"
-                >
-                  {suggester?.firstName + " " + suggester?.lastName}
-                </a>
+                <FaRegCalendarAlt />
+                {dateFormatter(suggestion?.createdAt)}
               </div>
-            )}
-            <div className="flex items-center gap-2">
-              <FaRegCalendarAlt />
-              {dateFormatter(suggestion?.createdAt)}
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Body */}
-      <div className="suggestion-body border border-gray-300 dark:border-gray-700 rounded-lg p-4 sm:p-6 bg-white dark:bg-black/40 shadow-sm">
-        <p className="pb-5 text-gray-800 dark:text-gray-200 leading-relaxed">
-          {suggestion?.suggestion}
-        </p>
-
-        <div className="flex items-center flex-wrap gap-3 mt-4">
-          <VoteComponent
-            downVoteLoading={downvoteSuggestionLoading}
-            upVoteLoading={upvoteSuggestionLoading}
-            upVotesLength={suggestion?.upVotes?.length}
-            downVotesLength={suggestion?.downVotes?.length}
-            downVotesClick={downvoteSuggestion}
-            upVotesClick={upvoteSuggestion}
-            suggestion={suggestion}
-            disableVoteFunction={disableVoteFunction}
-            disableDownVoteFunction={disableDownVoteFunction}
-          />
-
-          <Tooltip title="Click to view or hide comments">
-            <Button
-              icon={<FaRegCommentAlt className="text-sm" />}
-              onClick={() => setOpenCommentSection(!openCommentSection)}
-              className="flex items-center gap-1 border border-gray-300 dark:border-gray-600 rounded-md h-9 px-3 bg-white dark:bg-black/40 hover:border-primaryblue hover:text-primaryblue transition"
-            >
-              {suggestion?.comments?.length || 0}{" "}
-              {suggestion?.comments?.length === 1 ? "Comment" : "Comments"}
+          <Dropdown menu={{ items: actionItems }}>
+            <Button className="w-[120px]" type="primary">
+              Action
+              <FaChevronDown />
             </Button>
-          </Tooltip>
+          </Dropdown>
         </div>
-      </div>
 
-      {/* Actions + Attachments */}
-      <div className="grid gap-4">
-        <SuggestionActionButtons
-          id={suggestion?._id}
-          setOpenDeleteItemModal={setOpenDeleteItemModal}
+        {/* Body */}
+        <div className="">
+          <p className="pb-5 text-gray-800 dark:text-gray-200 leading-relaxed">
+            {suggestion?.suggestion}
+          </p>
+
+          <div className="flex items-center flex-wrap gap-3 mt-4">
+            <VoteComponent
+              downVoteLoading={downvoteSuggestionLoading}
+              upVoteLoading={upvoteSuggestionLoading}
+              upVotesLength={suggestion?.upVotes?.length}
+              downVotesLength={suggestion?.downVotes?.length}
+              downVotesClick={downvoteSuggestion}
+              upVotesClick={upvoteSuggestion}
+              suggestion={suggestion}
+              disableVoteFunction={disableVoteFunction}
+              disableDownVoteFunction={disableDownVoteFunction}
+            />
+
+            <Tooltip title="Click to view or hide comments">
+              <Button
+                icon={<FaRegCommentAlt className="text-sm" />}
+                onClick={() => setOpenCommentSection(!openCommentSection)}
+                className="flex items-center gap-1 border border-gray-300 dark:border-gray-600 rounded-md h-9 px-3 bg-white dark:bg-black/40 hover:border-primaryblue hover:text-primaryblue transition"
+              >
+                {suggestion?.comments?.length || 0}{" "}
+                {suggestion?.comments?.length === 1 ? "Comment" : "Comments"}
+              </Button>
+            </Tooltip>
+          </div>
+        </div>
+
+        {/* Actions + Attachments */}
+        <div className="grid gap-4">
+          <SuggestionActionButtons
+            id={suggestion?._id}
+            setOpenDeleteItemModal={setOpenDeleteItemModal}
+          />
+          {suggestion?.attachments?.length > 0 && (
+            <SuggestionAttachmentComponent suggestion={suggestion} />
+          )}
+        </div>
+
+        {/* Comment Box */}
+        <CommentBox
+          handleBtnClick={addCommentFunction}
+          placeholder="Start typing..."
+          comment={commentText}
+          onchange={(e) => setCommentText(e.target.value)}
+          setComment={setCommentText}
+          addCommentLoading={addCommentLoading}
         />
-        {suggestion?.attachments?.length > 0 && (
-          <SuggestionAttachmentComponent suggestion={suggestion} />
+
+        {/* Comment Section */}
+        {openCommentSection && (
+          <div className="comment_section border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-black/40">
+            <Comments suggestionId={id} />
+          </div>
         )}
       </div>
-
-      {/* Comment Box */}
-      <CommentBox
-        handleBtnClick={addCommentFunction}
-        placeholder="Start typing..."
-        comment={commentText}
-        onchange={(e) => setCommentText(e.target.value)}
-        setComment={setCommentText}
-        addCommentLoading={addCommentLoading}
-      />
-
-      {/* Comment Section */}
-      {openCommentSection && (
-        <div className="comment_section border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-black/40">
-          <Comments suggestionId={id} />
-        </div>
-      )}
-
       {/* Trending Suggestions */}
       <TrendingSuggestions />
 

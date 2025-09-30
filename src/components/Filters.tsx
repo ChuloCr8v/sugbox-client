@@ -138,11 +138,12 @@ const Filter = (props: Props) => {
     <div className="flex flex-col md:flex-row justify-between w-full gap-3 mt-4">
       {/* Search */}
       <Input
+        size="large"
         value={filterValue.searchValue}
         onChange={(e) => handleSearchSuggestion(e.target.value)}
         placeholder="Enter search term"
         prefix={<FaSearch className="text-gray-400 dark:text-gray-500 pr-1" />}
-        className="col-span-3 border-gray-600 dark:border-gray-700 h-9 rounded-full w-full bg-white/5 dark:bg-black/40 text-gray-800 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 max-w-[400px]"
+        className="col-span-3 border-gray-600 dark:border-gray-700 w-full dark:bg-black/40 text-gray-800 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 max-w-[400px]"
       />
 
       {/* Buttons */}

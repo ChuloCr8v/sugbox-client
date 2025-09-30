@@ -1,8 +1,8 @@
 import {
   FaBan,
   FaRegCheckCircle,
-  FaRegFile,
-  FaRegQuestionCircle,
+  FaRegClock,
+  FaRegFileAlt,
 } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 
@@ -16,12 +16,12 @@ interface Props {
 
 const icon = (title: string) => {
   if (title === "total") {
-    return <FaRegFile />;
+    return <FaRegFileAlt className="!text-primaryblue" />;
   } else if (title === "pending") {
-    return <FaRegQuestionCircle />;
+    return <FaRegClock className="text-secondary" />;
   } else if (title === "approved") {
-    return <FaRegCheckCircle />;
-  } else return <FaBan />;
+    return <FaRegCheckCircle className="text-green-600" />;
+  } else return <FaBan className="text-red-600" />;
 };
 
 const iconBg = (title: string) => {
@@ -84,22 +84,22 @@ const FilterCard = (props: Props) => {
   return (
     <div
       //  onClick={() => props.setFilter(props.data.title)}
-      className="flex justify-between p-4 bg-black/40 backdrop-blur-sm w-full rounded-xl border border-gray-600"
+      className="flex items-center gap-3 border-r border-gray-600 justify-start w-full mr-6 last-of-type:border-r-0"
     >
-      <div className="flex  items-center gap-3">
-        <p className="font-bold text-base text-left text-primaryblue">
-          {props.data?.number}
-        </p>
-        <p className=" text-base capitalize text-white">{props.data?.title}</p>
-      </div>
       <div
         className={twMerge(
-          "rounded-full h-8 w-8 flex items-center justify-center text-white duration-200 font-semibold text-xl",
+          "rounded-full h-10 w-10 backdrop-blur-xl flex items-center justify-center text-white duration-200 font-semibold text-xl bg-opacity-20",
           setIconBg()
           // iconHoverBg(props.data.title)
         )}
       >
         {icon(props.data?.title)}
+      </div>
+      <div className="flex flex-col items-start">
+        <p className="font-bold text-xl text-left text-white">
+          {props.data?.number}
+        </p>
+        <p className=" text-xs text-gray-300 capitalize">{props.data?.title}</p>
       </div>
     </div>
   );

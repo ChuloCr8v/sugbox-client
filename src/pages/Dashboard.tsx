@@ -41,7 +41,7 @@ const Dashboard = () => {
     <p className="text-gray-600 dark:text-gray-300">
       Hello {employee?.firstName}, <br className=" md:hidden" />
       any{" "}
-      <span className="text-primaryblue font-semibold capitalize">
+      <span className="text-secondary font-semibold capitalize">
         {" "}
         bright ideas
       </span>{" "}
@@ -61,7 +61,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="w-full grid gap-4 px-4 py-24">
+    <div className="w-full grid gap-4 px-4 py-24 bg-gradient-to-bl from-transparent to-orange-600/5 ">
       <PageHeader
         title={isAdmin ? adminProfileTitle : userProfileTitle}
         showActionButton

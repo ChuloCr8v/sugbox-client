@@ -1,3 +1,4 @@
+import ForgotPassword from "../../pages/ForgotPassword";
 import SignIn from "../../pages/login";
 import LoginPageRedirect from "../../pages/LoginPageRedirect";
 import Signup from "../../pages/signup";
@@ -5,8 +6,6 @@ import { useAppSelector } from "../../redux/store";
 
 const AuthPages = () => {
   const { authIndex } = useAppSelector((state) => state.authSlide);
-
-  console.log(authIndex);
 
   const renderPages = () => {
     switch (authIndex) {
@@ -16,6 +15,8 @@ const AuthPages = () => {
         return <Signup />;
       case 2:
         return <LoginPageRedirect />;
+      case 3:
+        return <ForgotPassword />;
       default:
         return null;
     }

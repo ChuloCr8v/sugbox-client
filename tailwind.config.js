@@ -15,7 +15,7 @@ export default {
       colors: {
         background: "#212121",
         primaryblue: "#0275ff",
-        primary: "#0275ff",
+        primary: "#ff6600",
         hoverblue: "#024BA3",
         textcolor: "#b3b7bc",
         bordercolor: "#f1f0f3",

@@ -1,15 +1,12 @@
 import { FaRegLightbulb, FaRegUser, FaTable, FaUsers } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import UseGetAuth from "../hooks/useGetAuth";
-import { closeSideBar, openSideBar } from "../redux/sideBar";
+import { closeSideBar } from "../redux/sideBar";
 
 const Sidebar = () => {
-  const { isSideBarOpen } = useSelector(
-    (state: { sideBar: { isSideBarOpen: boolean } }) => state.sideBar
-  );
   const dispatch = useDispatch();
   const { user, id, isAdmin } = UseGetAuth();
   const path = window.location.pathname;
@@ -84,9 +81,9 @@ const Sidebar = () => {
         to={item.link}
         onClick={() => dispatch(closeSideBar())}
         className={twMerge(
-          "w-full flex items-center gap-2 lg:gap-5 pr-6 px-4 py-3 border-l-2 border-transparent border-solid hover:border-primaryblue hover:text-primaryblue duration-200",
-          path.toLowerCase().includes(`${item.link}`) &&
-            "text-primaryblue border-primaryblue",
+          "w-full flex items-center gap-2 lg:gap-5 pr-6 px-4 py-3 border-l-2 border-transparent border-solid hover:border-primaryblue hover:text-primaryblue duration-200 text-gray-400",
+          path.toLowerCase().startsWith(`${item.link}`) &&
+            "bg-secondary/5 text-secondary border-secondary",
           path === "/" &&
             item.title === "Dashboard" &&
             "text-primaryblue border-primaryblue"
@@ -95,12 +92,7 @@ const Sidebar = () => {
         <span className="">
           <item.icon className="text-xl" />
         </span>
-        <span
-          className={twMerge(
-            "opacity-0 transition-all duration-1000 leading-none",
-            isSideBarOpen && "opacity-100"
-          )}
-        >
+        <span className={twMerge("transition-all duration-1000 leading-none")}>
           {item.title}
         </span>
       </Link>
@@ -114,19 +106,12 @@ const Sidebar = () => {
   return (
     <div className="">
       <div
-        onClick={() => dispatch(closeSideBar())}
+        // onMouseEnter={() => dispatch(openSideBar())}
+        // onMouseLeave={() => dispatch(closeSideBar())}
         className={twMerge(
-          "fixed z-20 top-0 left-0 min-h-screen w-0 bg-black opacity-30 lg:hidden duration-200",
-          isSideBarOpen && "w-screen"
-        )}
-      ></div>
-      <div
-        onMouseEnter={() => dispatch(openSideBar())}
-        onMouseLeave={() => dispatch(closeSideBar())}
-        className={twMerge(
-          "bg-white min-h-screen fixed top-0 left-0 w-0 lg:w-16 pt-24 border-r overflow-hidden z-50 duration-200",
-          !user && "hidden",
-          isSideBarOpen && "w-[180px] lg:w-[180px]"
+          "dark:bg-gradient-to-b from-background to-secondary/5 backdrop-blur-xl min-h-screen w-0 lg:w-[250px] pt-24 border-r border-gray-600 overflow-hidden z-50 duration-200",
+          !user && "hidden"
+          // isSideBarOpen && "!w-[250px]"
         )}
       >
         {allMenu.map((item, index) => (
