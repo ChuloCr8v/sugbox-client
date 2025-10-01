@@ -71,7 +71,7 @@ const LoginForm = () => {
         <div className="w-full flex justify-between items-center !mt-4">
           <Checkbox
             onChange={() => {}}
-            className="hover:text-primaryblue duration-200 text-base text-gray-300 !text-sm"
+            className="hover:text-primaryblue duration-200 text-gray-300 !text-sm"
           >
             Remember Me
           </Checkbox>
