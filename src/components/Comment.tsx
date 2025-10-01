@@ -8,6 +8,9 @@ import { commentsProps } from "../types";
 import { dateFormatter } from "../utils.ts/dateFormatter";
 import DeleteItemModal from "./modals/DeleteItemModal";
 import EditCommentModal from "./modals/EditCommentModal";
+import Icon from "./global/Icon";
+import { Calendar01Icon, Clock01Icon } from "@hugeicons/core-free-icons";
+import useGetAvatar from "../hooks/useGetAvatar";
 
 const Comment = (props: { data: commentsProps }) => {
   const [openDeleteItemModal, setOpenDeleteItemModal] = useState(false);
@@ -17,6 +20,9 @@ const Comment = (props: { data: commentsProps }) => {
   const [deleteComment, { isLoading: deleteCommentLoading }] =
     useDeleteCommentMutation();
   const { data: commenter } = useGetEmployeeQuery(props.data.userId);
+
+  console.log(commenter);
+  const { avatar } = useGetAvatar(commenter._id);
 
   const handleDeleteComment = async () => {
     try {
@@ -30,29 +36,40 @@ const Comment = (props: { data: commentsProps }) => {
   };
 
   return (
-    <div className="border-b-[1.5px] py-4" id={props.data._id}>
-      <div className="flex items-start flex-col gap-3">
-        <p className="text-[14px] font-bold text-primaryblue">
-          {props.data?.isAdmin ? (
-            <span className="flex items-center gap-1 text-yellow-600">
-              {" "}
-              Admin
-            </span>
-          ) : (
-            `${commenter?.firstName} ${commenter?.lastName}`
-          )}
+    <div
+      className="border-t first-of-type:border-t-0 [1.5px] pt-4"
+      id={props.data._id}
+    >
+      <div className="flex items-start flex-col gap-4">
+        <p className="text-xs text-gray-200">
+          <div className="flex items-center gap-3">
+            <div className="">{avatar("!h-8 !w-8 !rounded-full !text-sm")}</div>
+            <div className="">
+              <p className="text-sm">
+                {`${commenter?.firstName} ${commenter?.lastName}`}
+              </p>
+              <div className="flex items-center gap-2 *:!text-xs">
+                <div className="flex items-center gap-1">
+                  <Icon icon={Calendar01Icon} />{" "}
+                  <p className=" text-gray-400">
+                    {dateFormatter(props.data.createdAt)}
+                  </p>
+                </div>
+                <div className="flex gap-2 items-center text-gray-400">
+                  <Icon icon={Clock01Icon} />{" "}
+                  <p className="">
+                    {dayjs(props.data.createdAt).format("hh:mm a")}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </p>
         <div className="flex flex-col items-start gap-3 w-full">
-          <p className="normal-case">{props.data.comment}</p>
-          <div className="flex items-center justify-between w-full">
-            <div className="flex gap-2 items-center font-bold text-gray-500">
-              <p className="text-[12px]">
-                {dateFormatter(props.data.createdAt)}
-              </p>
-              <p className="text-[12px]">
-                {dayjs(props.data.createdAt).format("hh.mm.ss")}
-              </p>
-            </div>
+          <p className="normal-case text-sm text-gray-200">
+            {props.data.comment}
+          </p>
+          <div className="flex items-center gap-4 w-full">
             {verifyCommentOwnership && (
               <div className="flex items-center justify-center gap-2">
                 <Button

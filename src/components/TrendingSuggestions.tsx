@@ -16,7 +16,7 @@ const TrendingSuggestions = () => {
   }
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden pb-80">
       <p className="font-semibold text-lg text-gray-300">Trending</p>
       <div className="flex gap-3 mt-2 overflow-x-scroll py-2">
         {[...suggestions]

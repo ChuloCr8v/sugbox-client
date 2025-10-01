@@ -1,12 +1,18 @@
-import { twMerge } from "tailwind-merge";
+import { ClassNameValue, twMerge } from "tailwind-merge";
 import { useGetEmployeeQuery } from "../redux/data/employees";
 
 const useGetAvatar = (userId?: string) => {
   const { data: employee } = useGetEmployeeQuery(userId);
 
-  const avatar = () => {
+  const avatar = (className?: ClassNameValue) => {
+    console.log(employee);
     return (
-      <div className="w-full md:w-[200px] rounded-lg overflow-hidden">
+      <div
+        className={twMerge(
+          "w-full md:w-[200px] rounded-lg overflow-hidden bg-gradient-to-b from-primary to-black flex items-center justify-center",
+          className
+        )}
+      >
         {employee?.profilePicture ? (
           <img
             src={employee?.profilePicture}

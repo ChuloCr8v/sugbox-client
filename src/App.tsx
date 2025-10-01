@@ -1,4 +1,4 @@
-import { ConfigProvider } from "antd";
+import { ConfigProvider, theme } from "antd";
 import { Provider } from "react-redux";
 import "./App.css";
 import Layout from "./pages/Layout";
@@ -9,6 +9,7 @@ function App() {
   return (
     <ConfigProvider
       theme={{
+        algorithm: theme.darkAlgorithm,
         token: {
           colorPrimary: "#ff6600",
         },

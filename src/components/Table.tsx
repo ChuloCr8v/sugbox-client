@@ -18,7 +18,7 @@ const TableComponent = (props: {
         columns={props.columns}
         dataSource={props.data}
         onRow={props.onRow}
-        className="border-gray-200 bg-white h-full border rounded !shadow-none overflow-hidden w-full"
+        className="border-gray-600 !bg-gradient-to-b !from-primary/10 !to-black h-full border rounded !shadow-none overflow-hidden w-full"
       />
     </div>
   );

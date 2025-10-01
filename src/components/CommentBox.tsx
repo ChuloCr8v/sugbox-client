@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { twMerge } from "tailwind-merge";
 import { hideNewCommentModal } from "../redux/modals";
 import Button from "./Button";
+import CardWrapper from "./global/CardWrapper";
 
 type Props = {
   handleBtnClick: () => void;
@@ -23,21 +24,19 @@ const CommentBox = (props: Props) => {
   return (
     <>
       {newCommentModal && (
-        <div
-          className={twMerge(
-            "flex flex-col w-full items-end gap-4 bg-white  overflow-hidden duration-150"
-          )}
-        >
+        <CardWrapper className={twMerge("flex-col items-end gap-3")}>
           <TextArea
             rows={2}
             placeholder={props.placeholder}
             onChange={props.onchange}
             value={props.comment}
-            className="border-gray-200 p-2"
+            className="border-gray-600 !bg-transparent p-2 rounded-lg"
           />
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Button
-              className={"bg-primaryred hover:bg-red-600 text-white "}
+              className={
+                "bg-transparent border-gray-600 border hover:bg-red-600 text-white w-[120px]"
+              }
               text={"Cancel"}
               disabled={props.addCommentLoading}
               loading={props.addCommentLoading}
@@ -47,14 +46,14 @@ const CommentBox = (props: Props) => {
               }}
             />{" "}
             <Button
-              className={"bg-primaryblue text-white hover:bg-blue-600 "}
+              className={"w-[120px] bg-primary text-white"}
               text={"Submit"}
               disabled={props.comment === "" || props.addCommentLoading}
               onClick={props.handleBtnClick}
               loading={props.addCommentLoading}
             />
           </div>
-        </div>
+        </CardWrapper>
       )}
     </>
   );

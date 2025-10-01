@@ -84,7 +84,7 @@ const Suggestion = () => {
 
   if (isLoading) {
     return (
-      <div className="h-screen w-full flex items-center justify-center gap-2 text-primaryblue font-semibold">
+      <div className="h-screen w-full flex items-center justify-center gap-2 font-semibold text-gray-400">
         <Spin /> Loading...
       </div>
     );
@@ -123,10 +123,10 @@ const Suggestion = () => {
   ];
 
   return (
-    <div className="py-2 h-screen overflow-y-auto px-4 w-full gap-6 bg-gradient-to-t from-primary/5 backdrop-blur-xl to-transparent flex flex-col justify-between">
+    <div className="py-24 h-screen overflow-y-auto px-4 w-full gap-6 bg-gradient-to-t from-primary/5 backdrop-blur-xl to-transparent flex flex-col justify-between">
       <div className="space-y-4">
         {/* Header */}
-        <div className="border-b border-gray-600 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div className="border-b border-gray-600 flex flex-col sm:flex-row justify-between items-center gap-3 pb-4">
           <div className="grid gap-2">
             <h1 className="text-xl sm:text-2xl font-bold capitalize text-primary leading-tight">
               {suggestion?.title}

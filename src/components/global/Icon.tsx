@@ -11,7 +11,7 @@ type Props = {
 const Icon = ({
   icon,
   size = 14,
-  color = colors.primary,
+  color = colors.icon_gray,
   thickness,
 }: Props) => {
   return (

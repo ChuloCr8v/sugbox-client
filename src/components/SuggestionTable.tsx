@@ -23,7 +23,7 @@ const SuggestionTable = (props: Props) => {
       render: (_: ReactNode, record: { _id: string; title: string }) => (
         <a
           href={`/suggestion/${record._id}`}
-          className="capitalize font-semibold text-primaryblue"
+          className="capitalize font-semibold text-gray-300"
         >
           {record.title}
         </a>
