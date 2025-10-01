@@ -72,7 +72,7 @@ const AuthLayout = ({ heading, subheading }: Props) => {
           }}
           // layout
           className={twMerge(
-            "absolute z-0 !h-full !w-[94%] flex flex-col justify-center w-full rounded-[30px] overflow-hidden duration-200 z-50 bg-gradient-to-tl from-primary/40 to-secondary/70 backdrop-blur max-xl:hidden",
+            "absolute  !h-full !w-[94%] flex flex-col justify-center rounded-[30px] overflow-hidden duration-200 z-50 bg-gradient-to-tl from-primaryblue/40 to-secondary/70 backdrop-blur max-xl:hidden",
             "xl:!h-full",
             isPortal && "opacity-0"
           )}
@@ -85,7 +85,7 @@ const AuthLayout = ({ heading, subheading }: Props) => {
             y: 0,
           }}
           className={twMerge(
-            "relative z-20 flex flex-col justify-center w-full h-[30vh] rounded-[30px] duration-200 z-50 bg-gradient-to-br from-primary/40 to-secondary/70 backdrop-blur",
+            "relative flex flex-col justify-center w-full h-[30vh] rounded-[30px] duration-200 z-50 bg-gradient-to-br from-primaryblue/40 to-secondary/70 backdrop-blur",
             "md:h-[30vh]",
             "xl:shadow-xl xl:!h-[50vh]",
             isPortal && "h-[40vh] w-full",

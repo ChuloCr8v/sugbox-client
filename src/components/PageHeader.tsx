@@ -3,8 +3,10 @@ import { FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { twMerge } from "tailwind-merge";
 import UseGetAuth from "../hooks/useGetAuth";
-import { showNewEmployeeModal, showNewSuggestionModal } from "../redux/modals";
+import { showNewEmployeeModal } from "../redux/modals";
 import Button from "./Button";
+import { usePopup } from "../context/PopupContext";
+import SuggestionModal from "./modals/SuggestionModal";
 
 interface Props {
   title: ReactNode;
@@ -13,6 +15,8 @@ interface Props {
 
 const PageHeader = (props: Props) => {
   const dispatch = useDispatch();
+
+  const { openModal } = usePopup();
 
   const { isAdmin } = UseGetAuth();
 
@@ -38,9 +42,9 @@ const PageHeader = (props: Props) => {
           }
           type="primary"
           disabled={false}
-          onClick={() => dispatch(showNewSuggestionModal())}
+          onClick={() => openModal(<SuggestionModal />)}
           className={twMerge(
-            "text-white rounded md:rounded-md py-2 h-8",
+            "text-white !bg-primary rounded md:rounded-md py-2 h-8",
             isAdmin && "hidden"
           )}
         />

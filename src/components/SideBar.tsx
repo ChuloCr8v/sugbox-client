@@ -109,7 +109,7 @@ const Sidebar = () => {
         // onMouseEnter={() => dispatch(openSideBar())}
         // onMouseLeave={() => dispatch(closeSideBar())}
         className={twMerge(
-          "dark:bg-gradient-to-b from-background to-secondary/5 backdrop-blur-xl min-h-screen w-0 lg:w-[250px] pt-24 border-r border-gray-600 overflow-hidden z-50 duration-200",
+          "dark:bg-gradient-to-b from-black to-secondary/5 backdrop-blur-xl min-h-screen w-0 lg:w-[250px] pt-24 border-r border-gray-600 overflow-hidden z-50 duration-200",
           !user && "hidden"
           // isSideBarOpen && "!w-[250px]"
         )}

@@ -94,3 +94,21 @@ export const newEmployeeFormItems = [
     name: "repeatPassword",
   },
 ];
+
+export const newSuggestionFormFields = [
+  {
+    label: "Title",
+    type: "text",
+    placeholder: "E.g. Improved welfare packages",
+    name: "title",
+    required: true,
+  },
+  {
+    name: "suggestion",
+    label: "Suggestion",
+    type: "textArea",
+    placeholder: "Give a detailed explanation",
+    required: true,
+  },
+
+];

@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import "./App.css";
 import Layout from "./pages/Layout";
 import { store } from "./redux/store";
+import { PopupProvider } from "./context/PopupContext";
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
       }}
     >
       <Provider store={store}>
-        <Layout />
+        <PopupProvider>
+          <Layout />
+        </PopupProvider>
       </Provider>
     </ConfigProvider>
   );

@@ -61,7 +61,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="w-full grid gap-4 px-4 py-24 bg-gradient-to-bl from-transparent to-orange-600/5 ">
+    <div className="w-full grid gap-4 px-4 py-24 bg-gradient-to-bl from-black to-orange-600/5 ">
       <PageHeader
         title={isAdmin ? adminProfileTitle : userProfileTitle}
         showActionButton

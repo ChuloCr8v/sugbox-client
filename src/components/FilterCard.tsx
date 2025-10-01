@@ -7,6 +7,7 @@ import {
 import { twMerge } from "tailwind-merge";
 
 interface Props {
+  index: number;
   filter?: string;
   data: {
     title: string;
@@ -84,7 +85,12 @@ const FilterCard = (props: Props) => {
   return (
     <div
       //  onClick={() => props.setFilter(props.data.title)}
-      className="flex items-center gap-3 border-r border-gray-600 justify-start w-full mr-6 last-of-type:border-r-0"
+      className={twMerge(
+        "flex items-center md:pl-4 gap-3 border-r border-gray-600 justify-start w-full min-md:mr-6 last-of-type:border-r-0  max-md:p-2 max-md:border-b max-md:border-r-0 max-md:last-of-type:border-b-0",
+        props.index === 1 && "max-md:border-r",
+        props.index === 3 && "max-md:border-b-0 max-md:border-r",
+        [2, 4].includes(props.index) && "max-md:!pl-8"
+      )}
     >
       <div
         className={twMerge(

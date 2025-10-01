@@ -23,9 +23,9 @@ const FilterCards = (props: Props) => {
   ];
 
   return (
-    <CardWrapper>
+    <CardWrapper className="max-md:grid max-md:grid-cols-2 p-4 ">
       {filters.map((d, index) => (
-        <FilterCard data={d} key={index} />
+        <FilterCard data={d} key={index} index={index + 1} />
       ))}
     </CardWrapper>
   );

@@ -192,7 +192,7 @@ export const SectionHeading = (props: {
       {props.heading}
 
       {props?.count ? (
-        <span className="border border-primaryblue rounded-full text-[12px] text-primaryblue h-5 w-5 flex items-center justify-center">
+        <span className="border border-primary rounded-full text-[12px] text-primary h-5 w-5 flex items-center justify-center">
           {props?.count}
         </span>
       ) : (

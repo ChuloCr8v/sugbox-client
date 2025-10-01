@@ -171,7 +171,13 @@ const FormItemComponent = ({ form }: Props) => {
       //     </Button>
       //   );
       case "textArea":
-        return <TextArea disabled={item.disabled} />;
+        return (
+          <TextArea
+            disabled={item.disabled}
+            className="!bg-transparent !border-gray-700"
+            styles={{ textarea: { backgroundColor: "transparent" } }}
+          />
+        );
       default:
         return (
           <Input placeholder={item.placeholder} disabled={item.disabled} />

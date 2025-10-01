@@ -38,15 +38,15 @@ const SuggestionCard = (props: Props) => {
           <>
             {/* Header */}
             <div className="flex flex-col border-b pb-2 border-gray-600">
-              <p className="font-semibold text-primary capitalize text-base">
+              <p className="font-semibold text-gray-300 capitalize text-sm">
                 {props.data.title.slice(0, 30)}
                 {props.data.title.length > 30 && "..."}
               </p>
               <div className="text-sm flex gap-3 items-center">
                 <p
                   className={twMerge(
-                    "text-gray-300 text-xs flex items-center gap-1",
-                    props.data.isAnonymous && "text-gray-300"
+                    "text-gray-400 text-xs flex items-center gap-1",
+                    props.data.isAnonymous && "text-gray-400"
                   )}
                 >
                   {props.data.isAnonymous ? (
@@ -65,7 +65,7 @@ const SuggestionCard = (props: Props) => {
 
             {/* Suggestion text */}
             <div className="flex flex-col h-full items-start justify-between py-3">
-              <p className="text-textcolor text-sm leading-relaxed">
+              <p className="text-textcolor text-xs leading-relaxed">
                 {props.data.suggestion.slice(0, 100)}
                 {props.data.suggestion.length > 100 && "..."}
               </p>

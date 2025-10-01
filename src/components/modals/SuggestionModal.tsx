@@ -1,22 +1,24 @@
-import { Button, Checkbox, Modal, Spin, message } from "antd";
+import { Checkbox, Form, Spin, message } from "antd";
 import axios from "axios";
 import { useState } from "react";
 import { FaPaperclip, FaRegTrashAlt } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { twMerge } from "tailwind-merge";
 import UseGetAuth from "../../hooks/useGetAuth";
 import { useGetEmployeeQuery } from "../../redux/data/employees";
 import { useAddSuggestionMutation } from "../../redux/data/suggestions";
 import { hideNewSuggestionModal } from "../../redux/modals";
-import { FormGroup } from "../SmallerComponents";
+import { Label } from "../SmallerComponents";
 import { API_URL } from "../..";
-interface newSuggestionModalProps {
-  modals: {
-    newSuggestionModal: boolean;
-  };
-}
+import { CustomModal } from "../global/CustomModal";
+import { PlusSignCircleFreeIcons } from "@hugeicons/core-free-icons";
+import { newSuggestionFormFields } from "../../data";
+import FormItemComponent from "../RenderFormItem";
+import { useForm } from "antd/es/form/Form";
+import CardWrapper from "../global/CardWrapper";
 
 const SuggestionModal = () => {
+  const [form] = useForm();
   const [files, setFiles] = useState<any>([]);
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -33,9 +35,9 @@ const SuggestionModal = () => {
 
   const [addSuggestion, { isLoading }] = useAddSuggestionMutation();
   const [newSuggestion, setNewSuggestion] = useState(newSuggestionData);
-  const { newSuggestionModal } = useSelector(
-    (state: newSuggestionModalProps) => state.modals
-  );
+
+  const { formItem } = FormItemComponent({ form });
+
   const dispatch = useDispatch();
 
   const { token } = UseGetAuth();
@@ -121,13 +123,6 @@ const SuggestionModal = () => {
     }
   };
 
-  const handleUpdateNewSuggestion = (e: {
-    target: { value: string; name: string };
-  }) => {
-    const { name, value } = e.target;
-    setNewSuggestion((prev) => ({ ...prev, [name]: value }));
-  };
-
   const disabled =
     isLoading || newSuggestion.suggestion === "" || newSuggestion.title === "";
 
@@ -138,29 +133,28 @@ const SuggestionModal = () => {
 
   return (
     <>
-      <Modal
-        title={"New Suggestion"}
-        open={newSuggestionModal}
-        onCancel={() => dispatch(hideNewSuggestionModal())}
-        footer={false}
+      <CustomModal
+        title={"Add Suggestion"}
+        modalSubtitle="You can share your thoughts anonymously too"
+        icon={PlusSignCircleFreeIcons}
+        disabled={disabled}
+        loading={isLoading}
+        onOk={handleSubmit}
       >
-        <form className="flex flex-col items-start gap-4 mt-6">
-          <FormGroup
-            value={newSuggestion.title}
-            onInputChange={handleUpdateNewSuggestion}
-            label={"Title"}
-            inputType={"text"}
-            placeholder={"Suggestion Title"}
-            name={"title"}
-          />
-          <FormGroup
-            value={newSuggestion.suggestion}
-            onInputChange={handleUpdateNewSuggestion}
-            label={"Suggestion"}
-            inputType={"textarea"}
-            placeholder={"Leave your suggestion"}
-            name={"suggestion"}
-          />
+        <Form className="w-full space-y-3" form={form} layout="vertical">
+          {newSuggestionFormFields.map((item) => (
+            <Form.Item
+              name={item.name}
+              style={{
+                marginBottom: 10,
+              }}
+              label={<Label title={item.label} />}
+              className="w-full"
+              rules={[{ required: true, message: `${item.label} is required` }]}
+            >
+              {formItem(item)}
+            </Form.Item>
+          ))}
 
           <div className="">
             {progress > 0 && (
@@ -182,7 +176,7 @@ const SuggestionModal = () => {
                 <Spin /> getting files...
               </div>
             ) : (
-              <div className="w-fit place-self-start border rounded px-2 py-1 bg-gray-50 relative flex items-center gap-2 text-gray-500 hover:text-primaryblue hover:border-primaryblue">
+              <CardWrapper className="!w-fit py-2 px-3 text-gray-300 gap-2 !rounded-lg *:text-xs items-center">
                 <input
                   onChange={handleGetFiles}
                   type="file"
@@ -191,7 +185,7 @@ const SuggestionModal = () => {
                 />
                 <FaPaperclip className="" />
                 <p className="text-sm ">Add attachments</p>
-              </div>
+              </CardWrapper>
             )}
           </div>
 
@@ -225,33 +219,13 @@ const SuggestionModal = () => {
                 }));
                 console.log(newSuggestion);
               }}
-              className="hover:text-primaryblue duration-200"
+              className="duration-200 text-gray-300 text-xs"
             >
               Suggest Anonymously
             </Checkbox>
           </div>
-          <div className="w-full flex items-center justify-end gap-4 mt-4">
-            <Button
-              onClick={() => dispatch(hideNewSuggestionModal())}
-              disabled={isLoading}
-              loading={isLoading}
-              type="default"
-              className="h-8 w-[144px] "
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleSubmit}
-              disabled={disabled}
-              loading={isLoading || loading}
-              type="primary"
-              className="bg-primaryblue h-8 w-[144px]"
-            >
-              Submit
-            </Button>
-          </div>
-        </form>
-      </Modal>
+        </Form>
+      </CustomModal>
     </>
   );
 };
