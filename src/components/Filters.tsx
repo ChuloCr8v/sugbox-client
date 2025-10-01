@@ -135,7 +135,7 @@ const Filter = (props: Props) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between w-full gap-3 mt-4">
+    <div className="flex flex-col md:flex-row justify-between w-full gap-3">
       {/* Search */}
       <Input
         size="large"

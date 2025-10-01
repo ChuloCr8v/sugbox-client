@@ -5,6 +5,7 @@ import {
   FaRegFileAlt,
 } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
+import CardWrapper from "./global/CardWrapper";
 
 interface Props {
   index: number;
@@ -83,13 +84,14 @@ const FilterCard = (props: Props) => {
   // };
 
   return (
-    <div
+    <CardWrapper
       //  onClick={() => props.setFilter(props.data.title)}
       className={twMerge(
-        "flex items-center md:pl-4 gap-3 border-r border-gray-600 justify-start w-full min-md:mr-6 last-of-type:border-r-0  max-md:p-2 max-md:border-b max-md:border-r-0 max-md:last-of-type:border-b-0",
-        props.index === 1 && "max-md:border-r",
-        props.index === 3 && "max-md:border-b-0 max-md:border-r",
-        [2, 4].includes(props.index) && "max-md:!pl-8"
+        "flex items-center md:pl-4 gap-3 border-r border-gray-600 justify-start w-full min-md:mr-6 last-of-type:border-r-0 ",
+        "max-md:border max-md:rounded-lg max-md:last-of-type:border-r !justify-start !p-3 md:!p-0 md:!pl-4 md:first-of-type:!pl-0 md:!border-0 md:!border-r md:!rounded-none md:last-of-type:!border-r-0 md:from-transparent md:to-transparent"
+        // props.index === 1 && "max-md:border-r"
+        // props.index === 3 && "max-md:border-b-0 max-md:border-r"
+        // [2, 4].includes(props.index) && "max-md:!pl-8"
       )}
     >
       <div
@@ -107,7 +109,7 @@ const FilterCard = (props: Props) => {
         </p>
         <p className=" text-xs text-gray-300 capitalize">{props.data?.title}</p>
       </div>
-    </div>
+    </CardWrapper>
   );
 };
 

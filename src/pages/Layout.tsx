@@ -34,105 +34,107 @@ const Layout = () => {
 
   return (
     <div className="flex flex-col bg-gray-50 dark:bg-background h-screen overflow-hidden">
-      <div className="flex w-full h-full">
-        <Header />
-        <SideBar />
-        <div
-          className={twMerge(
-            "w-full flex flex-col items-center overflow-y-auto h-full"
-          )}
-        >
-          <div className="flex flex-col items-center  w-full">
-            <Routes>
-              <Route
-                path="/portal"
-                element={token ? <Dashboard /> : <AuthLayout />}
-              />
-              <Route
-                path="/*"
-                element={token ? <Dashboard /> : <AuthLayout />}
-              />
-              <Route
-                path="/signup"
-                element={token ? <Dashboard /> : <Signup />}
-              />
-              <Route path="/login-redirect" element={<LoginPageRedirect />} />
-              <Route
-                path="/login/:loginRole"
-                element={token ? <Dashboard /> : <Login />}
-              />
-              <Route
-                path="/dashboard"
-                element={token ? <Dashboard /> : <AuthLayout />}
-              />
-              <Route
-                path="/profile/:id"
-                element={token ? <Profile /> : <AuthLayout />}
-              />
-              <Route
-                path="/suggestion/:id"
-                element={token ? <Suggestion /> : <AuthLayout />}
-              />
-              <Route
-                path="/employees"
-                element={token ? <Employees /> : <AuthLayout />}
-              />
-              <Route
-                path="/suggestions"
-                element={token ? <Suggestions /> : <AuthLayout />}
-              />
-              <Route
-                path="/my-suggestions"
-                element={token ? <MySuggestions /> : <AuthLayout />}
-              />
-              <Route
-                path="/my-profile/:id"
-                element={token ? <Profile /> : <AuthLayout />}
-              />
-              <Route
-                path="/profile/:id"
-                element={token ? <Profile /> : <AuthLayout />}
-              />
-              <Route
-                path="/moderators/"
-                element={token ? <Moderators /> : <AuthLayout />}
-              />
+      <div className="flex flex-col bg-gradient-to-bl from-black to-orange-600/5 h-full overflow-auto">
+        <div className="flex w-full h-full">
+          <Header />
+          <SideBar />
+          <div
+            className={twMerge(
+              "w-full flex flex-col items-center overflow-y-auto h-full"
+            )}
+          >
+            <div className="flex flex-col items-center  w-full">
+              <Routes>
+                <Route
+                  path="/portal"
+                  element={token ? <Dashboard /> : <AuthLayout />}
+                />
+                <Route
+                  path="/*"
+                  element={token ? <Dashboard /> : <AuthLayout />}
+                />
+                <Route
+                  path="/signup"
+                  element={token ? <Dashboard /> : <Signup />}
+                />
+                <Route path="/login-redirect" element={<LoginPageRedirect />} />
+                <Route
+                  path="/login/:loginRole"
+                  element={token ? <Dashboard /> : <Login />}
+                />
+                <Route
+                  path="/dashboard"
+                  element={token ? <Dashboard /> : <AuthLayout />}
+                />
+                <Route
+                  path="/profile/:id"
+                  element={token ? <Profile /> : <AuthLayout />}
+                />
+                <Route
+                  path="/suggestion/:id"
+                  element={token ? <Suggestion /> : <AuthLayout />}
+                />
+                <Route
+                  path="/employees"
+                  element={token ? <Employees /> : <AuthLayout />}
+                />
+                <Route
+                  path="/suggestions"
+                  element={token ? <Suggestions /> : <AuthLayout />}
+                />
+                <Route
+                  path="/my-suggestions"
+                  element={token ? <MySuggestions /> : <AuthLayout />}
+                />
+                <Route
+                  path="/my-profile/:id"
+                  element={token ? <Profile /> : <AuthLayout />}
+                />
+                <Route
+                  path="/profile/:id"
+                  element={token ? <Profile /> : <AuthLayout />}
+                />
+                <Route
+                  path="/moderators/"
+                  element={token ? <Moderators /> : <AuthLayout />}
+                />
 
-              <Route
-                path="/settings/:id"
-                element={token ? <Settings /> : <AuthLayout />}
-              />
-              <Route
-                path="/reset-email/:id"
-                element={token ? <ResetEmail /> : <AuthLayout />}
-              />
-              <Route
-                path="/verify-otp/:id/:action"
-                element={<VerifyOTPPage />}
-              />
-              <Route path="/reset-password/:id" element={<ResetPassword />} />
-              <Route path="/forgot-password/" element={<ForgotPassword />} />
-              <Route
-                path="/verify-organization/:token/:id"
-                element={<VerificationSuccessfulPage />}
-              />
-              <Route
-                path="/change-password/:token/:id"
-                element={<ChangePassword />}
-              />
-            </Routes>
+                <Route
+                  path="/settings/:id"
+                  element={token ? <Settings /> : <AuthLayout />}
+                />
+                <Route
+                  path="/reset-email/:id"
+                  element={token ? <ResetEmail /> : <AuthLayout />}
+                />
+                <Route
+                  path="/verify-otp/:id/:action"
+                  element={<VerifyOTPPage />}
+                />
+                <Route path="/reset-password/:id" element={<ResetPassword />} />
+                <Route path="/forgot-password/" element={<ForgotPassword />} />
+                <Route
+                  path="/verify-organization/:token/:id"
+                  element={<VerificationSuccessfulPage />}
+                />
+                <Route
+                  path="/change-password/:token/:id"
+                  element={<ChangePassword />}
+                />
+              </Routes>
+            </div>
           </div>
-        </div>
-        {/** Modals */}
-        <SuggestionModal />
-        <EditSuggestionModal />
-        <NewEmployeeModal />
-        <EditCompanyForm />
-        <SendEmailModal />
-        <AddNewModerator />
-        {/* <CustomModal /> */}
+          {/** Modals */}
+          <SuggestionModal />
+          <EditSuggestionModal />
+          <NewEmployeeModal />
+          <EditCompanyForm />
+          <SendEmailModal />
+          <AddNewModerator />
+          {/* <CustomModal /> */}
 
-        <ThemeToggle />
+          <ThemeToggle />
+        </div>
       </div>
     </div>
   );

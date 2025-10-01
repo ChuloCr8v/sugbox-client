@@ -23,7 +23,7 @@ const FilterCards = (props: Props) => {
   ];
 
   return (
-    <CardWrapper className="max-md:grid max-md:grid-cols-2 p-4 ">
+    <CardWrapper className="max-md:from-transparent max-md:grid max-md:grid-cols-2 p-4 max-md:p-0 max-md:gap-2 max-md:border-0">
       {filters.map((d, index) => (
         <FilterCard data={d} key={index} index={index + 1} />
       ))}

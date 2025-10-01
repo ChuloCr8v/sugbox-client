@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaBan } from "react-icons/fa";
 import Employees from "../components/Employees";
-import ErrorComponent from "../components/ErrorComponent";
 import FilterCards from "../components/FilterCards";
 import Filters from "../components/Filters";
 import PageHeader from "../components/PageHeader";
@@ -11,6 +9,7 @@ import SummaryCardSection from "../components/SummaryCardSection";
 import UseGetAuth from "../hooks/useGetAuth";
 import useGetSuggestions from "../hooks/useGetSuggestions";
 import { useGetEmployeeQuery } from "../redux/data/employees";
+import ErrorComponent from "../components/ErrorComponent";
 
 const Dashboard = () => {
   const {
@@ -56,12 +55,12 @@ const Dashboard = () => {
     </p>
   );
 
-  if (isError) {
-    return <ErrorComponent />;
-  }
+  // if (isError) {
+  //   return <ErrorComponent />;
+  // }
 
   return (
-    <div className="w-full grid gap-4 px-4 py-24 bg-gradient-to-bl from-black to-orange-600/5 ">
+    <div className="w-full h-full grid gap-4 px-4 py-24  ">
       <PageHeader
         title={isAdmin ? adminProfileTitle : userProfileTitle}
         showActionButton
@@ -92,10 +91,7 @@ const Dashboard = () => {
 
       {!isAdmin &&
         (isError || error ? (
-          <p className="text-center text-gray-600 font-semibold w-full mt-20 flex flex-col items-center justify-center gap-4">
-            <FaBan className=" bg-gray-100 text-5xl text-gray-400 h-24 w-24 rounded-full p-6" />
-            Unable to get suggestions, check your internet and try again!
-          </p>
+          <ErrorComponent className="h-fit !bg-transparent !from-transparent !to-transparent md:mt-32" />
         ) : (
           <div className="mt-2">
             <SectionHeading

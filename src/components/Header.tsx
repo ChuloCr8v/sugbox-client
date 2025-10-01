@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <div
       className={twMerge(
-        "flex justify-center items-center w-screen border-b border-b-outline/40 fixed top-0 left-0 bg-background/50 backdrop-blur-xl z-[999]",
+        "flex justify-center items-center w-screen border-b border-b-outline/40 fixed top-0 left-0 bg-gradient-to-b from-background/50 to-transparent backdrop-blur-xl z-[999]",
         !user && "hidden"
       )}
     >
@@ -28,8 +28,8 @@ const Header = () => {
         <FaBars
           onClick={handleSideBar}
           className={twMerge(
-            "cursor-pointer hover:text-primaryblue duration-200 lg:hidden",
-            isSideBarOpen && "text-primaryblue",
+            "cursor-pointer hover:text-primary duration-200 lg:hidden",
+            isSideBarOpen && "text-primary",
             !user && "hidden"
           )}
         />
@@ -38,7 +38,9 @@ const Header = () => {
             to="/dashboard"
             className="logo_wrapper cursor-pointer font-bold text-xl text-gray-500 "
           >
-            <p className="text-3xl font-semibold text-white">SuggBox</p>
+            <p className="text-2xl font-semibold text-white">
+              Sugg<span className="text-primary">Box</span>
+            </p>
             {/* <p className="text-xs mt-2 text-gray-300">
               Your NO.1 digital Suggestion Box
             </p> */}
