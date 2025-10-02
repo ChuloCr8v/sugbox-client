@@ -5,7 +5,6 @@ import {
   FaChevronDown,
   FaRegCalendarAlt,
   FaRegCheckCircle,
-  FaRegCommentAlt,
   FaRegUser,
   FaUserNinja,
 } from "react-icons/fa";
@@ -31,6 +30,9 @@ import {
 } from "../redux/data/suggestions";
 import { hideNewCommentModal } from "../redux/modals";
 import { dateFormatter } from "../utils.ts/dateFormatter";
+import CardWrapper from "../components/global/CardWrapper";
+import Icon from "../components/global/Icon";
+import { Comment02Icon } from "@hugeicons/core-free-icons";
 
 const Suggestion = () => {
   const { id: userId, isAdmin } = UseGetAuth();
@@ -126,7 +128,7 @@ const Suggestion = () => {
     <div className="py-24 h-screen overflow-y-auto px-4 w-full gap-6 bg-gradient-to-t from-primary/5 backdrop-blur-xl to-transparent flex flex-col justify-between">
       <div className="space-y-4">
         {/* Header */}
-        <div className="border-b border-gray-600 flex flex-col sm:flex-row justify-between items-center gap-3 pb-4">
+        <div className="border-b border-gray-600 flex flex-row justify-between items-start gap-3 pb-4">
           <div className="grid gap-2">
             <h1 className="text-xl sm:text-2xl font-bold capitalize text-primary leading-tight">
               {suggestion?.title}
@@ -192,14 +194,17 @@ const Suggestion = () => {
             />
 
             <Tooltip title="Click to view or hide comments">
-              <Button
-                icon={<FaRegCommentAlt className="text-sm" />}
-                onClick={() => setOpenCommentSection(!openCommentSection)}
-                className="flex items-center gap-1 border border-gray-300 dark:border-gray-600 rounded-md h-9 px-3 bg-white dark:bg-black/40 hover:border-primaryblue hover:text-primaryblue transition"
-              >
-                {suggestion?.comments?.length || 0}{" "}
-                {suggestion?.comments?.length === 1 ? "Comment" : "Comments"}
-              </Button>
+              <CardWrapper className="!p-0 !w-fit !rounded-full">
+                <Button
+                  type="text"
+                  icon={<Icon icon={Comment02Icon} />}
+                  onClick={() => setOpenCommentSection(!openCommentSection)}
+                  className="gap-3"
+                >
+                  {suggestion?.comments?.length || 0}{" "}
+                  {suggestion?.comments?.length === 1 ? "Comment" : "Comments"}
+                </Button>
+              </CardWrapper>
             </Tooltip>
           </div>
         </div>

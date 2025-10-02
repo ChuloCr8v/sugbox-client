@@ -51,7 +51,7 @@ export const CustomModal = ({
   disabled = false,
   modalTheme = ModalTheme.DEFAULT,
   hideFooter = false,
-  maxHeight = true,
+  maxHeight = false,
 }: Props) => {
   const [stepButtons, setStepButtons] = useState(step ?? false);
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -70,7 +70,6 @@ export const CustomModal = ({
       okButtonProps={{ danger: isDanger, disabled }}
       open={isModalOpen}
       onCancel={closeModal}
-      confirmLoading={loading}
       closable={closable}
       footer={false}
       maskClosable={closable}
@@ -80,8 +79,9 @@ export const CustomModal = ({
       className="!p-0"
       classNames={{
         content:
-          "!bg-black/5 backdrop-blur-lg bg-gradient-to-b from-primary/5 to-transparent !border-gray-200",
+          "!bg-black/5 backdrop-blur-lg bg-gradient-to-b from-black/5 to-transparent !border-gray-200",
         body: " !border-gray-200 !border !border-primary/20 overflow-hidden rounded-lg",
+        mask: "backdrop-blur-sm bg-black/10",
       }}
       styles={{
         content: {
@@ -93,7 +93,7 @@ export const CustomModal = ({
       <div className="flex flex-col items-center">
         <div
           className={twMerge(
-            "modal-header flex items-center gap-3  w-full  px-6 py-4 border-b border-b-primary/20",
+            "modal-header flex items-center gap-3  w-full  px-6 py-4 border-b border-b-primary/20 bg-gradient-to-l from-primary/15 to-transparent ",
             warning && "from-red-50 to-red-100"
           )}
         >
@@ -106,7 +106,7 @@ export const CustomModal = ({
           >
             <HugeiconsIcon
               icon={icon ?? Activity01Icon}
-              size={modalSubtitle ? 28 : 24}
+              size={modalSubtitle ? 24 : 20}
               strokeWidth={1.5}
               color={warning ? "red" : "white"}
             />
@@ -115,7 +115,7 @@ export const CustomModal = ({
           <div className="text-left">
             <p
               className={twMerge(
-                "font-semibold capitalize text-base text-gray-300",
+                "font-semibold capitalize text-sm md:text-base text-gray-300",
                 !modalSubtitle && "text-base"
               )}
             >
@@ -157,11 +157,11 @@ export const CustomModal = ({
         )}
 
         {!stepButtons && !hideFooter && (
-          <div className="space-x-4 mt-4 w-full px-6 py-4 border-t border-primary/20">
+          <div className="space-x-4 w-full px-6 py-4 border-t border-primary/20">
             <div className="flex items-center justify-end gap-3">
               <Button
                 size="middle"
-                className="!text-sm !px-6 bg-transparent text-gray-300 border-gray-600"
+                className="!text-sm !px-6 bg-transparent text-gray-300 border-gray-600  !shadow-none"
                 onClick={onCancel ?? closeModal}
               >
                 Cancel
@@ -172,7 +172,7 @@ export const CustomModal = ({
                 type="primary"
                 size="middle"
                 className={twMerge(
-                  "!text-sm !px-6",
+                  "!text-sm !px-6 !shadow-none",
                   warning && "!bg-red-400 !text-white"
                 )}
                 disabled={showConfirmation ? !isConfirmed : false} // Disable based on checkbox

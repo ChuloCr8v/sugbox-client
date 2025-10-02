@@ -145,20 +145,21 @@ rect {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 2px;
-  background: rgb(144, 109, 247);
+  width: 2px;
+  height: 20px;
+  /* background: rgb(144, 109, 247); */
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  /* background: #f1f1f1; */
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: lightblue;
-  width: 10px;
+  background: #ff660030;
+  width: 3px;
+  height: 3px !important;
 }
 /* 
 .css-13aj3tc-MuiChartsSurface-root {

@@ -86,13 +86,17 @@ const Sidebar = () => {
             "bg-secondary/5 text-secondary border-secondary",
           path === "/" &&
             item.title === "Dashboard" &&
-            "text-primaryblue border-primaryblue"
+            "text-primary border-primary"
         )}
       >
         <span className="">
-          <item.icon className="text-xl" />
+          <item.icon className="text-base" />
         </span>
-        <span className={twMerge("transition-all duration-1000 leading-none")}>
+        <span
+          className={twMerge(
+            "transition-all duration-1000 leading-none text-sm"
+          )}
+        >
           {item.title}
         </span>
       </Link>

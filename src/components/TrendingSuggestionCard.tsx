@@ -10,7 +10,7 @@ type Props = { suggestion: suggestionProps };
 const TrendingSuggestionCard = (props: Props) => {
   const { data: employee } = useGetEmployeeQuery(props.suggestion?.userId);
   return (
-    <CardWrapper className="flex-col gap-4 h-full min-w-[350px] w-full ">
+    <CardWrapper className="flex-col gap-4 h-full min-w-[300px] w-full ">
       <div className="space-y-1 w-full">
         <p className="text-gray-300 font-semibold flex items-center gap-2">
           {props.suggestion?.title}
